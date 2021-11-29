@@ -17,9 +17,6 @@ public class Service implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@OneToOne
-	private Serviceinternet serviceinternet;
 
 	@ManyToOne
 	@JoinColumn(name="idtype")

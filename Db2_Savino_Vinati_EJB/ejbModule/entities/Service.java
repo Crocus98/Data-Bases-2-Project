@@ -21,6 +21,9 @@ public class Service implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idtype")
 	private Servicetype type;
+	
+	@OneToOne
+	private Servicemobile servicemobile;
 
 	public Service() {
 	}
@@ -41,4 +44,12 @@ public class Service implements Serializable {
 		this.type = type;
 	}
 
+	public Servicemobile getServicemobile() {
+		return servicemobile;
+	}
+
+	public void setServicemobile(Servicemobile servicemobile) {
+		this.servicemobile = servicemobile;
+	}
+	
 }

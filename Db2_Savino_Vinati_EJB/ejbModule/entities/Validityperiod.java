@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -19,6 +21,9 @@ public class Validityperiod implements Serializable {
 	private int id;
 
 	private int validityperiod;
+	
+	@OneToMany(mappedBy = "servicepackage")
+    private List<Packageperiod> packageperiod;
 
 	public Validityperiod() {
 	}

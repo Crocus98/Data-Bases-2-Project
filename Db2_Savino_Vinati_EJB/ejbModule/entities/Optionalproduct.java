@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -22,7 +24,11 @@ public class Optionalproduct implements Serializable {
 
 	private String name;
 	
-	
+	@ManyToMany
+	@JoinTable(name="packageproduct",
+	joinColumns=@JoinColumn(name="idoptionalproduct"),
+	inverseJoinColumns=@JoinColumn(name="idservicepackage"))
+	private List <Servicepackage> servicepackage;
 
 	public Optionalproduct() {
 		

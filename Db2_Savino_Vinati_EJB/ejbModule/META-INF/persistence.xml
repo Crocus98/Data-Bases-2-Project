@@ -15,6 +15,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.User</class>
 		<class>entities.Usertype</class>
 		<class>entities.Validityperiod</class>
+		<class>entities.Servicepackage</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

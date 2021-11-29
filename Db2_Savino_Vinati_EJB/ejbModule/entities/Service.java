@@ -27,6 +27,9 @@ public class Service implements Serializable {
 	
 	@OneToOne
 	private Servicemobile servicemobile;
+	
+	@OneToOne
+	private Serviceinternet serviceinternet;
 
 	public Service() {
 	}

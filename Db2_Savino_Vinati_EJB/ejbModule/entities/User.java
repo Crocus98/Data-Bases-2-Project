@@ -20,6 +20,9 @@ public class User implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idusertype")
 	private Usertype userType;
+	
+	@OneToOne
+	private Insolventuser insolventuser;
 
 	public String getMail() {
 		return mail;
@@ -43,5 +46,13 @@ public class User implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Insolventuser getInsolventuser() {
+		return insolventuser;
+	}
+
+	public void setInsolventuser(Insolventuser insolventuser) {
+		this.insolventuser = insolventuser;
 	}
 }

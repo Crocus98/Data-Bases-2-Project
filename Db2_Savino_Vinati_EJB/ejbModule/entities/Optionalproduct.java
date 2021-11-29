@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name = "optionalproduct", schema="db2_savino_vinati")
 @NamedQuery(name="Optionalproduct.findAll", query="SELECT o FROM Optionalproduct o")
 public class Optionalproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,13 +17,10 @@ public class Optionalproduct implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	 
-	private int idservicetype;
 
 	private float monthlyprice;
 
 	private String name;
-	
 	
 	@ManyToOne
 	@JoinColumn(name="idservicetype")
@@ -39,14 +37,6 @@ public class Optionalproduct implements Serializable {
 		this.id = id;
 	}
 
-	public int getIdservicetype() {
-		return this.idservicetype;
-	}
-
-	public void setIdservicetype(int idservicetype) {
-		this.idservicetype = idservicetype;
-	}
-
 	public float getMonthlyprice() {
 		return this.monthlyprice;
 	}
@@ -61,6 +51,14 @@ public class Optionalproduct implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Servicetype getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(Servicetype serviceType) {
+		this.serviceType = serviceType;
 	}
 
 }

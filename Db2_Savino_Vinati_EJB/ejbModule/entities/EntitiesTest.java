@@ -38,5 +38,4 @@ public class EntitiesTest implements Serializable {
 	public void setTestValue(String testValue) {
 		this.testValue = testValue;
 	}
-
 }

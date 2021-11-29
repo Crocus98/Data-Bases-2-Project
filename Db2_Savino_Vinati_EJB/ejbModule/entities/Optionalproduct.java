@@ -21,10 +21,6 @@ public class Optionalproduct implements Serializable {
 	private float monthlyprice;
 
 	private String name;
-	
-	@ManyToOne
-	@JoinColumn(name="idservicetype")
-	private Servicetype serviceType;
 
 	public Optionalproduct() {
 	}
@@ -51,14 +47,6 @@ public class Optionalproduct implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Servicetype getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(Servicetype serviceType) {
-		this.serviceType = serviceType;
 	}
 
 }

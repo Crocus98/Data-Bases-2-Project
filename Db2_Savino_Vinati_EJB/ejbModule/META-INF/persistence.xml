@@ -6,6 +6,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 	<persistence-unit name="SavinoVinatiProject" transaction-type="JTA">
 		<jta-data-source>ProjectDB</jta-data-source>
 		<class>entities.EntitiesTest</class>
+		<class>entities.Usertype</class>
+		<class>entities.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

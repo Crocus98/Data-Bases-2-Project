@@ -20,6 +20,9 @@ public class Serviceinternet implements Serializable {
 	private float feeextragbs;
 
 	private int includedgbs;
+	
+	@OneToOne
+	private Service service;
 
 	public Serviceinternet() {
 	}
@@ -46,6 +49,14 @@ public class Serviceinternet implements Serializable {
 
 	public void setIncludedgbs(int includedgbs) {
 		this.includedgbs = includedgbs;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 }

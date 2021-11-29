@@ -24,6 +24,9 @@ public class Servicemobile implements Serializable {
 	private int includedminutes;
 
 	private int includedsms;
+	
+	@OneToOne
+	private Service service;
 
 	public Servicemobile() {
 	}
@@ -66,6 +69,14 @@ public class Servicemobile implements Serializable {
 
 	public void setIncludedsms(int includedsms) {
 		this.includedsms = includedsms;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 }

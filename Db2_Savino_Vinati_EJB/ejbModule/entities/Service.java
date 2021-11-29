@@ -22,10 +22,10 @@ public class Service implements Serializable {
 	@JoinColumn(name="idtype")
 	private Servicetype type;
 	
-	@OneToOne
+	@OneToOne(mappedBy="service")
 	private Servicemobile servicemobile;
 	
-	@OneToOne
+	@OneToOne(mappedBy="service")
 	private Serviceinternet serviceinternet;
 
 	public Service() {

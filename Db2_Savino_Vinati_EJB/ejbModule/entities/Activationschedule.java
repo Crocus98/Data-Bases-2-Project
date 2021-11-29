@@ -3,29 +3,18 @@ package entities;
 import java.io.Serializable;
 
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "activationschedule", schema="db2_savino_vinati")
-@NamedQuery(name="Activationschedule.findAll", query="SELECT s FROM Servicepackage s")
+@NamedQuery(name="Activationschedule.findAll", query="SELECT s FROM Activationschedule s")
 public class Activationschedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private int iduser;
 	
 	@Temporal(TemporalType.DATE)
 	private Date activationdate;
@@ -36,6 +25,12 @@ public class Activationschedule implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="iduser")
 	private User user;
+	
+	@OneToMany(mappedBy="activationschedule")
+	private List<Productschedule> productschedules;
+	
+	@OneToMany(mappedBy="activationschedule")
+	private List<Serviceschedule> serviceschedules;
 
 	public Activationschedule() {
 	}
@@ -46,14 +41,6 @@ public class Activationschedule implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getIduser() {
-		return iduser;
-	}
-
-	public void setIduser(int iduser) {
-		this.iduser = iduser;
 	}
 
 	public Date getActivationdate() {
@@ -70,6 +57,30 @@ public class Activationschedule implements Serializable {
 
 	public void setDeactivationdate(Date deactivationdate) {
 		this.deactivationdate = deactivationdate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Productschedule> getProductschedules() {
+		return productschedules;
+	}
+
+	public void setProductschedules(List<Productschedule> productschedules) {
+		this.productschedules = productschedules;
+	}
+
+	public List<Serviceschedule> getServiceschedules() {
+		return serviceschedules;
+	}
+
+	public void setServiceschedules(List<Serviceschedule> serviceschedules) {
+		this.serviceschedules = serviceschedules;
 	}
 
 	

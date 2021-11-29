@@ -15,11 +15,15 @@ public class Insolventuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private int failedpaymentcount;
 
 	private boolean insolvent;
+	
+	@OneToOne
+	private User user;
 
 	public Insolventuser() {
 	}
@@ -46,6 +50,14 @@ public class Insolventuser implements Serializable {
 
 	public void setInsolvent(boolean insolvent) {
 		this.insolvent = insolvent;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

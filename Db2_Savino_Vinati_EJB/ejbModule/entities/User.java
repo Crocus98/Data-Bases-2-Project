@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,8 +23,11 @@ public class User implements Serializable {
 	@JoinColumn(name="idusertype")
 	private Usertype userType;
 	
-	@OneToOne
+	@OneToOne(mappedBy="user")
 	private Insolventuser insolventuser;
+	
+	@OneToMany(mappedBy="user")
+	private List<Activationschedule> activationschedules;
 
 	public String getMail() {
 		return mail;
@@ -54,5 +59,13 @@ public class User implements Serializable {
 
 	public void setInsolventuser(Insolventuser insolventuser) {
 		this.insolventuser = insolventuser;
+	}
+
+	public List<Activationschedule> getActivationschedules() {
+		return activationschedules;
+	}
+
+	public void setActivationschedules(List<Activationschedule> activationschedules) {
+		this.activationschedules = activationschedules;
 	}
 }

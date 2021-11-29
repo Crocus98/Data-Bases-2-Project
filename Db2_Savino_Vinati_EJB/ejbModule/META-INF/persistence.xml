@@ -7,9 +7,12 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<jta-data-source>ProjectDB</jta-data-source>
 		<class>entities.EntitiesTest</class>
 		<class>entities.Service</class>
+		<class>entities.Serviceinternet</class>
+		<class>entities.Servicemobile</class>
 		<class>entities.Servicetype</class>
 		<class>entities.User</class>
 		<class>entities.Usertype</class>
+		<class>entities.Validityperiod</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

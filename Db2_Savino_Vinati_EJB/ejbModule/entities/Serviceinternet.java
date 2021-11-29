@@ -16,7 +16,7 @@ public class Serviceinternet implements Serializable {
 
 	@Id
 	private int id;
-
+	
 	private float feeextragbs;
 
 	private int includedgbs;

@@ -17,6 +17,9 @@ public class Service implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@OneToOne
+	private Serviceinternet serviceinternet;
 
 	@ManyToOne
 	@JoinColumn(name="idtype")
@@ -52,4 +55,12 @@ public class Service implements Serializable {
 		this.servicemobile = servicemobile;
 	}
 	
+	public Serviceinternet getServiceinternet() {
+		return serviceinternet;
+	}
+
+	public void setServiceinternet(Serviceinternet serviceinternet) {
+		this.serviceinternet = serviceinternet;
+	}
+
 }

@@ -1,0 +1,96 @@
+package entities;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.*;
+
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the order database table.
+ * 
+ */
+@Entity
+@Table(name = "order", schema="db2_savino_vinati")
+@NamedQuery(name="Order.findAll", query="SELECT t FROM Order t")
+public class Order implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	private float totalvalue;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datehour;
+	
+	@Temporal(TemporalType.DATE)
+	private Date startdate;
+	
+	private boolean paid;
+	
+	@ManyToOne
+	@JoinColumn(name="iduser")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="idservicepackage")
+	private Servicepackage servicepackage;
+	
+	//@ManyToOne
+	//@JoinColumn(name="idpackageperiod")
+	//private Packageperiod packageperiod; todo
+
+	public Order() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public float getTotalvalue() {
+		return totalvalue;
+	}
+
+	public void setTotalvalue(float totalvalue) {
+		this.totalvalue = totalvalue;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Servicepackage getServicepackage() {
+		return servicepackage;
+	}
+
+	public void setServicepackage(Servicepackage servicepackage) {
+		this.servicepackage = servicepackage;
+	}
+
+	public Date getDatehour() {
+		return datehour;
+	}
+
+	public void setDatehour(Date datehour) {
+		this.datehour = datehour;
+	}
+}

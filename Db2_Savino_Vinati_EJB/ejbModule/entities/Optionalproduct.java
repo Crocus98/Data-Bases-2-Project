@@ -25,6 +25,7 @@ public class Optionalproduct implements Serializable {
 	
 
 	public Optionalproduct() {
+		
 	}
 
 	public int getId() {

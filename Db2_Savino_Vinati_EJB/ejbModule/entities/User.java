@@ -2,12 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
-/**
- * The persistent class for the test database table.
- * 
- */
 @Entity
 @Table(name = "user", schema="db2_savino_vinati")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")

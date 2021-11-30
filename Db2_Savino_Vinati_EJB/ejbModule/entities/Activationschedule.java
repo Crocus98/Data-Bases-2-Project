@@ -31,6 +31,16 @@ public class Activationschedule implements Serializable {
 	
 	@OneToMany(mappedBy="activationschedule")
 	private List<Serviceschedule> serviceschedules;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="productschedule",
+			joinColumns= { @JoinColumn(name="idactivation")},
+			inverseJoinColumns= { @JoinColumn(name="idoptionalproduct")}
+	)
+	private List<Optionalproduct> optionalproducts;
+	
+	
 
 	public Activationschedule() {
 	}

@@ -1,4 +1,4 @@
-package entities;
+ package entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "validityperiod", schema="db2_savino_vinati")
-@NamedQuery(name="Validityperiod.findAll", query="SELECT vp FROM Validityperiod vp")
+@NamedQuery(name="Validityperiod.findAll", query="SELECT v FROM Validityperiod v")
 public class Validityperiod implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +21,9 @@ public class Validityperiod implements Serializable {
 	private int id;
 
 	private int validityperiod;
+	
+	@OneToMany(mappedBy = "servicepackage")
+    private List<Packageperiod> packageperiod;
 
 	public Validityperiod() {
 	}

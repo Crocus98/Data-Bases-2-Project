@@ -31,7 +31,7 @@ public class Servicepackage implements Serializable {
 	private List<Optionalproduct> optionalproducts;
 
 	@OneToMany(mappedBy = "servicepackage")
-    private List<Packageperiod> packageperiod;
+    private List<Packageperiod> packageperiods;
 	 
 
 	public Servicepackage() {
@@ -60,6 +60,14 @@ public class Servicepackage implements Serializable {
 
 	public void setOptionalproducts(List<Optionalproduct> optionalproducts) {
 		this.optionalproducts = optionalproducts;
+	}
+
+	public List<Packageperiod> getPackageperiods() {
+		return packageperiods;
+	}
+
+	public void setPackageperiods(List<Packageperiod> packageperiods) {
+		this.packageperiods = packageperiods;
 	}
 
 }

@@ -21,9 +21,6 @@ public class Validityperiod implements Serializable {
 	private int id;
 
 	private int validityperiod;
-	
-	@OneToMany(mappedBy = "servicepackage")
-    private List<Packageperiod> packageperiod;
 
 	public Validityperiod() {
 	}

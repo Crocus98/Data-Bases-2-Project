@@ -19,7 +19,6 @@ public class Packageperiod implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-
 	@ManyToOne
     @JoinColumn(name = "idservicepackage")
 	private Servicepackage servicepackage;
@@ -29,7 +28,7 @@ public class Packageperiod implements Serializable {
 	private Validityperiod validityperiod;
 	
 	private float monthlycost;
-
+	
 	public Packageperiod() {
 		
 	}

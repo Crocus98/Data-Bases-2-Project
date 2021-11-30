@@ -24,11 +24,8 @@ public class Optionalproduct implements Serializable {
 
 	private String name;
 	
-	@ManyToMany
-	@JoinTable(name="packageproduct",
-	joinColumns=@JoinColumn(name="idoptionalproduct"),
-	inverseJoinColumns=@JoinColumn(name="idservicepackage"))
-	private List <Servicepackage> servicepackage;
+	@ManyToMany(mappedBy="optionalproducts", fetch = FetchType.EAGER)
+	private List <Servicepackage> servicepackages;
 
 	public Optionalproduct() {
 		
@@ -56,6 +53,14 @@ public class Optionalproduct implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List <Servicepackage> getServicepackages() {
+		return servicepackages;
+	}
+
+	public void setServicepackages(List <Servicepackage> servicepackages) {
+		this.servicepackages = servicepackages;
 	}
 
 }

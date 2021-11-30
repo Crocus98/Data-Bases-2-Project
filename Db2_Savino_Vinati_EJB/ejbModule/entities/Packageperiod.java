@@ -22,11 +22,11 @@ public class Packageperiod implements Serializable {
 
 	@ManyToOne
     @JoinColumn(name = "idservicepackage")
-    Servicepackage servicepackage;
+	private Servicepackage servicepackage;
 	
 	@ManyToOne
     @JoinColumn(name = "idvalidityperiod")
-    Validityperiod validityperiod;
+	private Validityperiod validityperiod;
 	
 	private float monthlycost;
 
@@ -48,6 +48,22 @@ public class Packageperiod implements Serializable {
 
 	public void setMonthlycost(float monthlycost) {
 		this.monthlycost = monthlycost;
+	}
+
+	public Validityperiod getValidityperiod() {
+		return validityperiod;
+	}
+
+	public void setValidityperiod(Validityperiod validityperiod) {
+		this.validityperiod = validityperiod;
+	}
+
+	public Servicepackage getServicepackage() {
+		return servicepackage;
+	}
+
+	public void setServicepackage(Servicepackage servicepackage) {
+		this.servicepackage = servicepackage;
 	}
 
 

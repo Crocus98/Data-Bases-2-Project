@@ -21,7 +21,7 @@ public class User implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="idusertype")
-	private Usertype userType;
+	private Usertype usertype;
 	
 	@OneToOne(mappedBy="user")
 	private Insolventuser insolventuser;
@@ -67,5 +67,13 @@ public class User implements Serializable {
 
 	public void setActivationschedules(List<Activationschedule> activationschedules) {
 		this.activationschedules = activationschedules;
+	}
+
+	public Usertype getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(Usertype usertype) {
+		this.usertype = usertype;
 	}
 }

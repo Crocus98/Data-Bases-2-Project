@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "order", schema="db2_savino_vinati")
-@NamedQuery(name="Order.findAll", query="SELECT t FROM Order t")
+@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,9 +39,9 @@ public class Order implements Serializable {
 	@JoinColumn(name="idservicepackage")
 	private Servicepackage servicepackage;
 	
-	//@ManyToOne
-	//@JoinColumn(name="idpackageperiod")
-	//private Packageperiod packageperiod; todo
+	@ManyToOne
+	@JoinColumn(name="idpackageperiod")
+	private Packageperiod packageperiod;
 
 	public Order() {
 	}

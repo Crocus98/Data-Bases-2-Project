@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "servicemobile", schema="db2_savino_vinati")
-@NamedQuery(name="Servicemobile.findAll", query="SELECT s FROM Servicemobile s")
+@NamedQuery(name="Servicemobile.findAll", query="SELECT sm FROM Servicemobile sm")
 public class Servicemobile implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "activationschedule", schema="db2_savino_vinati")
-@NamedQuery(name="Activationschedule.findAll", query="SELECT s FROM Activationschedule s")
+@NamedQuery(name="Activationschedule.findAll", query="SELECT acsc FROM Activationschedule acsc")
 public class Activationschedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -83,6 +83,5 @@ public class Activationschedule implements Serializable {
 		this.serviceschedules = serviceschedules;
 	}
 
-	
 
 }

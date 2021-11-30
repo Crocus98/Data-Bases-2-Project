@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "packageperiod", schema="db2_savino_vinati")
-@NamedQuery(name="Packageperiod.findAll", query="SELECT o FROM Optionalproduct o")
+@NamedQuery(name="Packageperiod.findAll", query="SELECT pp FROM Packageperiod pp")
 public class Packageperiod implements Serializable {
 	private static final long serialVersionUID = 1L;
 

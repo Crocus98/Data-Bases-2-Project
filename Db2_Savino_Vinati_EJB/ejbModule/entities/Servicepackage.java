@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "servicepackage", schema="db2_savino_vinati")
-@NamedQuery(name="Servicepackage.findAll", query="SELECT s FROM Servicepackage s")
+@NamedQuery(name="Servicepackage.findAll", query="SELECT sp FROM Servicepackage sp")
 public class Servicepackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 

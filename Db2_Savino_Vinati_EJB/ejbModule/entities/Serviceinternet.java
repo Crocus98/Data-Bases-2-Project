@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "serviceinternet", schema="db2_savino_vinati")
-@NamedQuery(name="Serviceinternet.findAll", query="SELECT s FROM Serviceinternet s")
+@NamedQuery(name="Serviceinternet.findAll", query="SELECT si FROM Serviceinternet si")
 public class Serviceinternet implements Serializable {
 	private static final long serialVersionUID = 1L;
 

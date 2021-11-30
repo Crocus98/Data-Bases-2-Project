@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "insolventuser", schema="db2_savino_vinati")
-@NamedQuery(name="Insolventuser.findAll", query="SELECT s FROM Insolventuser s")
+@NamedQuery(name="Insolventuser.findAll", query="SELECT iu FROM Insolventuser iu")
 public class Insolventuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 

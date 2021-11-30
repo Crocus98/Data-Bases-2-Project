@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "optionalproduct", schema="db2_savino_vinati")
-@NamedQuery(name="Optionalproduct.findAll", query="SELECT o FROM Optionalproduct o")
+@NamedQuery(name="Optionalproduct.findAll", query="SELECT op FROM Optionalproduct op")
 public class Optionalproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 

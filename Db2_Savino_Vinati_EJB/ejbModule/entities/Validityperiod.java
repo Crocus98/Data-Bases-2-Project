@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "validityperiod", schema="db2_savino_vinati")
-@NamedQuery(name="Validityperiod.findAll", query="SELECT v FROM Validityperiod v")
+@NamedQuery(name="Validityperiod.findAll", query="SELECT vp FROM Validityperiod vp")
 public class Validityperiod implements Serializable {
 	private static final long serialVersionUID = 1L;
 

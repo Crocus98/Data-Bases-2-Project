@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "servicetype", schema="db2_savino_vinati")
-@NamedQuery(name="Servicetype.findAll", query="SELECT s FROM Servicetype s")
+@NamedQuery(name="Servicetype.findAll", query="SELECT st FROM Servicetype st")
 public class Servicetype implements Serializable {
 	private static final long serialVersionUID = 1L;
 

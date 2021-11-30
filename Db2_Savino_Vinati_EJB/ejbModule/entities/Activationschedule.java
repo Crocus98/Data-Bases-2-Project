@@ -25,12 +25,17 @@ public class Activationschedule implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="iduser")
 	private User user;
+
+	public Activationschedule() {
+	}
 	
-	@OneToMany(mappedBy="activationschedule")
-	private List<Productschedule> productschedules;
-	
-	@OneToMany(mappedBy="activationschedule")
-	private List<Serviceschedule> serviceschedules;
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="serviceschedule",
+			joinColumns= { @JoinColumn(name="idactivation")},
+			inverseJoinColumns= { @JoinColumn(name="idservice")}
+	)
+	private List<Service> services;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
@@ -39,11 +44,6 @@ public class Activationschedule implements Serializable {
 			inverseJoinColumns= { @JoinColumn(name="idoptionalproduct")}
 	)
 	private List<Optionalproduct> optionalproducts;
-	
-	
-
-	public Activationschedule() {
-	}
 
 	public int getId() {
 		return this.id;
@@ -77,21 +77,20 @@ public class Activationschedule implements Serializable {
 		this.user = user;
 	}
 
-	public List<Productschedule> getProductschedules() {
-		return productschedules;
+	public List<Service> getServices() {
+		return services;
 	}
 
-	public void setProductschedules(List<Productschedule> productschedules) {
-		this.productschedules = productschedules;
+	public void setServices(List<Service> services) {
+		this.services = services;
 	}
 
-	public List<Serviceschedule> getServiceschedules() {
-		return serviceschedules;
+	public List<Optionalproduct> getOptionalproducts() {
+		return optionalproducts;
 	}
 
-	public void setServiceschedules(List<Serviceschedule> serviceschedules) {
-		this.serviceschedules = serviceschedules;
+	public void setOptionalproducts(List<Optionalproduct> optionalproducts) {
+		this.optionalproducts = optionalproducts;
 	}
-
 
 }

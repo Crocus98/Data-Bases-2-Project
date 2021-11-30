@@ -23,9 +23,8 @@ public class Optionalproduct implements Serializable {
 	private float monthlyprice;
 
 	private String name;
-	
-	@ManyToMany(mappedBy="optionalproducts", fetch = FetchType.EAGER)
-	private List <Servicepackage> servicepackages;
+
+	//mappedBy="optionalproducts", fetch = FetchType.EAGER
 
 	public Optionalproduct() {
 		
@@ -53,14 +52,6 @@ public class Optionalproduct implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List <Servicepackage> getServicepackages() {
-		return servicepackages;
-	}
-
-	public void setServicepackages(List <Servicepackage> servicepackages) {
-		this.servicepackages = servicepackages;
 	}
 
 }

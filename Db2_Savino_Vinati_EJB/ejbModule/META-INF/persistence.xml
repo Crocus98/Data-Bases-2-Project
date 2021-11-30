@@ -11,12 +11,10 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.Optionalproduct</class>
 		<class>entities.Order</class>
 		<class>entities.Packageperiod</class>
-		<class>entities.Productschedule</class>
 		<class>entities.Service</class>
 		<class>entities.Serviceinternet</class>
 		<class>entities.Servicemobile</class>
 		<class>entities.Servicepackage</class>
-		<class>entities.Serviceschedule</class>
 		<class>entities.Servicetype</class>
 		<class>entities.User</class>
 		<class>entities.Usertype</class>

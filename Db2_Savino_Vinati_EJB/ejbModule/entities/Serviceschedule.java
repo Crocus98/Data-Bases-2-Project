@@ -17,10 +17,6 @@ public class Serviceschedule implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private int idactivation;
-
-	private int idservice;
 	
 	@ManyToOne
 	@JoinColumn(name="idactivation")
@@ -41,20 +37,20 @@ public class Serviceschedule implements Serializable {
 		this.id = id;
 	}
 
-	public int getIdactivation() {
-		return this.idactivation;
+	public Service getService() {
+		return service;
 	}
 
-	public void setIdactivation(int idactivation) {
-		this.idactivation = idactivation;
+	public void setService(Service service) {
+		this.service = service;
 	}
 
-	public int getIdservice() {
-		return this.idservice;
+	public Activationschedule getActivationschedule() {
+		return activationschedule;
 	}
 
-	public void setIdservice(int idservice) {
-		this.idservice = idservice;
+	public void setActivationschedule(Activationschedule activationschedule) {
+		this.activationschedule = activationschedule;
 	}
 
 }

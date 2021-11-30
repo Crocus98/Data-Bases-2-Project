@@ -17,10 +17,6 @@ public class Productschedule implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private int idactivation;
-
-	private int idoptionalproduct;
 	
 	@ManyToOne
 	@JoinColumn(name="idactivation")
@@ -41,20 +37,20 @@ public class Productschedule implements Serializable {
 		this.id = id;
 	}
 
-	public int getIdactivation() {
-		return this.idactivation;
+	public Optionalproduct getOptionalproduct() {
+		return optionalproduct;
 	}
 
-	public void setIdactivation(int idactivation) {
-		this.idactivation = idactivation;
+	public void setOptionalproduct(Optionalproduct optionalproduct) {
+		this.optionalproduct = optionalproduct;
 	}
 
-	public int getIdoptionalproduct() {
-		return this.idoptionalproduct;
+	public Activationschedule getActivationschedule() {
+		return activationschedule;
 	}
 
-	public void setIdoptionalproduct(int idoptionalproduct) {
-		this.idoptionalproduct = idoptionalproduct;
+	public void setActivationschedule(Activationschedule activationschedule) {
+		this.activationschedule = activationschedule;
 	}
 
 }

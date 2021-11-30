@@ -24,8 +24,6 @@ public class Optionalproduct implements Serializable {
 
 	private String name;
 
-	//mappedBy="optionalproducts", fetch = FetchType.EAGER
-
 	public Optionalproduct() {
 		
 	}

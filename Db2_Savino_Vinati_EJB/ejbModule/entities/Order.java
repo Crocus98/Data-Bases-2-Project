@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.*;
 
 import javax.persistence.*;
@@ -42,6 +41,14 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idpackageperiod")
 	private Packageperiod packageperiod;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="orderproduct",
+			joinColumns= { @JoinColumn(name="idorder")},
+			inverseJoinColumns= { @JoinColumn(name="idoptionalproduct")}
+	)
+	private List<Optionalproduct> optionalproducts;
 
 	public Order() {
 	}

@@ -15,6 +15,7 @@ public class Servicemobile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private float feeextraminutes;
@@ -26,6 +27,7 @@ public class Servicemobile implements Serializable {
 	private int includedsms;
 	
 	@OneToOne
+	//@JoinColumn(name="idservice")
 	private Service service;
 
 	public Servicemobile() {

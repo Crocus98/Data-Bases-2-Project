@@ -28,6 +28,9 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy="user")
 	private List<Activationschedule> activationschedules;
+	
+	@OneToMany(mappedBy="user")
+	private List<Alert> alerts;
 
 	public String getMail() {
 		return mail;

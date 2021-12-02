@@ -21,9 +21,6 @@ public class Validityperiod implements Serializable {
 	private int id;
 
 	private int validityperiod;
-	
-	@OneToMany(mappedBy = "validityperiod")
-    private List<Packageperiod> packageperiods;
 
 	public Validityperiod() {
 	}
@@ -42,14 +39,6 @@ public class Validityperiod implements Serializable {
 
 	public void setValidityperiod(int validityperiod) {
 		this.validityperiod = validityperiod;
-	}
-
-	public List<Packageperiod> getPackageperiods() {
-		return packageperiods;
-	}
-
-	public void setPackageperiods(List<Packageperiod> packageperiods) {
-		this.packageperiods = packageperiods;
 	}
 
 }

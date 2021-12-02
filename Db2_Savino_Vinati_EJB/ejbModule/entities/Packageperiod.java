@@ -5,7 +5,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
+/*
+ * 
  * The persistent class for the optionalproduct database table.
  * 
  */

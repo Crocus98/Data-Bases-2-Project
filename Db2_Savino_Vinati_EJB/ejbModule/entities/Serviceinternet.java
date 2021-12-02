@@ -15,6 +15,7 @@ public class Serviceinternet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private float feeextragbs;
@@ -22,6 +23,7 @@ public class Serviceinternet implements Serializable {
 	private int includedgbs;
 	
 	@OneToOne
+	//@JoinColumn(name="idservice")
 	private Service service;
 
 	public Serviceinternet() {

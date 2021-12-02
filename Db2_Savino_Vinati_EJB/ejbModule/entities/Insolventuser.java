@@ -23,6 +23,7 @@ public class Insolventuser implements Serializable {
 	private boolean insolvent;
 	
 	@OneToOne
+	@JoinColumn(name="iduser")
 	private User user;
 
 	public Insolventuser() {

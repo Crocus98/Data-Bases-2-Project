@@ -32,6 +32,7 @@ public class Alert implements Serializable {
 	
 	private boolean active;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastrejection;
 	
 	public String getUsername() {

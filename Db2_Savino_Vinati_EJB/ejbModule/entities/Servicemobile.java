@@ -27,7 +27,7 @@ public class Servicemobile implements Serializable {
 	private int includedsms;
 	
 	@OneToOne
-	//@JoinColumn(name="idservice")
+	@PrimaryKeyJoinColumn
 	private Service service;
 
 	public Servicemobile() {

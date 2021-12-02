@@ -23,7 +23,7 @@ public class Serviceinternet implements Serializable {
 	private int includedgbs;
 	
 	@OneToOne
-	//@JoinColumn(name="idservice")
+	@PrimaryKeyJoinColumn
 	private Service service;
 
 	public Serviceinternet() {

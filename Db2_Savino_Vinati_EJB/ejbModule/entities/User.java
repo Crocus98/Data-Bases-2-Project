@@ -7,7 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user", schema="db2_savino_vinati")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQueries({
+	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
+	@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
+	})
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -78,5 +81,13 @@ public class User implements Serializable {
 
 	public void setUsertype(Usertype usertype) {
 		this.usertype = usertype;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

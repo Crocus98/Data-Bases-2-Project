@@ -9,6 +9,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.Alert</class>
 		<class>entities.EntitiesTest</class>
 		<class>entities.Insolventuser</class>
+		<class>entities.MvPackage</class>
+		<class>entities.MvPackageperiod</class>
 		<class>entities.Optionalproduct</class>
 		<class>entities.Order</class>
 		<class>entities.Packageperiod</class>
@@ -20,8 +22,6 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.User</class>
 		<class>entities.Usertype</class>
 		<class>entities.Validityperiod</class>
-		<class>entities.MvPackage</class>
-		<class>entities.MvPackageperiod</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

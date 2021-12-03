@@ -1,44 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>Telco Service Application - Login page</title>
-	<link rel="stylesheet" type="text/css" media="all" href="css/login.css"/>
-	<script src="ajaxUtil.js" defer></script>
-	<script src="loginManagement.js" defer></script> 
 </head>
 <body>
-	<div class="frameLogin">
-
-	<div class="title">Telco Service Application</div>
-	
-	<div id="sectionLogin" class="form">
-		<div class="subtitle">Log in</div>
+	<h1>Telco Service Application</h1>
+	<div>
 		<form action="CheckLogin" method="POST">
-			<div class="label column1" style="top:42px;">Username</div> <input type="text" name="username"  class="column2" required style="top:40px;">
-			<div class="label column1" style="top:72px;">Password</div> <input type="password" name="pwd" class="column2" required style="top:70px;">
-			<input class="column2" id="loginbutton" type="button" value="Login" style="top:100px;width:100px;">
-			<div id="errormess1" class="message column1" style="top:140px;"></div>
+			Username: <input type="text" name="username" required> <br>
+			Password: <input type="password" name="pwd" required><br>
+			<input type="submit" value="Login">
+			<p th:text=" ${errorMsg}"></p>
 		</form>
 	</div>
 	
-	<div id="sectionRegistration" class="form">
-		<div class="subtitle">Registration</div>
-		<form id="RegisterUser">
-			<div class="label column1" style="top:42px;">Username</div> <input type="text" name="username" class="column2" required style="top:40px;">
-			<div class="label column1" style="top:72px;">Password</div> <input type="password" id="pwd1" name="pwd" class="column2" required style="top:70px;">
-			<div class="label column1" style="top:102px;">Repeat password</div> <input type="password" id="pwd2" name="pwd2" class="column2" required style="top:100px;">
-			<div class="label column1" style="top:132px;">Mail</div> <input type="text" id="email" name="email" class="column2" required style="top:130px;width:180px;">
-			<div class="label column3" style="top:102px;">Role</div> 
-			<select name="role" class="column4" style="top:100px;">
-			  <option value="customer">Customer</option>
-			  <option value="employee">Employee</option>
-			</select>
-			<input class="column2" id="registerbutton" type="button" value="Crea account" style="top:160px;width:100px;">
-			<div id="errormess2" class="message column1" style="top:190px;"></div>
-		</form>
-	</div>
-	
-</div>
 </body>
 </html>

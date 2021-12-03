@@ -8,11 +8,30 @@
 	<h1>Telco Service Application</h1>
 	<div>
 		<form action="CheckLogin" method="POST">
-			Username: <input type="text" name="username" required> <br>
-			Password: <input type="password" name="pwd" required><br>
-			<input type="submit" value="Login">
-			<p th:text=" ${errorMsg}"></p>
+			<fieldset>
+				Username: <input type="text" name="username" required> <br>
+				Password: <input type="password" name="pwd" required><br>
+				<input type="submit" value="Login">
+				<p th:text=" ${errorMsg}"></p>
+			</fieldset>
 		</form>
+	</div>
+	<div>
+		<form action="UserRegistration" method="POST">
+			<fieldset>
+				Username: <input type="text" name="usernamer" pattern=".{3,}" title="At least 3 characters required." required> <br>
+				Password: <input type="password" name="pwdr" pattern=".{6,}" title="Password too short. At least 6 character required." required><br>
+				Password: <input type="password" name="pwdr" pattern=".{6,}" required><span th:text= " ${errorPswr}"></span><br>
+				Ruolo: 	<select name="typer" required>
+							<option value="Customer">Customer</option>
+							<option value="Employee">Employee</option>
+	  					</select><br>
+	  			Mail: <input  type="email" name="mailr" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Insert domain extension: eg  '.com' or ''.it'" required> <br>
+				<input type="submit" value="Register">
+				<p th:text=" ${errorMsgr}"></p>
+			</fieldset>
+		</form>
+		
 	</div>
 	
 </body>

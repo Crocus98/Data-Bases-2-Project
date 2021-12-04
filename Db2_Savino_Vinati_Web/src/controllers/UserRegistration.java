@@ -54,6 +54,7 @@ public class UserRegistration extends HttpServlet {
 		String message = null;
 		String messagepwd = null;
 		String path = "/index.html";
+		boolean goToRedirect = false;
 			
 		try {
 			usernamer = StringEscapeUtils.escapeJava(request.getParameter("usernamer"));
@@ -63,33 +64,35 @@ public class UserRegistration extends HttpServlet {
 			mailr = StringEscapeUtils.escapeJava(request.getParameter("mailr"));
 			
 			if (usernamer == null || pwdr == null || pwdr2 == null || typer == null || mailr == null || 
-					usernamer.isEmpty() || pwdr.isEmpty() || pwdr2.isEmpty() || typer.isEmpty() || mailr.isEmpty() ) 
-			{
+					usernamer.isEmpty() || pwdr.isEmpty() || pwdr2.isEmpty() || typer.isEmpty() || mailr.isEmpty() ) {
 				throw new InvalidRegistrationParams("Missing or empty registration values");
 			}
 			
 			if (!pwdr.equals(pwdr2)) {
 				messagepwd = "Passwords do not match";
+				goToRedirect = true;
 			}
 			
 		} 
 		catch (Exception e) {
 			message = e.getMessage();
+			goToRedirect = true;
 		}
-		
-		try {
-			userService.registerUser(usernamer, pwdr, typer, mailr);
-			message = "Successful registration";
-		} 
-		catch (Exception e) {
-			message = e.getMessage();
+		if(!goToRedirect) {
+			try {
+				userService.registerUser(usernamer, pwdr, typer, mailr);
+				message = "Successful registration";
+			} 
+			catch (Exception e) {
+				message = e.getMessage();
+			}
 		}
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("errorMsgr", message);
 		if(messagepwd != null) {
-			ctx.setVariable("errorPswr", message);
+			ctx.setVariable("errorPswr", messagepwd);
 		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}

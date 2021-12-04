@@ -45,7 +45,6 @@ public class UserService {
 	
 	public Usertype getUsertype(String type) throws InvalidUsertype {
 		List<Usertype> utList = null;
-		Usertype usertype = null;
 		try {
 			utList = em.createNamedQuery("Usertype.findFromType", Usertype.class)
 					.setParameter(1, type)
@@ -66,21 +65,43 @@ public class UserService {
 		}
 	}
 	
-	public boolean checkDuplicatedUsername(String username) throws DuplicatedUsername, InvalidRegistrationParams{
-		List<User> utList = null;
+	public boolean checkDuplicatedMail(String username) throws DuplicatedMail, InvalidRegistrationParams{
+		List<User> uList = null;
 		try {
-			utList = em.createNamedQuery("User.findFromUsername", User.class)
+			uList = em.createNamedQuery("User.findFromMail", User.class)
+					.setParameter(1, username)
+					.getResultList();
+		}
+		catch(PersistenceException e) {
+			throw new InvalidRegistrationParams("Could not verify mail");
+		}
+		if (uList.isEmpty()) 
+		{
+			return true;
+		}
+		else if (uList.size() == 1) {
+			throw new DuplicatedMail("Mail already exists");
+		}
+		else {
+			throw new DuplicatedMail("System error: more than one tuple with this mail already exist.");
+		}
+	}
+	
+	public boolean checkDuplicatedUsername(String username) throws DuplicatedUsername, InvalidRegistrationParams{
+		List<User> uList = null;
+		try {
+			uList = em.createNamedQuery("User.findFromUsername", User.class)
 					.setParameter(1, username)
 					.getResultList();
 		}
 		catch(PersistenceException e) {
 			throw new InvalidRegistrationParams("Could not verify usertype");
 		}
-		if (utList.isEmpty()) 
+		if (uList.isEmpty()) 
 		{
 			return true;
 		}
-		else if (utList.size() == 1) {
+		else if (uList.size() == 1) {
 			throw new DuplicatedUsername("Username already exists");
 		}
 		else {
@@ -93,6 +114,7 @@ public class UserService {
 		
 		try {
 			checkDuplicatedUsername(username);
+			checkDuplicatedMail(mail);
 			usertype = getUsertype(type);
 		} 
 		catch (Exception e) {

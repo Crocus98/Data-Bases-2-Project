@@ -1,6 +1,10 @@
  package entities;
 
 import java.io.Serializable;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import javax.persistence.*;
 
 

@@ -3,7 +3,7 @@ package controllers;
 import java.io.IOException;
 
 import javax.ejb.EJB;
-import javax.persistence.NonUniqueResultException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +17,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import entities.User;
-import exceptions.CredentialsException;
+
 import exceptions.InvalidRegistrationParams;
 import services.UserService;
 

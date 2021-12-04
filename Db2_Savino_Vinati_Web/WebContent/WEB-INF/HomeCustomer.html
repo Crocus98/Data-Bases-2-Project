@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Home Customer</title>
 </head>
 <body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
 	<h1>Home Customer</h1>
+	<p align="right" th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
 </body>
 </html>

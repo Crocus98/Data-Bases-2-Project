@@ -10,15 +10,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="mv_packageperiod")
-@NamedQuery(name="MvPackageperiod.findAll", query="SELECT mpp FROM MvPackageperiod mpp")
+@NamedQuery(name="MvPackageperiod.findAll", query="SELECT m FROM MvPackageperiod m")
 public class MvPackageperiod implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private String packagename;
+	
+	@ManyToOne
+	private Servicepackage servicePackage;
 
 	private int period;
 
@@ -35,14 +36,6 @@ public class MvPackageperiod implements Serializable {
 		this.id = id;
 	}
 
-	public String getPackagename() {
-		return this.packagename;
-	}
-
-	public void setPackagename(String packagename) {
-		this.packagename = packagename;
-	}
-
 	public int getPeriod() {
 		return this.period;
 	}
@@ -57,6 +50,14 @@ public class MvPackageperiod implements Serializable {
 
 	public void setSales(int sales) {
 		this.sales = sales;
+	}
+
+	public Servicepackage getServicePackage() {
+		return servicePackage;
+	}
+
+	public void setServicePackage(Servicepackage servicePackage) {
+		this.servicePackage = servicePackage;
 	}
 
 }

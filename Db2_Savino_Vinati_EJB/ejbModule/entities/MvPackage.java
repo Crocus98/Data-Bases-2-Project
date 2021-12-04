@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="mv_package")
-@NamedQuery(name="MvPackage.findAll", query="SELECT mp FROM MvPackage mp")
+@NamedQuery(name="MvPackage.findAll", query="SELECT m FROM MvPackage m")
 public class MvPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,9 @@ public class MvPackage implements Serializable {
 
 	private float avgoptionalproducts;
 
-	private String packagename;
+	@OneToOne
+	@JoinColumn(name = "idpackage")
+	private Servicepackage servicepackage;
 
 	private int sales;
 
@@ -47,14 +49,6 @@ public class MvPackage implements Serializable {
 		this.avgoptionalproducts = avgoptionalproducts;
 	}
 
-	public String getPackagename() {
-		return this.packagename;
-	}
-
-	public void setPackagename(String packagename) {
-		this.packagename = packagename;
-	}
-
 	public int getSales() {
 		return this.sales;
 	}
@@ -77,6 +71,14 @@ public class MvPackage implements Serializable {
 
 	public void setValuewithproducts(float valuewithproducts) {
 		this.valuewithproducts = valuewithproducts;
+	}
+
+	public Servicepackage getServicepackage() {
+		return servicepackage;
+	}
+
+	public void setServicepackage(Servicepackage servicepackage) {
+		this.servicepackage = servicepackage;
 	}
 
 }

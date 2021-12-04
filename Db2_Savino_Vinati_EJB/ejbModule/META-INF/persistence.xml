@@ -9,8 +9,10 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.Alert</class>
 		<class>entities.EntitiesTest</class>
 		<class>entities.Insolventuser</class>
+		<class>entities.MvAlert</class>
 		<class>entities.MvPackage</class>
 		<class>entities.MvPackageperiod</class>
+		<class>entities.MvSuspendedorder</class>
 		<class>entities.Optionalproduct</class>
 		<class>entities.Order</class>
 		<class>entities.Packageperiod</class>

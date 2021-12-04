@@ -19,6 +19,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import entities.User;
 import exceptions.CredentialsException;
+import exceptions.InvalidRegistrationParams;
 import services.UserService;
 
 @WebServlet("/UserRegistration")
@@ -49,7 +50,9 @@ public class UserRegistration extends HttpServlet {
 		String typer = null;
 		String mailr = null;
 		
-		
+		String message = null;
+		String path = "/index.html";
+			
 		try {
 			usernamer = StringEscapeUtils.escapeJava(request.getParameter("usernamer"));
 			pwdr = StringEscapeUtils.escapeJava(request.getParameter("pwdr"));
@@ -59,44 +62,23 @@ public class UserRegistration extends HttpServlet {
 			if (usernamer == null || pwdr == null || typer == null || mailr == null || 
 					usernamer.isEmpty() || pwdr.isEmpty() || typer.isEmpty() || mailr.isEmpty() ) 
 			{
-				throw new Exception("Missing or empty registration values");
+				throw new InvalidRegistrationParams("Missing or empty registration values");
 			}
 		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or empty registration values");
-			return;
+			message = e.getMessage();
 		}
 
-		User user;
 		try {
-			user = userService.checkCredentials(usernamer, pwdr);
-		} catch (CredentialsException | NonUniqueResultException e ) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check registration values");
-			return;
+			userService.registerUser(usernamer, pwdr, typer, mailr);
+			message = "Successful registration";
+		} catch (InvalidRegistrationParams e ) {
+			message = e.getMessage();
 		}
-
-		String path;
-		if (user == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "Incorrect username or password");
-			path = "/index.html";
-			templateEngine.process(path, ctx, response.getWriter());
-		} else 
-		{
-			request.getSession().setAttribute("user", user);
-			if(user.getUsertype().getUsertype().equals("Customer"))
-			{
-				path = getServletContext().getContextPath() + "/HomeCustomer";
-				response.sendRedirect(path);
-			}
-			else if(user.getUsertype().getUsertype().equals("Employee"))
-			{
-				path = getServletContext().getContextPath() + "/HomeEmployee";
-				response.sendRedirect(path);
-			}
-		}
-
+		
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("errorMsgr", message);
+		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	public void destroy() {

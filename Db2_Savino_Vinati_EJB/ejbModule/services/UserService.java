@@ -8,6 +8,7 @@ import javax.persistence.NonUniqueResultException;
 
 import entities.Insolventuser;
 import entities.User;
+import entities.Usertype;
 import exceptions.*;
 import java.util.List;
 
@@ -42,7 +43,26 @@ public class UserService {
 		
 	}
 	
-	public boolean registerUser (String username, String password, String type, String mail) throws CredentialsException {
+	public void registerUser (String username, String password, String type, String mail) throws InvalidRegistrationParams{
+		List<Usertype> utList = null;
+		Usertype usertype = null;
+		try {
+			
+			utList = em.createNamedQuery("Usertype.findFromType", Usertype.class)
+					.setParameter(1, type)
+					.getResultList();
+		}
+		catch(PersistenceException e) {
+			throw new InvalidRegistrationParams("Invalid user type");
+		}
+		if (utList.isEmpty()) 
+		{
+			return;
+		}
+		else if (utList.size() == 1) {
+			usertype = utList.get(0);
+		}
+		
 		try {
 			User user = new User();
 			user.setUsername(username);
@@ -51,11 +71,13 @@ public class UserService {
 			if(type == "Customer") {
 				user.setInsolventuser(new Insolventuser());
 			}
-			user.setUsertype(null);
-			return true;
+			user.setUsertype(usertype);
+			em.persist(user);
+			
 		}
 		catch(PersistenceException e){
-			throw new CredentialsException("Could not verify registration values");
+			throw new InvalidRegistrationParams("Could not verify registration values");
 		}
+		
 	}
 }

@@ -43,26 +43,61 @@ public class UserService {
 		
 	}
 	
-	public void registerUser (String username, String password, String type, String mail) throws InvalidRegistrationParams{
+	public Usertype getUsertype(String type) throws InvalidUsertype {
 		List<Usertype> utList = null;
 		Usertype usertype = null;
 		try {
-			
 			utList = em.createNamedQuery("Usertype.findFromType", Usertype.class)
 					.setParameter(1, type)
 					.getResultList();
 		}
 		catch(PersistenceException e) {
-			throw new InvalidRegistrationParams("Invalid user type");
+			throw new InvalidUsertype("Could not verify user type");
 		}
 		if (utList.isEmpty()) 
 		{
-			return;
+			return null;
 		}
 		else if (utList.size() == 1) {
-			usertype = utList.get(0);
+			return utList.get(0);
 		}
+		else {
+			throw new InvalidUsertype("System error");
+		}
+	}
+	
+	public boolean checkDuplicatedUsername(String username) throws DuplicatedUsername, InvalidRegistrationParams{
+		List<User> utList = null;
+		try {
+			utList = em.createNamedQuery("User.findFromUsername", User.class)
+					.setParameter(1, username)
+					.getResultList();
+		}
+		catch(PersistenceException e) {
+			throw new InvalidRegistrationParams("Could not verify usertype");
+		}
+		if (utList.isEmpty()) 
+		{
+			return true;
+		}
+		else if (utList.size() == 1) {
+			throw new DuplicatedUsername("Username already exists");
+		}
+		else {
+			throw new DuplicatedUsername("System error: more than one tuple with this username already exist.");
+		}
+	}
+	
+	public void registerUser (String username, String password, String type, String mail) throws InvalidRegistrationParams{
+		Usertype usertype= null;
 		
+		try {
+			checkDuplicatedUsername(username);
+			usertype = getUsertype(type);
+		} 
+		catch (Exception e) {
+			throw new InvalidRegistrationParams(e.getMessage());
+		}
 		try {
 			User user = new User();
 			user.setUsername(username);
@@ -73,7 +108,6 @@ public class UserService {
 			}
 			user.setUsertype(usertype);
 			em.persist(user);
-			
 		}
 		catch(PersistenceException e){
 			throw new InvalidRegistrationParams("Could not verify registration values");

@@ -47,37 +47,50 @@ public class UserRegistration extends HttpServlet {
 
 		String usernamer = null;
 		String pwdr = null;
+		String pwdr2 = null;
 		String typer = null;
 		String mailr = null;
 		
 		String message = null;
+		String messagepwd = null;
 		String path = "/index.html";
 			
 		try {
 			usernamer = StringEscapeUtils.escapeJava(request.getParameter("usernamer"));
 			pwdr = StringEscapeUtils.escapeJava(request.getParameter("pwdr"));
+			pwdr2 = StringEscapeUtils.escapeJava(request.getParameter("pwdr2"));
 			typer = StringEscapeUtils.escapeJava(request.getParameter("typer"));
 			mailr = StringEscapeUtils.escapeJava(request.getParameter("mailr"));
 			
-			if (usernamer == null || pwdr == null || typer == null || mailr == null || 
-					usernamer.isEmpty() || pwdr.isEmpty() || typer.isEmpty() || mailr.isEmpty() ) 
+			if (usernamer == null || pwdr == null || pwdr2 == null || typer == null || mailr == null || 
+					usernamer.isEmpty() || pwdr.isEmpty() || pwdr2.isEmpty() || typer.isEmpty() || mailr.isEmpty() ) 
 			{
 				throw new InvalidRegistrationParams("Missing or empty registration values");
 			}
-		} catch (Exception e) {
+			
+			if (!pwdr.equals(pwdr2)) {
+				messagepwd = "Passwords do not match";
+			}
+			
+		} 
+		catch (Exception e) {
 			message = e.getMessage();
 		}
-
+		
 		try {
 			userService.registerUser(usernamer, pwdr, typer, mailr);
 			message = "Successful registration";
-		} catch (InvalidRegistrationParams e ) {
+		} 
+		catch (Exception e) {
 			message = e.getMessage();
 		}
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("errorMsgr", message);
+		if(messagepwd != null) {
+			ctx.setVariable("errorPswr", message);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

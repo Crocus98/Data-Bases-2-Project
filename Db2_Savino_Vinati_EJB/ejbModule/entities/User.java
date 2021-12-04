@@ -26,7 +26,7 @@ public class User implements Serializable {
 	@JoinColumn(name="idusertype")
 	private Usertype usertype;
 	
-	@OneToOne(mappedBy="user")
+	@OneToOne(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Insolventuser insolventuser;
 	
 	@OneToMany(mappedBy="user")

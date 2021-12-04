@@ -15,7 +15,6 @@ public class Insolventuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private int failedpaymentcount;
@@ -23,6 +22,7 @@ public class Insolventuser implements Serializable {
 	private boolean insolvent;
 	
 	@OneToOne
+	@PrimaryKeyJoinColumn
 	@JoinColumn(name="iduser")
 	private User user;
 

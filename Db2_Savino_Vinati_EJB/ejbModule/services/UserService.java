@@ -5,6 +5,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.NonUniqueResultException;
+
+import entities.Insolventuser;
 import entities.User;
 import exceptions.*;
 import java.util.List;
@@ -37,7 +39,7 @@ public class UserService {
 			return uList.get(0);
 		}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
-
+		
 	}
 	
 	public boolean registerUser (String username, String password, String type, String mail) throws CredentialsException {
@@ -46,6 +48,9 @@ public class UserService {
 			user.setUsername(username);
 			user.setPassword(password);
 			user.setMail(mail);
+			if(type == "Customer") {
+				user.setInsolventuser(new Insolventuser());
+			}
 			user.setUsertype(null);
 			return true;
 		}

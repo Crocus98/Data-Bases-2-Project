@@ -26,6 +26,7 @@ public class Insolventuser implements Serializable {
 	private User user;
 
 	public Insolventuser() {
+		
 	}
 
 	public int getId() {

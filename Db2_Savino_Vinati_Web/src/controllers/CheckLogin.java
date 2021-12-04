@@ -90,7 +90,6 @@ public class CheckLogin extends HttpServlet {
 				response.sendRedirect(path);
 			}
 		}
-
 	}
 
 	public void destroy() {

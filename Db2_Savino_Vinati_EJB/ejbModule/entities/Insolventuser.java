@@ -22,8 +22,8 @@ public class Insolventuser implements Serializable {
 	private boolean insolvent;
 	
 	@OneToOne
-	@PrimaryKeyJoinColumn
 	@JoinColumn(name = "id")
+	@MapsId
 	private User user;
 
 	public Insolventuser() {

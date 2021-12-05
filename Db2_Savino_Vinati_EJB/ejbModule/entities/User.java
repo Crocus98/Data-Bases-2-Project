@@ -46,6 +46,9 @@ public class User implements Serializable {
 		this.password = password;
 		this.usertype = usertype;
 		this.mail = mail;
+		if(usertype.getUsertype().equals("Customer")) {
+			this.setInsolventuser(new Insolventuser());
+		}
 	}
 
 	public String getMail() {
@@ -78,7 +81,7 @@ public class User implements Serializable {
 
 	public void setInsolventuser(Insolventuser insolventuser) {
 		this.insolventuser = insolventuser;
-		insolventuser.setUser(this);
+		insolventuser.setUser(this); //updates the inverse relationship too.
 	}
 
 	public List<Activationschedule> getActivationschedules() {

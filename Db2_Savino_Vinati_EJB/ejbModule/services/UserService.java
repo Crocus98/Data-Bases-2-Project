@@ -14,8 +14,13 @@ import java.util.List;
 
 @Stateless
 public class UserService {
+	//Container managed entity manager
+	//NB1: Using @PersistenceUnit or EntityManagerFactory 
+	//NB continues: would have created an em ApplicationManaged (managed by developer)
 	@PersistenceContext(unitName = "SavinoVinatiProject")
 	private EntityManager em;
+	//Being container managed we don't need any transaction demarcation code.
+	//Everything is managed by the container. Transaction is propagated between methods.
 
 	public UserService() {
 		
@@ -40,7 +45,6 @@ public class UserService {
 			return uList.get(0);
 		}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
-		
 	}
 	
 	public Usertype getUsertype(String type) throws InvalidUsertype {
@@ -60,9 +64,7 @@ public class UserService {
 		else if (utList.size() == 1) {
 			return utList.get(0);
 		}
-		else {
-			throw new InvalidUsertype("System error");
-		}
+		throw new InvalidUsertype("System error: there is more than one usertype with this name");
 	}
 	
 	public boolean checkDuplicatedMail(String username) throws DuplicatedMail, InvalidRegistrationParams{
@@ -82,9 +84,7 @@ public class UserService {
 		else if (uList.size() == 1) {
 			throw new DuplicatedMail("Mail already exists");
 		}
-		else {
-			throw new DuplicatedMail("System error: more than one tuple with this mail already exist.");
-		}
+		throw new DuplicatedMail("System error: more than one tuple with this mail already exist.");
 	}
 	
 	public boolean checkDuplicatedUsername(String username) throws DuplicatedUsername, InvalidRegistrationParams{
@@ -121,18 +121,11 @@ public class UserService {
 			throw new InvalidRegistrationParams(e.getMessage());
 		}
 		try {
-			User user = new User();
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setMail(mail);
-			if(type == "Customer") {
-				user.setInsolventuser(new Insolventuser());
-			}
-			user.setUsertype(usertype);
+			User user = new User(username, password, usertype, mail);
 			em.persist(user);
 		}
 		catch(PersistenceException e){
-			throw new InvalidRegistrationParams("Could not verify registration values");
+			throw new InvalidRegistrationParams("Could not register user");
 		}
 		
 	}

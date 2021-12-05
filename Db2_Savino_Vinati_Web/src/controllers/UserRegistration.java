@@ -77,6 +77,7 @@ public class UserRegistration extends HttpServlet {
 			message = e.getMessage();
 			goToRedirect = true;
 		}
+		
 		if(!goToRedirect) {
 			try {
 				userService.registerUser(usernamer, pwdr, typer, mailr);

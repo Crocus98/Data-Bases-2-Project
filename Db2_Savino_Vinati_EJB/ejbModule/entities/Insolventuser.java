@@ -23,6 +23,7 @@ public class Insolventuser implements Serializable {
 	
 	@OneToOne
 	@PrimaryKeyJoinColumn
+	@JoinColumn(name = "id")
 	private User user;
 
 	public Insolventuser() {

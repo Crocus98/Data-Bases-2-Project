@@ -51,11 +51,11 @@ public class CheckLogin extends HttpServlet {
 			usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
 			
-			if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) 
-			{
+			if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
 				throw new Exception("Missing or empty credential value");
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
@@ -63,7 +63,8 @@ public class CheckLogin extends HttpServlet {
 		User user = null;
 		try {
 			user = userService.checkCredentials(usrn, pwd);
-		} catch (CredentialsException | NonUniqueResultException e ) {
+		} 
+		catch (CredentialsException | NonUniqueResultException e ) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
 			return;
@@ -76,16 +77,14 @@ public class CheckLogin extends HttpServlet {
 			ctx.setVariable("errorMsg", "Incorrect username or password");
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
-		} else 
-		{
+		} 
+		else {
 			request.getSession().setAttribute("user", user);
-			if(user.getUsertype().getUsertype().equals("Customer"))
-			{
+			if(user.getUsertype().getUsertype().equals("Customer")){
 				path = getServletContext().getContextPath() + "/HomeCustomer";
 				response.sendRedirect(path);
 			}
-			else if(user.getUsertype().getUsertype().equals("Employee"))
-			{
+			else if(user.getUsertype().getUsertype().equals("Employee")){
 				path = getServletContext().getContextPath() + "/HomeEmployee";
 				response.sendRedirect(path);
 			}

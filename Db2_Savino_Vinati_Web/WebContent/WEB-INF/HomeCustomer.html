@@ -8,7 +8,8 @@
 	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
+	<div align="right" th:text="${'Nice to see you again ' + session.user.username }"></div>
+	
 	<h1>Home Customer</h1>
-	<p align="right" th:text="${'Nice to see you again ' + session.user.username }"></p>
 </body>
 </html>

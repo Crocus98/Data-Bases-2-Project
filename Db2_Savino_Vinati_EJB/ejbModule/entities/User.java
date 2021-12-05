@@ -36,6 +36,17 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy="user")
 	private List<Alert> alerts;
+	
+	public User() {
+		
+	}
+	
+	public User(String username, String password, Usertype usertype, String mail) {
+		this.username = username;
+		this.password = password;
+		this.usertype = usertype;
+		this.mail = mail;
+	}
 
 	public String getMail() {
 		return mail;
@@ -67,6 +78,7 @@ public class User implements Serializable {
 
 	public void setInsolventuser(Insolventuser insolventuser) {
 		this.insolventuser = insolventuser;
+		insolventuser.setUser(this);
 	}
 
 	public List<Activationschedule> getActivationschedules() {

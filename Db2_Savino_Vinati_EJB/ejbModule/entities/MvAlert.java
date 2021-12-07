@@ -19,6 +19,7 @@ public class MvAlert implements Serializable {
 	private int id;
 
 	@OneToOne
+	@JoinColumn(name = "idalert")
 	private Alert alert;
 
 	public MvAlert() {

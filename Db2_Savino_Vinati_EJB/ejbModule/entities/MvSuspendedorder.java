@@ -19,6 +19,7 @@ public class MvSuspendedorder implements Serializable {
 	private int id;
 
 	@OneToOne
+	@JoinColumn(name = "idorder")
 	private Order suspendedorder;
 
 	public MvSuspendedorder() {

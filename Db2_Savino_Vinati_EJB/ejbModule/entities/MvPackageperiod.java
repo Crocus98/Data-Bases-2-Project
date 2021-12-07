@@ -19,6 +19,7 @@ public class MvPackageperiod implements Serializable {
 	private int id;
 	
 	@ManyToOne
+	@JoinColumn(name = "idpackage")
 	private Servicepackage servicePackage;
 
 	private int period;

@@ -86,7 +86,7 @@ public class CreateOptionalProduct extends HttpServlet {
 			}
 		}
 		
-		String path = "/WEB-INF/HomeEmloyee.html";
+		String path = "/WEB-INF/HomeEmployee.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("errorMsg", message);

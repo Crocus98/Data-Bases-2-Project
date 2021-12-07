@@ -10,5 +10,21 @@
 	</div>
 	<div align="right" th:text="${'Nice to see you again ' + session.user.username}"></div>
 	<h1>Home Employee</h1>
+	<div>
+		<h2>Fill in the form to create a new optional product</h2>
+		<form th:action="@{/CreateOptionalProduct}" method="POST">
+			<fieldset>
+				<p>
+					Name: <input type="text" name="productname" required />
+				</p>
+				<p>
+					Monthly cost: <input type="number" step="0.01"
+						name="monthlycost" min=0 required />
+				</p>
+				<input type="submit" value="Create">
+				<p th:text="${errorMsg}"></p>
+			</fieldset>
+		</form>
+	</div>	
 </body>
 </html>

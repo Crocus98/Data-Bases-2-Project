@@ -30,9 +30,18 @@ public class Servicepackage implements Serializable {
 	)
 	private List<Optionalproduct> optionalproducts;
 
+	
+	
 	@OneToMany(mappedBy = "servicepackage")
     private List<Packageperiod> packageperiods;
-	 
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+			name="servicepackageservice",
+			joinColumns= { @JoinColumn(name="idservicepackage")},
+			inverseJoinColumns= { @JoinColumn(name="idservice")}
+	)
+	private List<Service> services;
 
 	public Servicepackage() {
 		

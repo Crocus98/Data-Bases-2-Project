@@ -25,6 +25,11 @@ public class Optionalproduct implements Serializable {
 	public Optionalproduct() {
 		
 	}
+	
+	public Optionalproduct(String name, float monthlyprice) {
+		this.name = name;
+		this.monthlyprice = monthlyprice;
+	}
 
 	public int getId() {
 		return this.id;

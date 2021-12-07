@@ -8,9 +8,7 @@ import javax.persistence.PersistenceContext;
 
 
 import entities.Servicepackage;
-
-
-
+import entities.Validityperiod;
 
 @Stateless
 public class ServicePackageService {
@@ -20,10 +18,6 @@ public class ServicePackageService {
 	public ServicePackageService() {
 	}
 
-	// If a mission is deleted by a concurrent transaction this method retrieves it
-	// from the cache. If a mission is deleted by the JPA application, the
-	// persistence context evicts it, this method no longer
-	// retrieves it, and relationship sorting by the client works
 	public List<Servicepackage> findAllServicePackages() {
 		 List<Servicepackage> packages = em
 					.createNamedQuery("Servicepackage.findAll", Servicepackage.class)
@@ -34,6 +28,13 @@ public class ServicePackageService {
 	public Servicepackage findServicePackageById(int serviceId) {
 		Servicepackage service = em.find(Servicepackage.class, serviceId);
 		return service;
+	}
+	
+	public List<Validityperiod> findValidityperiod () {
+		List<Validityperiod> validityperiods = em
+				.createNamedQuery("Validityperiod.findAll", Validityperiod.class)
+				.getResultList();
+		return validityperiods;
 	}
 
 

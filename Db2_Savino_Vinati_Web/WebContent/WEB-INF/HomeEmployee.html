@@ -34,7 +34,7 @@
 					Name: <input type="text" name="productname" required />
 				</p>
 				<p>
-					Monthly cost of service packages for different validity periods
+					Monthly cost of service packages for different validity periods:
 					<span th:each="vp : ${validityperiods}">
 						<input type="checkbox" name="idvalidityperiod" th:value="${vp.id}" th:text="${vp.validityperiod}">
 						<span th:text="${'Period ' + vp.validityperiod + ': '}"></span>
@@ -43,11 +43,11 @@
 				</p>
 				<p>
 					Services included (at least 1):
-					<input type="checkbox" name="idservices" th:each="s : ${services}" th:value="${s.id}" th:text="${s.type.type}" ><br>
+					<input type="checkbox" name="idservices" th:each="s : ${services}" th:value="${s.id}" th:text="${s.name}"><br>
 				</p>
 				<p>
 					Optional products included:
-					<input type="checkbox" name="idoptionalproducts" th:each="op : ${optionalproducts}" th:value="${op.id}" th:text="${op.name}" ><br>
+					<input type="checkbox" name="idoptionalproducts" th:each="op : ${optionalproducts}" th:value="${op.id}" th:text="${op.name}"><br>
 				</p>
 				<input type="submit" value="Create Package">
 				<p th:text="${errorMsg}"></p>

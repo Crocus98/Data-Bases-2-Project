@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Package Details</title>
+<link rel="stylesheet" type="text/css" media="all" href="css/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<!--  
+	<div align="right" th:text="${'Nice to see you again ' + session.user.username }"></div>
+	
+	 -->
+	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
+	
+	<h1>Buy Service</h1>
+	
+	<div>
+	<p>you can preselect an option with the selected attribute:</p>
+	<form >
+	<p th:text="${singlepackage.name}"></p>
+    <fieldset>      
+        <p>Services</p>     
+        <input  th:each="s : ${singlepackage.services}" type="checkbox" name="service" th:value="${s.id}" th:text={s.type} required><br>         
+        <br>
+        <p>Validity Period</p> 
+        <input  th:each="pp : ${singlepackage.packageperiods}" type="checkbox" name="validity" th:value="${pp.id}" th:text={pp.validityperiod} required><br>         
+        <br>  
+        <p>Optional Product</p> 
+        <input  th:each="op : ${singlepackage.optionalproducts}" type="checkbox" name="optional" th:value="${op.id}" th:text={op.name}><br>         
+        <br>
+        Start Date: <input type="date" name="startdate" required> <br>
+        <br>  
+        <input type="submit" value="Submit now" />      
+    </fieldset>      
+</form>
+	
+	</div>
+</body>
+</html>

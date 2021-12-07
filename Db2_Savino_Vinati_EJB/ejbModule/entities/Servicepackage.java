@@ -70,6 +70,14 @@ public class Servicepackage implements Serializable {
 	public void setOptionalproducts(List<Optionalproduct> optionalproducts) {
 		this.optionalproducts = optionalproducts;
 	}
+	
+	public List<Service> getServices() {
+		return services;
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
 
 	public List<Packageperiod> getPackageperiods() {
 		return packageperiods;

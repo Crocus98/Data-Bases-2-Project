@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.NonUniqueResultException;
 
-import entities.Insolventuser;
+
 import entities.User;
 import entities.Usertype;
 import exceptions.*;

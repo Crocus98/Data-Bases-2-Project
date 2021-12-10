@@ -1,11 +1,9 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +17,18 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import entities.Optionalproduct;
+import entities.Service;
 import entities.User;
+import entities.Validityperiod;
+import services.ServicePackageService;
 
 @WebServlet("/HomeEmployee")
 public class GoToHomePageEmployee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "services/ServicePackageService")
+	private ServicePackageService servicePackageService;
 
 	public GoToHomePageEmployee() {
 		super();
@@ -42,6 +46,8 @@ public class GoToHomePageEmployee extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String message = null;
+		boolean isBadRequest = false;
 		HttpSession session = request.getSession();
 		User user;
 		if (session.isNew() || session.getAttribute("user") == null) {
@@ -56,9 +62,37 @@ public class GoToHomePageEmployee extends HttpServlet {
 			}
 		}
 		
+		List<Service> services = null;
+		List<Optionalproduct> optionalproducts = null;
+		List<Validityperiod>  validityperiods = null;
+		
+		try {
+			services = servicePackageService.findAllServices();
+			optionalproducts = servicePackageService.findAllOptionalproducts();
+			validityperiods = servicePackageService.findAllValidityperiods();
+			
+			if(services == null || optionalproducts == null || validityperiods == null
+				|| services.isEmpty() || optionalproducts.isEmpty() || validityperiods.isEmpty()) {
+				isBadRequest = true;
+				message = "Some data necessary to create new servicepackages are missing";
+			}
+		}
+		catch(Exception e) {
+			isBadRequest = true;
+			message = "Could not retrieve data to create new servicepackages correctly";
+		}
+		
 		String path = "/WEB-INF/HomeEmployee.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		if(isBadRequest) {
+			ctx.setVariable("errorMsg2", message);	
+		}
+		else{
+			ctx.setVariable("services", services);
+			ctx.setVariable("optionalproducts", optionalproducts);
+			ctx.setVariable("validityperiods", validityperiods);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

@@ -33,6 +33,11 @@ public class Packageperiod implements Serializable {
 	public Packageperiod() {
 		
 	}
+	public Packageperiod(Servicepackage servicepackage, Validityperiod validityperiod, Float monthlycost) {
+		this.setServicepackage(servicepackage);
+		this.setValidityperiod(validityperiod);
+		this.monthlycost = monthlycost;
+	}
 
 	public int getId() {
 		return this.id;

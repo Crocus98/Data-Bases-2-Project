@@ -19,10 +19,10 @@
 				</p>
 				<p>
 					Monthly cost: <input type="number" step="0.01"
-						name="monthlycost" min=0 required />
+						name="monthlycost" min="0.01" required />
 				</p>
 				<input type="submit" value="Create Product">
-				<p th:text="${errorMsg}"></p>
+				<p th:text="${errorMsg1}"></p>
 			</fieldset>
 		</form>
 	</div>
@@ -31,26 +31,27 @@
 		<form th:action="@{/CreateServicePackage}" method="POST">
 			<fieldset>
 				<p>
-					Name: <input type="text" name="productname" required />
+					Insert service package name:<br>
+					<input type="text" name="productname" required />
 				</p>
 				<p>
-					Monthly cost of service packages for different validity periods:
+					Select validity periods to offer and insert prices for each of them:<br>
 					<span th:each="vp : ${validityperiods}">
-						<input type="checkbox" name="idvalidityperiod" th:value="${vp.id}" th:text="${vp.validityperiod}">
-						<span th:text="${'Period ' + vp.validityperiod + ': '}"></span>
-						<input type="number" name="monthlycosts" min=6 max=100 />
-					</span><br>
+						<input type="checkbox" name="idvalidityperiods" th:value="${vp.id}" th:text="${'Perdiod '+ vp.validityperiod +' months:'}">
+						<input type="number" step="0.01" name="monthlycosts" min="0.01"/><br>
+						<input type="hidden" name="idallvalidityperiods" th:value="${vp.id}">
+					</span>
 				</p>
 				<p>
-					Services included (at least 1):
-					<input type="checkbox" name="idservices" th:each="s : ${services}" th:value="${s.id}" th:text="${s.name}"><br>
+					Choose services to include (at least 1):<br>
+					<input type="checkbox" name="idservices" th:each="s : ${services}" th:value="${s.id}" th:text="${s.name + '    '}"><br>
 				</p>
 				<p>
-					Optional products included:
-					<input type="checkbox" name="idoptionalproducts" th:each="op : ${optionalproducts}" th:value="${op.id}" th:text="${op.name}"><br>
+					Choose optional products to include:<br>
+					<input type="checkbox" name="idoptionalproducts" th:each="op : ${optionalproducts}" th:value="${op.id}" th:text="${op.name+'    '}"><br>
 				</p>
 				<input type="submit" value="Create Package">
-				<p th:text="${errorMsg}"></p>
+				<p th:text="${errorMsg2}"></p>
 			</fieldset>
 		</form>
 	</div>	

@@ -12,7 +12,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "servicepackage", schema="db2_savino_vinati")
-@NamedQuery(name="Servicepackage.findAll", query="SELECT sp FROM Servicepackage sp")
+@NamedQueries({
+	@NamedQuery(name="Servicepackage.findAll", query="SELECT sp FROM Servicepackage sp"),
+	@NamedQuery(name="Servicepackage.findFromName", query="SELECT sp FROM Servicepackage sp WHERE sp.name = ?1")
+})
 public class Servicepackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +48,13 @@ public class Servicepackage implements Serializable {
 
 	public Servicepackage() {
 		
+	}
+	
+	public Servicepackage(String name,List<Service> services, List<Optionalproduct> optionalproducts, List<Packageperiod> packageperiods) {
+		this.name = name;
+		this.setServices(services);
+		this.setOptionalproducts(optionalproducts);
+		this.setPackageperiods(packageperiods);
 	}
 
 	public int getId() {

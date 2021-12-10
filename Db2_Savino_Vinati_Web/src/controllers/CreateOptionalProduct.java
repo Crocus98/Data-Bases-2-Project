@@ -1,9 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -21,8 +19,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import entities.Optionalproduct;
+import entities.Service;
 import entities.User;
+import entities.Validityperiod;
 import services.OptionalProductService;
+import services.ServicePackageService;
 
 
 @WebServlet("/CreateOptionalProduct")
@@ -31,6 +32,8 @@ public class CreateOptionalProduct extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "services/OptionalProductService")
 	private OptionalProductService optionalProductService;
+	@EJB(name = "services/ServicePackageService")
+	private ServicePackageService servicePackageService;
        
     public CreateOptionalProduct() {
         super();
@@ -64,7 +67,8 @@ public class CreateOptionalProduct extends HttpServlet {
 		
 		boolean isBadRequest = false;
 		String productname = null;
-		String message = null;
+		String message1 = null;
+		String message2 = null;
 		float monthlycost = 0;
 		try {
 			monthlycost = Float.parseFloat(request.getParameter("monthlycost"));
@@ -73,23 +77,52 @@ public class CreateOptionalProduct extends HttpServlet {
 		} 
 		catch (NumberFormatException | NullPointerException e) {
 			isBadRequest = true;
-			message = "Invalid parameters for creating a new product.";
+			message1 = "Invalid parameters for creating a new product.";
 		}
 		
 		if(!isBadRequest) {
 			try {
 				optionalProductService.createOptionalProduct(productname, monthlycost);
-				message = "Optional product created successfully";
+				message1 = "Optional product created successfully";
 			}
 			catch(Exception e) {
-				message = e.getMessage();
+				message1 = e.getMessage();
+			}
+		}
+		
+		List<Service> services = null;
+		List<Optionalproduct> optionalproducts = null;
+		List<Validityperiod>  validityperiods = null;
+		if(!isBadRequest) {
+			try {
+				services = servicePackageService.findAllServices();
+				optionalproducts = servicePackageService.findAllOptionalproducts();
+				validityperiods = servicePackageService.findAllValidityperiods();
+				
+				if(services == null || optionalproducts == null || validityperiods == null
+					|| services.isEmpty() || optionalproducts.isEmpty() || validityperiods.isEmpty()) {
+					isBadRequest = true;
+					message2 = "Some data necessary to create new servicepackages are missing";
+				}
+			}
+			catch(Exception e) {
+				isBadRequest = true;
+				message2 = "Could not retrieve data to create new servicepackages correctly";
 			}
 		}
 		
 		String path = "/WEB-INF/HomeEmployee.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("errorMsg", message);
+		ctx.setVariable("errorMsg1", message1);
+		if(isBadRequest) {
+			ctx.setVariable("errorMsg2", message2);
+		}
+		else{
+			ctx.setVariable("services", services);
+			ctx.setVariable("optionalproducts", optionalproducts);
+			ctx.setVariable("validityperiods", validityperiods);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 	

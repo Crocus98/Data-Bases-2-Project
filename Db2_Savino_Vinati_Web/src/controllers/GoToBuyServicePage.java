@@ -58,7 +58,7 @@ public class GoToBuyServicePage extends HttpServlet {
 		Integer servicepackageId = null;
 		try {
 			servicepackageId = Integer.parseInt(request.getParameter("servicepackageid"));
-			System.out.print(servicepackageId);
+			System.out.print("servicepackage id: " + servicepackageId);
 		} catch (NumberFormatException | NullPointerException e) {
 			// only for debugging e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
@@ -88,6 +88,28 @@ public class GoToBuyServicePage extends HttpServlet {
 			return;
 		}
 
+		
+		
+		
+		System.out.println("singlepackage" + singlepackage);
+		for (Service item: singlepackage.getServices() ) {
+			System.out.println("service: " + item.getId());	
+		}
+		for (Optionalproduct item: singlepackage.getOptionalproducts() ) {
+			System.out.println("opt: " + item.getName());	
+		}
+		/**
+		for (Packageperiod item: singlepackage.getPackageperiods() ) {
+			System.out.println("validity: " + item.getValidityperiod());	
+		}
+		**/
+		// packageperiod.forEach(System.out::println);
+		services.forEach(System.out::println);
+		optionalproduct.forEach(System.out::println);
+		
+		
+		
+		
 		// Redirect to the Home page and add missions to the parameters
 		String path = "/WEB-INF/BuyService.html";
 		ServletContext servletContext = getServletContext();

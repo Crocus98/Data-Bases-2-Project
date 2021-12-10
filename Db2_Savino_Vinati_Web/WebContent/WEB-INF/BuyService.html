@@ -21,15 +21,15 @@
 	<p>you can preselect an option with the selected attribute:</p>
 	<form >
 	<p th:text="${singlepackage.name}"></p>
-    <fieldset>      
-        <p>Services</p>     
-        <input  th:each="s : ${singlepackage.services}" type="checkbox" name="service" th:value="${s.id}" th:text={s.type} required><br>         
+    <fieldset>  
+    	<p>Services</p>     
+        <input  th:each="s : ${singlepackage.services}" type="checkbox" name="service" th:value="${s.id}" th:text="${s.name}" required><br>         
         <br>
         <p>Validity Period</p> 
-        <input  th:each="pp : ${singlepackage.packageperiods}" type="checkbox" name="validity" th:value="${pp.id}" th:text={pp.validityperiod} required><br>         
+        <input  th:each="pp : ${singlepackage.validityperiods}" type="checkbox" name="validity" th:value="${pp.key.id}" th:text="${pp.key.validityperiod}" required><br>         
         <br>  
         <p>Optional Product</p> 
-        <input  th:each="op : ${singlepackage.optionalproducts}" type="checkbox" name="optional" th:value="${op.id}" th:text={op.name}><br>         
+        <input  th:each="op : ${singlepackage.optionalproducts}" type="checkbox" name="optional" th:value="${op.id}" th:text="${op.name}"><br>         
         <br>
         Start Date: <input type="date" name="startdate" required> <br>
         <br>  

@@ -1,27 +1,22 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
-import org.apache.openjpa.lib.util.Services;
-
 import entities.Optionalproduct;
-import entities.Packageperiod;
 import entities.Service;
 import entities.Servicepackage;
-import entities.User;
-import entities.Usertype;
 import entities.Validityperiod;
 import exceptions.BadServicePackage;
-import exceptions.DuplicatedMail;
 import exceptions.DuplicatedPackagename;
-import exceptions.InvalidRegistrationParams;
-import exceptions.InvalidUsertype;
+
 
 @Stateless
 public class ServicePackageService {
@@ -84,22 +79,36 @@ public class ServicePackageService {
 		throw new DuplicatedPackagename("System error: more than one tuple with this service package name already exist.");
 	}
 	
+	
 	public void createNewServicePackage (String servicepackagename, List<Integer> idservicesincluded, List<Integer> idoptionalproductspossible, 
 			List<Integer> idvalidityperiods, List<Float> monthlycosts) throws BadServicePackage {
-		List<Service> services = null;
-		List<Optionalproduct> optionalproducts = null;
-		List<Packageperiod> packageperiods = new ArrayList<Packageperiod>();
+		Servicepackage servicepackage = null;
 		try {
+			servicepackage = new Servicepackage();
 			checkDuplicatedName(servicepackagename);
-			//get services from list id
-			//get optional products from list id
-			//foreach package packageperiods.add(new Packageperiod());
-		} 
+			servicepackage.setName(servicepackagename);
+			servicepackage.setValidityperiods(new HashMap<>());
+			servicepackage.setOptionalproducts(new ArrayList<>());
+			servicepackage.setServices(new ArrayList<>());
+			for(int i = 0; i < idvalidityperiods.size(); i++) {
+				Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiods.get(i));
+				servicepackage.setValidityperiodCost(validityperiod, monthlycosts.get(i));
+			}
+			if(idoptionalproductspossible != null) {
+				for(int i = 0; i < idoptionalproductspossible.size(); i++) {
+					Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproductspossible.get(i));
+					servicepackage.addOptionalproduct(optionalproduct);
+				}
+			}
+			for(int i = 0; i < idservicesincluded.size(); i++) {
+				Service service = em.find(Service.class, idservicesincluded.get(i));
+				servicepackage.addService(service);
+			}
+		}
 		catch (Exception e) {
 			throw new BadServicePackage(e.getMessage());
 		}
 		try {
-			Servicepackage servicepackage = new Servicepackage(servicepackagename, services, optionalproducts, packageperiods);
 			em.persist(servicepackage);
 		}
 		catch(PersistenceException e) {

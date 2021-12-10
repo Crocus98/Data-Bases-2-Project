@@ -78,6 +78,20 @@ public class Servicepackage implements Serializable {
 		this.optionalproducts = optionalproducts;
 	}
 	
+	public void addOptionalproduct(Optionalproduct optionalproduct) {
+		getOptionalproducts().add(optionalproduct);
+		//is it necessary to update other side?
+		// aligns both sides of the relationship
+		// if mission is new, invoking persist() on reporter cascades also to mission
+	}
+	
+	public void addService(Service service) {
+		getServices().add(service);
+		//is it necessary to update other side?
+		// aligns both sides of the relationship
+		// if mission is new, invoking persist() on reporter cascades also to mission
+	}
+	
 	public List<Service> getServices() {
 		return services;
 	}
@@ -88,6 +102,10 @@ public class Servicepackage implements Serializable {
 
 	public Map<Validityperiod, Float> getValidityperiods() {
 		return validityperiods;
+	}
+	
+	public void setValidityperiods(Map<Validityperiod, Float> validityperiods) {
+		this.validityperiods = validityperiods;
 	}
 	
 	public void setValidityperiodCost(Validityperiod validityperiod, float monthlycost) {

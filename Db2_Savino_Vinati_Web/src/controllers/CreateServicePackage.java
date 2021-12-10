@@ -82,7 +82,7 @@ public class CreateServicePackage extends HttpServlet {
 			if(servicepackagename == null || servicepackagename.isEmpty() || monthlycoststring == null 
 					|| idvalidityperiodstring == null || idservicestring == null || idallvalidityperiodstring == null
 					|| idservicestring.length < 1 || monthlycoststring.length < 1 || idvalidityperiodstring.length < 1 
-					|| idallvalidityperiodstring.length < 1 || monthlycoststring.length != idvalidityperiodstring.length) {
+					|| idallvalidityperiodstring.length < 1 || monthlycoststring.length != idallvalidityperiodstring.length) {
 				throw new BadServicePackage("");
 			}
 			for (int j = 0; j < idvalidityperiodstring.length; j++)
@@ -94,7 +94,6 @@ public class CreateServicePackage extends HttpServlet {
 						}
 						monthlycosts.add(Float.parseFloat(monthlycoststring[i]));
 						idvalidityperiods.add(Integer.parseInt(idallvalidityperiodstring[i]));
-						System.out.println("[*] "+ Float.parseFloat(monthlycoststring[i]) + " - "+ Integer.parseInt(idallvalidityperiodstring[i]));
 						break;
 					}
 				}

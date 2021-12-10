@@ -82,7 +82,8 @@ public class GoToBuyServicePage extends HttpServlet {
 			//packageperiod = singlepackage.getPackageperiods();
 			services = singlepackage.getServices();
 			optionalproduct = singlepackage.getOptionalproducts();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover services and periods");
 			return;

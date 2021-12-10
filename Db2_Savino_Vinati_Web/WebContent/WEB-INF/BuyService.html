@@ -19,21 +19,38 @@
 	
 	<div>
 	<p>you can preselect an option with the selected attribute:</p>
-	<form >
+	<form th:action="@{/GoToConfirmPage}" method="POST">
 	<p th:text="${singlepackage.name}"></p>
-    <fieldset>      
-        <p>Services</p>     
-        <input  th:each="s : ${singlepackage.services}" type="checkbox" name="service" th:value="${s.id}" th:text={s.type} required><br>         
-        <br>
-        <p>Validity Period</p> 
-        <input  th:each="pp : ${singlepackage.packageperiods}" type="checkbox" name="validity" th:value="${pp.id}" th:text={pp.validityperiod} required><br>         
-        <br>  
+    <fieldset>  
+    	<p>Services</p>
+    	<ul>
+	    	<li th:each="s : ${singlepackage.services}">
+	    		<input type="checkbox" name="service" th:value="${s.id}" th:text="${s.name}"><br>        
+	        <br>
+	    	</li>
+    	</ul>    
+       	<p>Validity Period</p> 
+       	<ul>
+	       	<li th:each="pp : ${singlepackage.validityperiods}">
+	       		<input type="radio" name="validity" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br>         
+	        <br>  
+	       	</li>
+       	</ul>
+       
         <p>Optional Product</p> 
-        <input  th:each="op : ${singlepackage.optionalproducts}" type="checkbox" name="optional" th:value="${op.id}" th:text={op.name}><br>         
-        <br>
+        <ul>
+	        <li th:each="op : ${singlepackage.optionalproducts}">
+		        <input type="checkbox" name="optional" th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"><br>         
+	       		 <br>
+	        </li>
+        </ul>
+        
         Start Date: <input type="date" name="startdate" required> <br>
+        <input type="hidden" name="idsinglepackage" th:value="${singlepackage.id}">
+        <input type="hidden" name="idsinglepackage" th:value="${singlepackage.name}">
         <br>  
-        <input type="submit" value="Submit now" />      
+        <input type="submit" value="CONFIRM" />   
+        <p th:text="${errorMsg}"></p>   
     </fieldset>      
 </form>
 	

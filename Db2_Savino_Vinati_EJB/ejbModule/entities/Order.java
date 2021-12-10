@@ -39,8 +39,8 @@ public class Order implements Serializable {
 	private Servicepackage servicepackage;
 	
 	@ManyToOne
-	@JoinColumn(name="idpackageperiod")
-	private Packageperiod packageperiod;
+	@JoinColumn(name="idvalidityperiod")
+	private Validityperiod validityperiod;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(

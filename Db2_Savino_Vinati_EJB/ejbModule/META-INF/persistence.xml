@@ -16,7 +16,6 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>entities.MvSuspendedorder</class>
 		<class>entities.Optionalproduct</class>
 		<class>entities.Order</class>
-		<class>entities.Packageperiod</class>
 		<class>entities.Service</class>
 		<class>entities.Serviceinternet</class>
 		<class>entities.Servicemobile</class>

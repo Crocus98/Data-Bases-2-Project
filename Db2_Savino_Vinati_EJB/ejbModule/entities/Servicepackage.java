@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.*;
 
@@ -35,8 +36,11 @@ public class Servicepackage implements Serializable {
 
 	
 	
-	@OneToMany(mappedBy = "servicepackage")
-    private List<Packageperiod> packageperiods;
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "packageperiod", schema = "db2_savino_vinati", joinColumns = @JoinColumn(name = "idservicepackage"))
+	@MapKeyJoinColumn(name = "idvalidityperiod")
+	@Column(name = "monthlycost")
+	private Map<Validityperiod, Float> validityperiods;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
@@ -48,13 +52,6 @@ public class Servicepackage implements Serializable {
 
 	public Servicepackage() {
 		
-	}
-	
-	public Servicepackage(String name,List<Service> services, List<Optionalproduct> optionalproducts, List<Packageperiod> packageperiods) {
-		this.name = name;
-		this.setServices(services);
-		this.setOptionalproducts(optionalproducts);
-		this.setPackageperiods(packageperiods);
 	}
 
 	public int getId() {
@@ -89,12 +86,12 @@ public class Servicepackage implements Serializable {
 		this.services = services;
 	}
 
-	public List<Packageperiod> getPackageperiods() {
-		return packageperiods;
+	public Map<Validityperiod, Float> getValidityperiods() {
+		return validityperiods;
 	}
-
-	public void setPackageperiods(List<Packageperiod> packageperiods) {
-		this.packageperiods = packageperiods;
+	
+	public void setValidityperiodCost(Validityperiod validityperiod, float monthlycost) {
+		validityperiods.put(validityperiod, monthlycost);
 	}
 
 }

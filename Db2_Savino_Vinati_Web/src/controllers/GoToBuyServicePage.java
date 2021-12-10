@@ -20,7 +20,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import services.ServicePackageService;
 import entities.Optionalproduct;
-import entities.Packageperiod;
 import entities.Service;
 import entities.Servicepackage;
 
@@ -70,7 +69,7 @@ public class GoToBuyServicePage extends HttpServlet {
 		// obtain the other details for it
 	
 		Servicepackage singlepackage = null;
-		List<Packageperiod> packageperiod = null;
+		//List<Packageperiod> packageperiod = null;
 		List<Service> services = null;
 		List<Optionalproduct> optionalproduct = null;
 		try {
@@ -80,7 +79,7 @@ public class GoToBuyServicePage extends HttpServlet {
 				return;
 			}
 			
-			packageperiod = singlepackage.getPackageperiods();
+			//packageperiod = singlepackage.getPackageperiods();
 			services = singlepackage.getServices();
 			optionalproduct = singlepackage.getOptionalproducts();
 		} catch (Exception e) {
@@ -94,7 +93,7 @@ public class GoToBuyServicePage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("singlepackage", singlepackage);
-		ctx.setVariable("packageperiod", packageperiod);
+		//ctx.setVariable("packageperiod", packageperiod);
 		ctx.setVariable("services", services);
 		ctx.setVariable("optionalproduct", optionalproduct);
 		templateEngine.process(path, ctx, response.getWriter());

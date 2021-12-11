@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Sales Report Page</title>
+<link rel="stylesheet" type="text/css" media="all" href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
 	<div align="right">
@@ -10,6 +11,90 @@
 	</div>
 	<div align="right" th:text="${'Nice to see you again ' + session.user.username}"></div>
 	<h1>Sales Report Page</h1>
-	
+
+	<!-- UNO -->
+	<h2>Sales report for packages</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Package name</th>
+				<th>Number of sales</th>
+				<th>Total value of sales</th>
+				<th>Total value of sales with products</th>
+				<th>Average number of optional products per package</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="mvp : ${mv_package}">
+				<td th:text="${mvp.id}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- DUE -->
+	<h2>Sales report for packages per period</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Package name</th>
+				<th>Validity period</th>
+				<th>Number of sales per period</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<!-- TRE -->
+	<h2>Insolvent users</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>User name</th>
+				<th>Mail</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<!-- QUATTRO -->
+	<h2>Suspended orders</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>User name</th>
+				<th>Package name</th>
+				<th>Validity period</th>
+				<th>Total value</th>
+				<th>Date of submission</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<!-- CINQUE -->
+	<h2>Active alerts</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>User name</th>
+				<th>Mail</th>
+				<th>Amount</th>
+				<th>Last rejection</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+		<!-- SEI -->
+	<h2>Best seller optional product</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Optional product name</th>
+				<th>Total value of sales</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </body>
 </html>

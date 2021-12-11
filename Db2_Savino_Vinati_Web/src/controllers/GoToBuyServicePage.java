@@ -1,8 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,24 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import services.ServicePackageService;
-import entities.Optionalproduct;
-import entities.Service;
 import entities.Servicepackage;
+import entities.User;
 
 @WebServlet("/GoToBuyServicePage")
 public class GoToBuyServicePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "services/ServicePackageService")
-	private ServicePackageService spService;
+	private ServicePackageService servicePackageService;
 
 	public GoToBuyServicePage() {
 		super();
@@ -46,83 +40,47 @@ public class GoToBuyServicePage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// If the user is not logged in (not present in session) redirect to the login
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			 response.sendRedirect(loginpath);
-			return;
-		}
-
-		// get and check params
-		Integer servicepackageId = null;
-		try {
-			servicepackageId = Integer.parseInt(request.getParameter("servicepackageid"));
-			System.out.print("servicepackage id: " + servicepackageId);
-		} catch (NumberFormatException | NullPointerException e) {
-			// only for debugging e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
-			return;
-		}
-
-		// If a service package with that ID exist
-		// obtain the other details for it
-	
-		Servicepackage singlepackage = null;
-		//List<Packageperiod> packageperiod = null;
-		List<Service> services = null;
-		List<Optionalproduct> optionalproduct = null;
-		try {
-			singlepackage = spService.findServicePackageById(servicepackageId);
-			if (singlepackage == null) {
-				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Service Package not found");
+		User user;
+		if (!(session.isNew() || session.getAttribute("user") == null)) {
+			user = (User) session.getAttribute("user");
+			if (user.getUsertype().getUsertype().equals("Employee")) {
+				response.sendRedirect(loginpath);
 				return;
 			}
-			
-			//packageperiod = singlepackage.getPackageperiods();
-			services = singlepackage.getServices();
-			optionalproduct = singlepackage.getOptionalproducts();
+		}
+		
+		String message = null;
+		boolean isBadRequest = false;
+		Servicepackage servicepackage = null;
+		try {
+			Integer servicepackageId = Integer.parseInt(request.getParameter("servicepackageid"));
+			servicepackage = servicePackageService.findServicePackageById(servicepackageId);
 		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover services and periods");
-			return;
+		catch (NumberFormatException | NullPointerException e) {
+			message = "Invalid service package id parameter";
+			isBadRequest = true;
 		}
-
-		
-		
-		
-		System.out.println("singlepackage" + singlepackage);
-		for (Service item: singlepackage.getServices() ) {
-			System.out.println("service: " + item.getId());	
+		catch(Exception ee) {
+			message = "Service package not found";
+			isBadRequest = true;
 		}
-		for (Optionalproduct item: singlepackage.getOptionalproducts() ) {
-			System.out.println("opt: " + item.getName());	
-		}
-		/**
-		for (Packageperiod item: singlepackage.getPackageperiods() ) {
-			System.out.println("validity: " + item.getValidityperiod());	
-		}
-		**/
-		// packageperiod.forEach(System.out::println);
-		services.forEach(System.out::println);
-		optionalproduct.forEach(System.out::println);
 		
-		
-		
-		
-		// Redirect to the Home page and add missions to the parameters
 		String path = "/WEB-INF/BuyService.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("singlepackage", singlepackage);
-		//ctx.setVariable("packageperiod", packageperiod);
-		ctx.setVariable("services", services);
-		ctx.setVariable("optionalproduct", optionalproduct);
+		if(isBadRequest) {
+			ctx.setVariable("errorMsg", message);
+		}
+		else {
+			ctx.setVariable("singlepackage", servicepackage);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	public void destroy() {
+		
 	}
 
 }

@@ -10,11 +10,7 @@
 			<a th:href="@{/Logout}">Logout</a>
 		</div>
 	</th:block>
-	<!--  
-	<div align="right" th:text="${'Nice to see you again ' + session.user.username }"></div>
-	
-	 -->
-	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
+	<div align="right" th:text="${session.user.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
 	
 	<h1>Service Package summary</h1>
 	

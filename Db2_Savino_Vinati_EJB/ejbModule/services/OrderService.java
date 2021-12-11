@@ -1,25 +1,8 @@
 package services;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-
-import entities.Optionalproduct;
-import entities.Order;
-import entities.Service;
-import entities.Servicepackage;
-import entities.User;
-import entities.Validityperiod;
-import exceptions.BadServicePackage;
-import exceptions.DuplicatedPackagename;
 
 
 @Stateless
@@ -30,7 +13,7 @@ public class OrderService {
 	public OrderService() {
 	}
 	
-	public void createOrder (Servicepackage servicepackage, User iduser, Validityperiod validitypeirod, 
+	/*public void createOrder (Servicepackage servicepackage, User iduser, Validityperiod validitypeirod, 
 			Float totvalue, Date startdate, boolean paid) throws BadServicePackage {
 		Order order = null;
 		try {
@@ -67,7 +50,7 @@ public class OrderService {
 			throw new BadServicePackage("Could not create service package");
 		}
 		
-	}
+	}*/
 	
 	
 	

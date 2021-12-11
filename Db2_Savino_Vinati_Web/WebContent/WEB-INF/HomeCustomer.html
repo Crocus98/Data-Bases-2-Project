@@ -9,14 +9,11 @@
 	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
-	<!--  
-	<div align="right" th:text="${'Nice to see you again ' + session.user.username }"></div>
-	
-	 -->
 	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
-	
 	<h1>Home Customer</h1>
-	
+	<th:block th:if="${!errorMsg.isEmpty()}">
+		<p th:text="${'ERROR: '+ errorMsg}"></p>
+	</th:block>
 	<div>
 	<table>
 		<thead>
@@ -26,10 +23,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="s : ${servicepackage}">
+			<tr th:each="s : ${servicepackages}">
 				<td th:text="${s.name}"></td>
 				<td><a th:href="@{/GoToBuyServicePage(servicepackageid=${s.id})}">Buy</a></td>
-				
 			</tr>
 		</tbody>
 	</table>

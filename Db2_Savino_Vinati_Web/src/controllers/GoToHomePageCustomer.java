@@ -28,7 +28,7 @@ public class GoToHomePageCustomer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "services/ServicePackageService")
-	private ServicePackageService spService;
+	private ServicePackageService servicePackageService;
 
 
 	public GoToHomePageCustomer() {
@@ -50,30 +50,32 @@ public class GoToHomePageCustomer extends HttpServlet {
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
 		User user;
-		
-		
-		user = (User) session.getAttribute("user");
-		if (!user.getUsertype().getUsertype().equals("Customer")) {
-			response.sendRedirect(loginpath);
-			return;
+		if (!(session.isNew() || session.getAttribute("user") == null)) {
+			user = (User) session.getAttribute("user");
+			if (user.getUsertype().getUsertype().equals("Employee")) {
+				response.sendRedirect(loginpath);
+				return;
 			}
-		
-		List<Servicepackage> packages=null;
-		
-		try {
-			packages = spService.findAllServicePackages();
-		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
-			return;
 		}
-			
+		
+		String message = null;
+		boolean isBadRequest = false;
+		List<Servicepackage> packages = null;
+		try {
+			packages = servicePackageService.findAllServicePackages();
+			message = "";
+		} catch (Exception e) {
+			isBadRequest = true;
+			message = "Could not retrieve service packages to be bought.";
+		}
 		
 		String path = "/WEB-INF/HomeCustomer.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		//ctx.setVariable("preventiviCliente", preventiviCliente);
-		//ctx.setVariable("products", prodottiDisponibili);
-		ctx.setVariable("servicepackage", packages);
+		ctx.setVariable("errorMsg", message);
+		if(!isBadRequest) {
+			ctx.setVariable("servicepackages", packages);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 	

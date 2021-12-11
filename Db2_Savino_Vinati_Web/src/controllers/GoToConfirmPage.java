@@ -1,35 +1,34 @@
- package controllers;
+package controllers;
 
- import java.io.IOException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
- import javax.servlet.ServletContext;
- import javax.servlet.ServletException;
- import javax.servlet.annotation.WebServlet;
- import javax.servlet.http.HttpServlet;
- import javax.servlet.http.HttpServletRequest;
- import javax.servlet.http.HttpServletResponse;
- import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
- import org.apache.commons.lang.StringEscapeUtils;
- import org.thymeleaf.TemplateEngine;
- import org.thymeleaf.context.WebContext;
- import org.thymeleaf.templatemode.TemplateMode;
- import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
- import exceptions.BadServicePackage;
- import entities.Optionalproduct;
- import entities.Service;
+import exceptions.BadServicePackage;
+import entities.Optionalproduct;
+import entities.Service;
 import entities.Servicepackage;
 import entities.User;
- import entities.Validityperiod;
- import services.ServicePackageService;
+import entities.Validityperiod;
+import services.ServicePackageService;
 
  @WebServlet("/GoToConfirmPage")
  public class  GoToConfirmPage  extends HttpServlet {
@@ -53,32 +52,22 @@ import entities.User;
      
  	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
  			throws ServletException, IOException {
- 		HttpSession session = request.getSession();
  		String loginpath = getServletContext().getContextPath() + "/index.html";
- 		User user = null;
- 		if (session.isNew() || session.getAttribute("user") == null) {
- 			response.sendRedirect(loginpath);
- 			return;
- 		}
- 		else {
- 			user = (User)session.getAttribute("user");
- 			if (!user.getUsertype().getUsertype().equals("Customer")) {
- 				response.sendRedirect(loginpath);
- 				return;
- 			}
- 		}
- 		//Retrieving data from the service package form
- 		boolean isBadRequest = false;
- 		boolean isBadRequest2 = false;
- 		String message = null;
- 		String message2 = null;
- 		String servicepackagename = null;
+		HttpSession session = request.getSession();
+		User user;
+		if (!(session.isNew() || session.getAttribute("user") == null)) {
+			user = (User) session.getAttribute("user");
+			if (user.getUsertype().getUsertype().equals("Employee")) {
+				response.sendRedirect(loginpath);
+				return;
+			}
+		}
+		
+		String message = null;
+		boolean isBadRequest = false;
  	
- 		// List<Integer> idoptionalproducts = new ArrayList<Integer>();
- 		
- 		// Single package product
- 	
- 		String idpackage = null;
+
+		//NO NO NO NO
  		// Services
  		List <Service> services = null;
  	

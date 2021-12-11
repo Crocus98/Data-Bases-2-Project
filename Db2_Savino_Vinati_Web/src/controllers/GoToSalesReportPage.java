@@ -73,6 +73,7 @@ public class GoToSalesReportPage extends HttpServlet {
 		
 		try {
 			salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproduct);
+			message = "";
 		}
 		catch(Exception e) {
 			isBadRequest = true;

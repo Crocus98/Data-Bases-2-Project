@@ -43,7 +43,12 @@ public class SalesReportService {
 		List<MvBestproduct> mvBestproduct = em
 				.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
 				.getResultList();
-		return mvBestproduct.get(0);
+		if(mvBestproduct != null && mvBestproduct.size() > 0) {
+			return mvBestproduct.get(0);
+		}
+		else {
+			return null;
+		}
 	}
 
 

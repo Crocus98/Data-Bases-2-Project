@@ -16,8 +16,9 @@
 		<p>you can preselect an option with the selected attribute:</p>
 		<form th:action="@{/GoToConfirmPage}" method="POST">
 		    <fieldset>
-		    	Package service name: <p th:text="${singlepackage.name}"></p><br>
+		    	<p>Package service name: <span th:text="${singlepackage.name}"></span>
 		    	<input type="hidden" name="idservicepackage" th:value="${singlepackage.id}">
+		    	<p>
 		    	
 		    	<p>Services</p>
 		    	<ul>

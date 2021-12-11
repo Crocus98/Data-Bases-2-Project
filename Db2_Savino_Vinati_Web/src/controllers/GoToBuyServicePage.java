@@ -57,7 +57,7 @@ public class GoToBuyServicePage extends HttpServlet {
 		try {
 			Integer servicepackageId = Integer.parseInt(request.getParameter("servicepackageid"));
 			servicepackage = servicePackageService.findServicePackageById(servicepackageId);
-		} 
+		}
 		catch (NumberFormatException | NullPointerException e) {
 			message = "Invalid service package id parameter";
 			isBadRequest = true;

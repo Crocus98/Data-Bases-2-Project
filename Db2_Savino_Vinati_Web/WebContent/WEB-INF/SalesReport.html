@@ -36,6 +36,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
 	<!-- TWO -->
 	<h2>Sales report for packages per period</h2>
 	<table>
@@ -54,6 +55,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
 	<!-- THREE -->
 	<h2>Insolvent users</h2>
 	<table>
@@ -72,6 +74,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
 	<!-- FOUR -->
 	<h2>Suspended orders</h2>
 	<table>
@@ -94,6 +97,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
 	<!-- FIVE -->
 	<h2>Active alerts</h2>
 	<table>
@@ -114,6 +118,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
 	<!-- SIX-->
 	<h2>Best seller optional product</h2>
 	<table>
@@ -124,9 +129,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td th:text="${mvbestproduct.optionalproduct.name}"></td>
-				<td th:text="${mvbestproduct.value}"></td>
+			<tr th:each="mvbp : ${mvbestproducts}">
+				<td th:text="${mvbp.optionalproduct.name}"></td>
+				<td th:text="${mvbp.value}"></td>
 			</tr>
 		</tbody>
 	</table>

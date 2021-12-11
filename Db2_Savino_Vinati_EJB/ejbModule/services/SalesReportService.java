@@ -25,30 +25,25 @@ public class SalesReportService {
 	}
 
 	public void getSalesReportPageData(List<MvPackage> mvpackages, List<MvPackageperiod> mvpackageperiods, List<MvInsolventUser> mvinsolventusers, 
-			List<MvSuspendedorder> mvsuspendedorders, List<MvAlert> mvalerts, MvBestproduct mvbestproduct) throws BadSalesReportDataRetrieval {
+			List<MvSuspendedorder> mvsuspendedorders, List<MvAlert> mvalerts, List<MvBestproduct> mvbestproducts) throws BadSalesReportDataRetrieval {
 		try {
 			mvpackages = findAllmvpackages();
 			mvpackageperiods = findAllmvpackageperiods();
 			mvinsolventusers = findAllmvinsolventusers();
 			mvsuspendedorders = findAllmvsuspendedorders();
 			mvalerts = findAllmvalers();
-			mvbestproduct = findAllbestproduct();
+			mvbestproducts = findAllbestproducts();
 		}
 		catch(PersistenceException e){
 			throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
 		}
 	}
 
-	private MvBestproduct findAllbestproduct(){
+	private List<MvBestproduct> findAllbestproducts(){
 		List<MvBestproduct> mvBestproduct = em
 				.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
 				.getResultList();
-		if(mvBestproduct != null && mvBestproduct.size() > 0) {
-			return mvBestproduct.get(0);
-		}
-		else {
-			return null;
-		}
+		return mvBestproduct;
 	}
 
 

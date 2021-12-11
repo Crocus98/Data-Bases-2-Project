@@ -69,10 +69,10 @@ public class GoToSalesReportPage extends HttpServlet {
 		List<MvPackage> mvpackages = null;
 		List<MvPackageperiod> mvpackageperiods = null;
 		List<MvSuspendedorder> mvsuspendedorders = null;
-		MvBestproduct mvbestproduct = null;
+		List<MvBestproduct> mvbestproducts = null;
 		
 		try {
-			salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproduct);
+			salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproducts);
 			message = "";
 		}
 		catch(Exception e) {
@@ -83,16 +83,14 @@ public class GoToSalesReportPage extends HttpServlet {
 		String path = "/WEB-INF/SalesReport.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(isBadRequest) {
-			ctx.setVariable("errorMsg", message);
-		}
-		else {
+		ctx.setVariable("errorMsg", message);
+		if(!isBadRequest) {
 			ctx.setVariable("mvalerts", mvalerts);
 			ctx.setVariable("mvinsolventusers", mvinsolventusers);
 			ctx.setVariable("mvpackages", mvpackages);
 			ctx.setVariable("mvpackageperiods", mvpackageperiods);
 			ctx.setVariable("mvsuspendedorders", mvsuspendedorders);
-			ctx.setVariable("mvbestproduct", mvbestproduct);
+			ctx.setVariable("mvbestproduct", mvbestproducts);
 		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}

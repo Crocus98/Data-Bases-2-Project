@@ -54,7 +54,7 @@ public class CheckLogin extends HttpServlet {
 			if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
 				throw new Exception("Missing or empty credential value");
 			}
-		} 
+		}
 		catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
@@ -63,7 +63,7 @@ public class CheckLogin extends HttpServlet {
 		User user = null;
 		try {
 			user = userService.checkCredentials(usrn, pwd);
-		} 
+		}
 		catch (CredentialsException | NonUniqueResultException e ) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");

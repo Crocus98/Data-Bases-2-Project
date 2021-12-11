@@ -1,8 +1,16 @@
 package services;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+
+import entities.Order;
+import entities.Servicepackage;
+import exceptions.BadOrder;
 
 
 @Stateless
@@ -12,48 +20,23 @@ public class OrderService {
 
 	public OrderService() {
 	}
-	
-	/*public void createOrder (Servicepackage servicepackage, User iduser, Validityperiod validitypeirod, 
-			Float totvalue, Date startdate, boolean paid) throws BadServicePackage {
-		Order order = null;
+
+	public Order createOrderNoPersist(Integer idservicepackage, Integer idvalidityperiod,
+			List<Integer> idoptionalproducts, Date date) throws BadOrder {
+		Order order = new Order();
 		try {
-			order = new Order();
-			order.setServicepackage(servicepackage);
-			order.setUser(iduser);
-			order.setValidityperiod(validitypeirod);
-			order.setStartdate(startdate);
-			order.setTotalvalue(0);
-			
-			int idvalidityperiod = validitypeirod.getId();
-		
-			Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiod);
-			servicepackage.setValidityperiodCost(validityperiod, monthlycosts.get(i));
-			
-			if(idoptionalproductspossible != null) {
-				for(int i = 0; i < idoptionalproductspossible.size(); i++) {
-					Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproductspossible.get(i));
-					servicepackage.addOptionalproduct(optionalproduct);
-				}
-			}
-			for(int i = 0; i < idservicesincluded.size(); i++) {
-				Service service = em.find(Service.class, idservicesincluded.get(i));
-				servicepackage.addService(service);
-			}
-		}
-		catch (Exception e) {
-			throw new BadServicePackage(e.getMessage());
-		}
-		try {
-			em.persist(servicepackage);
+			Servicepackage servicepackage = em.find(Servicepackage.class, idservicepackage);
+			//TODO
+			//Fare il find singolo per ogni idoptionalproduct e aggiungerli uno ad uno all'order
+			//Fare il find singolo del validityperiod e aggiungerlo all'order
+			//Calcolare il total value
+			//Inserire tutto dentro all'ordine
+			//Inserire le date necessarie
+			order.setServicepackage(servicepackage); //Controllare se ho aggiornato entrambi i lati se servisse (non dovrebbe serivire)
+			return order;
 		}
 		catch(PersistenceException e) {
-			throw new BadServicePackage("Could not create service package");
+			throw new BadOrder("Data for the creation of the order were wrong");
 		}
-		
-	}*/
-	
-	
-	
-	
-
+	}
 }

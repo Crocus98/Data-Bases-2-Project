@@ -16,7 +16,9 @@
 		<p>you can preselect an option with the selected attribute:</p>
 		<form th:action="@{/GoToConfirmPage}" method="POST">
 		    <fieldset>
-		    	Package service name: <p th:text="${singlepackage.name}"></p><br> 
+		    	Package service name: <p th:text="${singlepackage.name}"></p><br>
+		    	<input type="hidden" name="idservicepackage" th:value="${singlepackage.id}">
+		    	
 		    	<p>Services</p>
 		    	<ul>
 			    	<li th:each="s : ${singlepackage.services}">
@@ -26,7 +28,7 @@
 		       	<p>Validity Period</p> 
 		       	<ul>
 			       	<li th:each="pp : ${singlepackage.validityperiods}">
-			       		<input type="radio" name="idvalidityperiods" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br> 
+			       		<input type="radio" name="idvalidityperiod" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br> 
 			       	</li>
 		       	</ul> 
 		        <p>Optional Product</p>
@@ -36,7 +38,7 @@
 			        </li>
 		        </ul>
 		        <p>Start Date: <input type="date" name="startdate" required></p><br>
-		        <input type="submit" value="CONFIRM" />
+		        <input type="submit" value="Confirm" />
 		        <p th:text="${errorMsg}"></p>
 		    </fieldset>      
 		</form>

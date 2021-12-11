@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Home Customer</title>
-<link rel="stylesheet" type="text/css" media="all" href="css/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
 	<div align="right">
@@ -18,18 +17,17 @@
 	<h1>Home Customer</h1>
 	
 	<div>
-	<p>Packages:</p>
-	<table>
+	<table  border="1" cellspacing="0" cellpadding="5" width="200">
 		<thead>
 			<tr>
-				<th>Package name</th>
+				<th>Packages</th>
 				<th> </th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="s : ${servicepackage}">
 				<td th:text="${s.name}"></td>
-				<td><a th:href="@{/GoToBuyServicePage(servicepackageid=${s.id})}">BUY SERVICE PACKAGE</a></td>
+				<td><a th:href="@{/GoToBuyServicePage(servicepackageid=${s.id})}">Buy</a></td>
 				
 			</tr>
 		</tbody>

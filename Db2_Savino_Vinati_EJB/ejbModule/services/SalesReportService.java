@@ -5,11 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class ValidityperiodService {
+public class SalesReportService {
 	@PersistenceContext(unitName = "SavinoVinatiProject")
 	private EntityManager em;
 	
-	public ValidityperiodService() {
+	public SalesReportService() {
+		
 	}
 	
 }

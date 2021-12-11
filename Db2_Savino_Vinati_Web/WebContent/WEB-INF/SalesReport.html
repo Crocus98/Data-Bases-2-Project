@@ -8,6 +8,7 @@
 	<div align="right">
 		<a th:href="@{/HomeEmployee}">Home</a>
 	</div>
+	<div align="right" th:text="${'Nice to see you again ' + session.user.username}"></div>
 	<h1>Sales Report Page</h1>
 	
 </body>

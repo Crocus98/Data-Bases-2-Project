@@ -24,14 +24,17 @@
     	<p>Services</p>
     	<ul>
 	    	<li th:each="s : ${singlepackage.services}">
-	    		<span th:value="${s.id}" th:text="${s.name}"></span><br>        
+	    		<span th:value="${s.id}" th:text="${s.name}"></span><br>     
+	    		<input type="hidden" name="idservice" th:value="${s.id}">
+	    		<input type="hidden" name="servicename" th:value="${s.name}">    
 	        <br>
 	    	</li>
     	</ul>    
        	<p>Validity Period</p> 
        	<ul>
 	       	<li th:each="pp : ${singlepackage.validityperiods}">
-	       		<input type="radio" name="validity" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br>         
+	       		<input type="radio" name="idvalidity" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br> 
+	       		<input type="hidden" name="validityperiod" th:value="${pp.value}">         
 	        <br>  
 	       	</li>
        	</ul>
@@ -39,14 +42,15 @@
         <p>Optional Product</p> 
         <ul>
 	        <li th:each="op : ${singlepackage.optionalproducts}">
-		        <input type="checkbox" name="optional" th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"><br>         
+		        <input type="checkbox" name="idoptionalproducts" th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"><br> 
+		        <input type="hidden" name="optionalproductsvalue" th:value="${op.monthlyprice}">      
 	       		 <br>
 	        </li>
         </ul>
         
         Start Date: <input type="date" name="startdate" required> <br>
         <input type="hidden" name="idsinglepackage" th:value="${singlepackage.id}">
-        <input type="hidden" name="idsinglepackage" th:value="${singlepackage.name}">
+        <input type="hidden" name="singlepackagename" th:value="${singlepackage.name}">
         <br>  
         <input type="submit" value="CONFIRM" />   
         <p th:text="${errorMsg}"></p>   

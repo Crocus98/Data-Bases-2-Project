@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Confirmation</title>
 </head>
 <body>
-
+	<th:block th:if="${!session.user.username.isEmpty()}">
+		<div align="right">
+			<a th:href="@{/Logout}">Logout</a>
+		</div>
+	</th:block>
+	<!--  
+	<div align="right" th:text="${'Nice to see you again ' + session.user.username }"></div>
+	
+	 -->
+	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
+	
+	<h1>Service Package summary</h1>
+	
+	<div>
+	<p>you can preselect an option with the selected attribute:</p>
+	<form th:action="@{/GoToConfirmPage}" method="POST">
+    <fieldset>  
+    	<p th:text="${'Service package: ' + singlepackage.name}"></p>
+    	<p>Services</p>
+    	<ul>
+	    	<li th:each="s : ${servicepackage.services}">
+	    		<span th:value="${s.id}" th:text="${s.name}"></span><br>         
+	        <br>
+	    	</li>
+    	</ul>    
+       	<p>Validity Period</p> 
+       	<ul>
+	       	<li th:each="pp : ${servicepackage.validityperiods}">
+	       		<span th:value="${pp.key.id}" th:text="${'validity period: ' + pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }"></span><br>   
+	        <br>  
+	       	</li>
+       	</ul>
+        <p>Optional Product</p> 
+        <ul>
+	        <li th:each="op : ${servicepackage.optionalproducts}">
+		        <span th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"></span><br>     
+	       		 <br>
+	        </li>
+        </ul>
+        
+        Start Date: <input type="date" name="startdate" required> <br>
+        <input type="hidden" name="idsinglepackage" th:value="${singlepackage.id}">
+        <input type="hidden" name="singlepackagename" th:value="${singlepackage.name}">
+        <br>  
+        <input type="submit" value="CONFIRM" />   
+        <p th:text="${errorMsg}"></p>   
+    </fieldset>      
+</form>
+	
+	</div>
 </body>
 </html>

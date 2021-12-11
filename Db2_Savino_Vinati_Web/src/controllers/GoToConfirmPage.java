@@ -1,10 +1,14 @@
  package controllers;
 
  import java.io.IOException;
- import java.util.ArrayList;
- import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
- import javax.ejb.EJB;
+import javax.ejb.EJB;
  import javax.servlet.ServletContext;
  import javax.servlet.ServletException;
  import javax.servlet.annotation.WebServlet;
@@ -22,7 +26,8 @@
  import exceptions.BadServicePackage;
  import entities.Optionalproduct;
  import entities.Service;
- import entities.User;
+import entities.Servicepackage;
+import entities.User;
  import entities.Validityperiod;
  import services.ServicePackageService;
 
@@ -57,7 +62,7 @@
  		}
  		else {
  			user = (User)session.getAttribute("user");
- 			if (!user.getUsertype().getUsertype().equals("Employee")) {
+ 			if (!user.getUsertype().getUsertype().equals("Customer")) {
  				response.sendRedirect(loginpath);
  				return;
  			}
@@ -68,96 +73,88 @@
  		String message = null;
  		String message2 = null;
  		String servicepackagename = null;
- 		List<Integer> idvalidityperiods = new ArrayList<Integer>();
- 		List<Integer> idservices = new ArrayList<Integer>();
- 		List<Float> monthlycosts = new ArrayList<Float>();
- 		List<Integer> idoptionalproducts = new ArrayList<Integer>();
+ 	
+ 		// List<Integer> idoptionalproducts = new ArrayList<Integer>();
+ 		
+ 		// Single package product
+ 	
+ 		String idpackage = null;
+ 		// Services
+ 		List <Service> services = null;
+ 	
+ 		// Validity Period
+ 		String validityperiod = null;
+ 		String idvalidityperiod = null;
+ 		// Optional product
+ 		List <Optionalproduct> optionals = null;
+ 		List <Integer> idoptionals = new ArrayList<Integer>();
+ 		// Starting date of subscription
+ 		LocalDate startingdate = null;
+ 		
+ 		
+ 		
+ 		
  		try {
- 			servicepackagename = StringEscapeUtils.escapeJava(request.getParameter("productname"));
- 			String[] monthlycoststring = request.getParameterValues("monthlycosts");
- 			String[] idvalidityperiodstring = request.getParameterValues("idvalidityperiods");
- 			String [] idallvalidityperiodstring = request.getParameterValues("idallvalidityperiods");
- 			String[] idservicestring = request.getParameterValues("idservices");
- 			String[] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
- 			if(servicepackagename == null || servicepackagename.isEmpty() || monthlycoststring == null 
- 					|| idvalidityperiodstring == null || idservicestring == null || idallvalidityperiodstring == null
- 					|| idservicestring.length < 1 || monthlycoststring.length < 1 || idvalidityperiodstring.length < 1 
- 					|| idallvalidityperiodstring.length < 1 || monthlycoststring.length != idvalidityperiodstring.length) {
+ 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+ 			
+ 			String idpackagestring = StringEscapeUtils.escapeJava(request.getParameter("idsinglepackage"));
+ 			String idvalidityperiodstring = request.getParameter("idvalidity");
+ 		//	String[] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
+ 			String startingdatestring = request.getParameter("optionalproductsvalue");
+ 			startingdate = LocalDate.parse(startingdatestring);
+ 			LocalDate today = java.time.LocalDate.now();
+ 	 		
+ 			
+ 			if(idpackagestring == null || idpackagestring.isEmpty()
+ 					|| idvalidityperiodstring == null || idvalidityperiodstring.isEmpty()
+ 					|| startingdatestring == null || startingdatestring.isEmpty() || startingdate.isBefore(today)) {
  				throw new BadServicePackage("");
- 			}
- 			for (int j = 0; j < idvalidityperiodstring.length; j++)
- 			{
- 				for(int i = 0; i < idallvalidityperiodstring.length; i++) {
- 					if(Integer.parseInt(idallvalidityperiodstring[i]) == Integer.parseInt(idvalidityperiodstring[j])) {
- 						if(monthlycoststring[i].isEmpty() || monthlycoststring[i] == null){
- 							throw new BadServicePackage("");
- 						}
- 						monthlycosts.add(Float.parseFloat(monthlycoststring[i]));
- 						idvalidityperiods.add(Integer.parseInt(idallvalidityperiodstring[i]));
- 						System.out.println("[*] "+ Float.parseFloat(monthlycoststring[i]) + " - "+ Integer.parseInt(idallvalidityperiodstring[i]));
- 						break;
- 					}
- 				}
- 			}
- 			for(int i = 0; i < idservicestring.length; i++) {
- 				idservices.add(Integer.parseInt(idservicestring[i]));
- 			}
- 			if(idoptionalproductstring != null) {
- 				for(int i = 0; i < idoptionalproductstring.length; i++) {
- 					idoptionalproducts.add(Integer.parseInt(idoptionalproductstring[i]));
- 				}
  			}
  		} 
  		catch (Exception e) {
- 			message = "Invalid data inserted into the form. Impossible to create new service package";
+ 			message = "Invalid data inserted into the form.";
  			isBadRequest = true;
  		}
  		
- 		//Trying to create a new service package
- 		if(!isBadRequest) {
- 			try {
- 				servicePackageService.createNewServicePackage(servicepackagename, idservices, idoptionalproducts, idvalidityperiods, monthlycosts);
- 				message = "Service package created successfully";
- 			}
- 			catch(Exception e) {
- 				isBadRequest = true;
- 				message = e.getMessage();
- 			}
- 			
- 		}
+ 	
  		
- 		//Retrieve data necessary to return to home employee
- 		List<Service> services = null;
+ 		//Retrieve data about service package
+ 		Servicepackage servicepackage = null;
+ 		List<Service> serviceslist = null;
  		List<Optionalproduct> optionalproducts = null;
- 		List<Validityperiod>  validityperiods = null;
+ 		Map<Validityperiod, Float> validityperiods = null;
  		try {
- 			services = servicePackageService.findAllServices();
- 			optionalproducts = servicePackageService.findAllOptionalproducts();
- 			validityperiods = servicePackageService.findAllValidityperiods();
+ 			int idpack =  Integer.parseInt(idpackage);
+ 			servicepackage = servicePackageService.findServicePackageById(idpack);
+ 			serviceslist = servicepackage.getServices();
+ 			optionalproducts = servicepackage.getOptionalproducts();
+ 			validityperiods = servicepackage.getValidityperiods();
  			
- 			if(services == null || optionalproducts == null || validityperiods == null
+ 			if(servicepackage == null || services == null || optionalproducts == null || validityperiods == null
  				|| services.isEmpty() || optionalproducts.isEmpty() || validityperiods.isEmpty()) {
  				isBadRequest2 = true;
- 				message2 = ".\nSome data necessary to create new servicepackages are missing";
+ 				message2 = ".\nSome data are missing";
  			}
  		}
  		catch(Exception e) {
  			isBadRequest2 = true;
- 			message2 = ".\nCould not retrieve data to create new servicepackages correctly";
+ 			message2 = ".\nCould not retrieve data correctly";
  		}
  		//Returning to home employee
- 		String path = "/WEB-INF/HomeEmployee.html";
+ 		String path = "/WEB-INF/Confirmation.html";
  		ServletContext servletContext = getServletContext();
  		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
  		if(!isBadRequest2) {
- 			ctx.setVariable("services", services);
+ 			ctx.setVariable("servicepackage", servicepackage);
+ 			ctx.setVariable("services", serviceslist);
  			ctx.setVariable("optionalproducts", optionalproducts);
  			ctx.setVariable("validityperiods", validityperiods);
+ 			
  		}
  		else {
  			message = message + message2;
  		}
- 		ctx.setVariable("errorMsg2", message);
+ 		ctx.setVariable("errorMsg", message);
  		templateEngine.process(path, ctx, response.getWriter());
  	}
 

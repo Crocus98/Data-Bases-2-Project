@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 import javax.persistence.*;
@@ -99,5 +100,29 @@ public class Order implements Serializable {
 
 	public void setDatehour(Date datehour) {
 		this.datehour = datehour;
+	}
+
+	public Validityperiod getValidityperiod() {
+		return validityperiod;
+	}
+
+	public void setValidityperiod(Validityperiod validityperiod) {
+		this.validityperiod = validityperiod;
+	}
+
+	public List<Optionalproduct> getOptionalproducts() {
+		return optionalproducts;
+	}
+
+	public void setOptionalproducts(List<Optionalproduct> optionalproducts) {
+		this.optionalproducts = optionalproducts;
+	}
+
+	public Date getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
 	}
 }

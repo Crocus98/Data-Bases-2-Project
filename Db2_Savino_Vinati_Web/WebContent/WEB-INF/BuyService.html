@@ -13,26 +13,26 @@
 	<h1>Buy Service</h1>
 	
 	<div>
-		<p>you can preselect an option with the selected attribute:</p>
+		<p>Select the options you prefer for your service package:</p>
 		<form th:action="@{/GoToConfirmPage}" method="POST">
 		    <fieldset>
 		    	<p>Package service name: <span th:text="${singlepackage.name}"></span>
 		    	<input type="hidden" name="idservicepackage" th:value="${singlepackage.id}">
 		    	<p>
 		    	
-		    	<p>Services</p>
+		    	<p>Services:</p>
 		    	<ul>
 			    	<li th:each="s : ${singlepackage.services}">
 			    		<span th:value="${s.id}" th:text="${s.name}"></span><br>
 			    	</li>
 		    	</ul>    
-		       	<p>Validity Period</p> 
+		       	<p>Validity Period:</p> 
 		       	<ul>
 			       	<li th:each="pp : ${singlepackage.validityperiods}">
 			       		<input type="radio" name="idvalidityperiod" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br> 
 			       	</li>
 		       	</ul> 
-		        <p>Optional Product</p>
+		        <p>Optional Products:</p>
 		        <ul>
 			        <li th:each="op : ${singlepackage.optionalproducts}">
 				        <input type="checkbox" name="idoptionalproducts" th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"><br>

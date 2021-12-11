@@ -25,7 +25,7 @@
     	<p>Services</p>
     	<ul>
 	    	<li th:each="s : ${singlepackage.services}">
-	    		<input type="checkbox" name="service" th:value="${s.id}" th:text="${s.name}"><br>        
+	    		<span th:value="${s.id}" th:text="${s.name}"></span><br>        
 	        <br>
 	    	</li>
     	</ul>    

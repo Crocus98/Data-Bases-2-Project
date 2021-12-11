@@ -18,6 +18,12 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import entities.MvAlert;
+import entities.MvBestproduct;
+import entities.MvInsolventUser;
+import entities.MvPackage;
+import entities.MvPackageperiod;
+import entities.MvSuspendedorder;
 import entities.Optionalproduct;
 import entities.Service;
 import entities.User;
@@ -62,9 +68,37 @@ public class GoToSalesReportPage extends HttpServlet {
 			}
 		}
 		
+		boolean isBadRequest = false;
+		String message = null;
+		List<MvAlert> mvalerts = null;
+		List<MvInsolventUser> mvinsolventusers = null;
+		List<MvPackage> mvpackages = null;
+		List<MvPackageperiod> mvpackageperiods = null;
+		List<MvSuspendedorder> mvsuspendedorders = null;
+		MvBestproduct mvbestproduct = null;
+		
+		try {
+
+		}
+		catch(Exception e) {
+			isBadRequest = true;
+			message = "Could not retrieve the sales report data";
+		}
+		
 		String path = "/WEB-INF/SalesReport.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		if(isBadRequest) {
+			ctx.setVariable("errorMsg", message);
+		}
+		else {
+			ctx.setVariable("mvalerts", mvalerts);
+			ctx.setVariable("mvinsolventusers", mvinsolventusers);
+			ctx.setVariable("mvpackages", mvpackages);
+			ctx.setVariable("mvpackageperiods", mvpackageperiods);
+			ctx.setVariable("mvsuspendedorders", mvsuspendedorders);
+			ctx.setVariable("mvbestproduct", mvbestproduct);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 	

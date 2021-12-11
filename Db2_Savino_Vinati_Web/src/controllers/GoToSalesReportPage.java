@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,31 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import entities.MvAlert;
 import entities.MvBestproduct;
 import entities.MvInsolventUser;
 import entities.MvPackage;
 import entities.MvPackageperiod;
 import entities.MvSuspendedorder;
-import entities.Optionalproduct;
-import entities.Service;
 import entities.User;
-import entities.Validityperiod;
-import services.OptionalProductService;
-import services.ServicePackageService;
+import services.SalesReportService;
 
 
 @WebServlet("/GoToSalesReportPage")
 public class GoToSalesReportPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	@EJB(name = "services/SalesReportService")
+	private SalesReportService salesReportService;
        
     public GoToSalesReportPage() {
         super();
@@ -78,11 +72,11 @@ public class GoToSalesReportPage extends HttpServlet {
 		MvBestproduct mvbestproduct = null;
 		
 		try {
-
+			salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproduct);
 		}
 		catch(Exception e) {
 			isBadRequest = true;
-			message = "Could not retrieve the sales report data";
+			message = e.getMessage();
 		}
 		
 		String path = "/WEB-INF/SalesReport.html";

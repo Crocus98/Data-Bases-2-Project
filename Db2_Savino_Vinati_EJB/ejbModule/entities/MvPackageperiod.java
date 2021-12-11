@@ -20,7 +20,7 @@ public class MvPackageperiod implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "idpackage")
-	private Servicepackage servicePackage;
+	private Servicepackage servicepackage;
 
 	private int period;
 
@@ -53,12 +53,12 @@ public class MvPackageperiod implements Serializable {
 		this.sales = sales;
 	}
 
-	public Servicepackage getServicePackage() {
-		return servicePackage;
+	public Servicepackage getServicepackage() {
+		return servicepackage;
 	}
 
-	public void setServicePackage(Servicepackage servicePackage) {
-		this.servicePackage = servicePackage;
+	public void setServicepackage(Servicepackage servicepackage) {
+		this.servicepackage = servicepackage;
 	}
 
 }

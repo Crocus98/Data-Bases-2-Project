@@ -12,7 +12,7 @@
 	<div align="right" th:text="${'Nice to see you again ' + session.user.username}"></div>
 	<h1>Sales Report Page</h1>
 
-	<!-- UNO -->
+	<!-- ONE -->
 	<h2>Sales report for packages</h2>
 	<table>
 		<thead>
@@ -25,12 +25,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="mvp : ${mv_package}">
-				<td th:text="${mvp.id}"></td>
+			<tr th:each="mvp : ${mvpackages}">
+				<td th:text="${mvp.servicepackage.name}"></td>
+				<td th:text="${mvp.sales}"></td>
+				<td th:text="${mvp.value}"></td>
+				<td th:text="${mvp.valuewithproducts}"></td>
+				<td th:text="${mvp.avgoptionalproducts}"></td>
 			</tr>
 		</tbody>
 	</table>
-	<!-- DUE -->
+	<!-- TWO -->
 	<h2>Sales report for packages per period</h2>
 	<table>
 		<thead>
@@ -41,21 +45,32 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr th:each="mvpp : ${mvpackageperiods}">
+				<td th:text="${mvpp.servicepackage.name}"></td>
+				<td th:text="${mvpp.period}"></td>
+				<td th:text="${mvpp.sales}"></td>
+			</tr>
 		</tbody>
 	</table>
-	<!-- TRE -->
+	<!-- THREE -->
 	<h2>Insolvent users</h2>
 	<table>
 		<thead>
 			<tr>
 				<th>User name</th>
 				<th>Mail</th>
+				<th>Failed Payment Count</th>
 			</tr>
 		</thead>
 		<tbody>
+			<tr th:each="mviu : ${mvinsolventusers}">
+				<td th:text="${mviu.insolventuser.user.username}"></td>
+				<td th:text="${mviu.insolventuser.user.mail}"></td>
+				<td th:text="${mviu.insolventuser.failedpaymentcount}"></td>
+			</tr>
 		</tbody>
 	</table>
-	<!-- QUATTRO -->
+	<!-- FOUR -->
 	<h2>Suspended orders</h2>
 	<table>
 		<thead>
@@ -68,9 +83,16 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr th:each="mvso : ${mvsuspendedorders}">
+				<td th:text="${mvso.user.username}"></td>
+				<td th:text="${mvso.servicepackage.name}"></td>
+				<td th:text="${mvso.validityperiod.validityperiod}"></td>
+				<td th:text="${mvso.totalvalue}"></td>
+				<td th:text="${mvso.datehour}"></td>
+			</tr>
 		</tbody>
 	</table>
-	<!-- CINQUE -->
+	<!-- FIVE -->
 	<h2>Active alerts</h2>
 	<table>
 		<thead>
@@ -82,9 +104,15 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr th:each="mva : ${mvalerts}">
+				<td th:text="${mva.username}"></td>
+				<td th:text="${mva..mail}"></td>
+				<td th:text="${mva.amount}"></td>
+				<td th:text="${mva.lastrejection}"></td>
+			</tr>
 		</tbody>
 	</table>
-		<!-- SEI -->
+	<!-- SIX-->
 	<h2>Best seller optional product</h2>
 	<table>
 		<thead>
@@ -94,6 +122,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr th:each="mvbp : ${mvbestproduct}">
+				<td th:text="${mvbp.optionalproduct.name}"></td>
+				<td th:text="${mvbp.value}"></td>
+			</tr>
 		</tbody>
 	</table>
 </body>

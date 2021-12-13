@@ -124,4 +124,13 @@ public class Order implements Serializable {
 	public void setStartdate(Date startdate) {
 		this.startdate = startdate;
 	}
+	
+	public void addOptionalProduct(Optionalproduct optionalproduct) {
+		getOptionalproducts().add(optionalproduct);
+		//is it necessary to update other side?
+		// aligns both sides of the relationship
+		// if mission is new, invoking persist() on reporter cascades also to mission
+	}
+	
+	
 }

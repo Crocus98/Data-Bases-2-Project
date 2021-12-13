@@ -111,5 +111,9 @@ public class Servicepackage implements Serializable {
 	public void setValidityperiodCost(Validityperiod validityperiod, float monthlycost) {
 		validityperiods.put(validityperiod, monthlycost);
 	}
+	
+
+	
+	
 
 }

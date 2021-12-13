@@ -79,26 +79,28 @@ import services.ServicePackageService;
 		
 		//Check data received from the form 
  		try {
- 			//TODO
- 			//raccogliere i dati e metterli nelle 4 variabili sopra
- 			//idsservicepackage integer
- 			//idvalidityperiod integer
- 			//idoptionalproducts List<integers>
- 			//Date startdate
  			
- 			//SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
- 			//String idpackagestring = StringEscapeUtils.escapeJava(request.getParameter("idsinglepackage"));
- 			//String idvalidityperiodstring = request.getParameter("idvalidity");
- 			//String[] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
- 			//String startingdatestring = request.getParameter("optionalproductsvalue");
-
- 			//long startingdate = Date.parse(startingdatestring);
- 			//LocalDate today = java.time.LocalDate.now();
- 			//if(idpackagestring == null || idpackagestring.isEmpty()
- 					//|| idvalidityperiodstring == null || idvalidityperiodstring.isEmpty()
- 					//|| startingdatestring == null || startingdatestring.isEmpty()) {
- 				//throw new BadOrderParams("");
- 			//}
+ 			idservicepackage =  Integer.parseInt(request.getParameter("idsinglepackage"));
+ 			idvalidityperiod = Integer.parseInt(request.getParameter("idvalidity"));
+ 			String [] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
+ 			String startdatestring = request.getParameter("startdate");
+ 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+ 			startdate = dateFormat.parse(startdatestring);
+ 			Date today = new Date();
+ 			if(idservicepackage == null || idservicepackage > 0
+ 					|| idvalidityperiod == null || idvalidityperiod > 0
+ 					|| startdatestring == null || startdatestring.isEmpty()
+ 					|| startdate.before(today)) {
+ 				throw new BadOrderParams("");
+ 			}
+ 			
+ 			if(idoptionalproductstring != null) {
+ 				idoptionalproducts = new ArrayList<>();
+ 				for (int i = 0; i < idoptionalproductstring.length; i++) {
+ 					idoptionalproducts.add(Integer.parseInt(idoptionalproductstring[i]));
+ 				}
+ 			}
+ 		
  		} 
  		catch (Exception e) {
  			message = "Invalid data inserted into the form.";

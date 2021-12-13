@@ -26,8 +26,10 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import exceptions.BadOrder;
 import exceptions.BadOrderParams;
 import entities.Order;
+import entities.Servicepackage;
 import entities.User;
 import services.OrderService;
+import services.ServicePackageService;
 
 
  @WebServlet("/GoToConfirmPage")
@@ -36,6 +38,8 @@ import services.OrderService;
  	private TemplateEngine templateEngine;
  	@EJB(name = "services/OrderService")
  	private OrderService orderService;
+	@EJB(name = "services/ServicePackageService")
+	private ServicePackageService servicePackageService;
         
      public  GoToConfirmPage () {
          super();
@@ -74,7 +78,6 @@ import services.OrderService;
 		
 		//Check data received from the form 
  		try {
- 			
  			idservicepackage =  Integer.parseInt(request.getParameter("idservicepackage"));
  			idvalidityperiod = Integer.parseInt(request.getParameter("idvalidityperiod"));
  			String [] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
@@ -97,7 +100,7 @@ import services.OrderService;
 	
  		} 
  		catch (Exception e) {
- 			message = "ERROR: Invalid data inserted into the form. Message: "+ e.getMessage();
+ 			message = "ERROR: Invalid data inserted into the form. Could not create order";
  			isBadRequest = true;
  		}
  		
@@ -106,25 +109,48 @@ import services.OrderService;
  	 		try {
  	 			order = orderService.createOrderNoPersist(idservicepackage, idvalidityperiod, idoptionalproducts, startdate);
  	 			if(order == null) {
- 	 				throw new BadOrder("");
+ 	 				throw new BadOrder("Order is null");
  	 			}
  	 		}
  	 		catch(Exception e) {
  	 			isBadRequest = true;
- 	 			message = "ERROR: Could not create order";
+ 	 			message = "ERROR: Could not create order. " + e.getMessage();
  	 		}
  		}
  		
- 		//Moving to confirmation page
- 		String path = "/WEB-INF/Confirmation.html";
+ 		
+ 		//Moving to confirmation page if successful or to service buy page if not
  		ServletContext servletContext = getServletContext();
  		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
- 		if(!isBadRequest) {
- 			ctx.setVariable("order", order);
- 			System.out.println(order.getServicepackage().getName());
+ 		String path;
+ 		if(isBadRequest){
+ 			String message2 = null;
+ 			boolean isBadRequest2 = false;
+ 			Servicepackage servicepackage = null;
+ 			try {
+ 				servicepackage = servicePackageService.findServicePackageById(idservicepackage);
+ 			}
+ 			catch (NumberFormatException | NullPointerException e) {
+ 				message2 = "Invalid service package id parameter.";
+ 				isBadRequest2 = true;
+ 			}
+ 			catch(Exception ee) {
+ 				message2 = "Service package not found";
+ 				isBadRequest2 = true;
+ 			}
+ 			path = "/WEB-INF/BuyService.html";
+	 		
+	 		if(isBadRequest2) {
+	 			ctx.setVariable("errorMsg", message+". "+ message2);
+	 		}
+	 		else {
+	 			ctx.setVariable("errorMsg", message);
+		 		ctx.setVariable("singlepackage", servicepackage);
+	 		}
  		}
  		else {
- 			ctx.setVariable("errorMsg", message);
+	 		path = "/WEB-INF/Confirmation.html";
+	 		ctx.setVariable("order", order);
  		}
  		templateEngine.process(path, ctx, response.getWriter());
  	}

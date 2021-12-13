@@ -17,40 +17,41 @@
 	<div>
 	
 	<form th:action="@{/GoToConfirmPage}" method="POST">
-    <fieldset>  
-    	<p th:text="${'Service package: ' + order.servicepackage.name}"></p>
-    	<p>Services</p>
-    	<ul>
-	    	<li th:each="s : ${order.servicepackage.services}">
-	    		<span th:value="${s.id}" th:text="${s.name}"></span><br>         
-	        <br>
-	    	</li>
-    	</ul>    
-       	<p>Validity Period</p> 
-       	<ul>
-	       	<li>
-	       		<span th:value="${order.validityperiod.id}" th:text="${'validity period: ' + order.validityperiod + ' price: ' + order.validityperiod.value + ' &#36' }"></span><br>   
-	        <br>  
-	       	</li>
-       	</ul>
-        <p>Optional Product</p> 
-        <ul>
-	        <li th:each="op : ${order.optionalproducts}">
-		        <span th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"></span><br>     
-	       		 <br>
-	        </li>
-        </ul>
-        
-        <p>Start date:</p> 
-        <span th:value="${order.startdate}" th:text="${'date: ' + order.startdate}"></span><br>
-    	
-    	
-    	<p>Total value to be paid:</p> 
-        <span th:value="${order.totalvalue}" th:text="${'total: ' + order.totalvalue + ' &#36'}"></span><br>
-    
-    
-        <input type="submit" value="CONFIRM" />   
-        <p th:text="${errorMsg}"></p>   
+    <fieldset> 
+    	<th:block th:if="${order != null}">
+	    	<p th:text="${'Service package: ' + order.servicepackage.name}"></p>
+	    	<p>Services:</p>
+	    	<ul>
+		    	<li th:each="s : ${order.servicepackage.services}">
+		    		<span th:value="${s.id}" th:text="${s.name}"></span><br>      
+		        <br>
+		    	</li>
+	    	</ul>    
+	       	<p>Validity Period:</p> 
+	       	<ul>
+		       	<li>
+		       		<span th:value="${order.validityperiod.id}" th:text="${'Validity period: ' + order.validityperiod.validityperiod + ' price: ' + order.servicepackage.validityperiods.get(order.validityperiod) + ' &#36' }"></span><br>   
+		        <br>
+		       	</li>
+	       	</ul>
+	        <p>Optional Product:</p> 
+	        <ul>
+		        <li th:each="op : ${order.optionalproducts}">
+			        <span th:value="${op.id}" th:text="${op.name + ' price: ' + op.monthlyprice + ' &#36'}"></span><br>     
+		       		 <br>
+		        </li>
+	        </ul>
+	        
+	        <p>Start date:</p> 
+	        <span th:value="${order.startdate}" th:text="${'date: ' + order.startdate}"></span><br>
+	    	
+	    	
+	    	<p>Total value to be paid:</p> 
+	        <span th:value="${order.totalvalue}" th:text="${order.totalvalue + ' &#36'}"></span><br><br>
+	    
+	        <input type="submit" value="CONFIRM" />
+       	</th:block>   
+        <p th:text="${errorMsg}"></p>
     </fieldset>      
 </form>
 	

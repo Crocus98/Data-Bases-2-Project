@@ -23,16 +23,12 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import exceptions.BadOrder;
 import exceptions.BadOrderParams;
-import exceptions.BadServicePackage;
-import entities.Optionalproduct;
 import entities.Order;
-import entities.Service;
-import entities.Servicepackage;
 import entities.User;
-import entities.Validityperiod;
 import services.OrderService;
-import services.ServicePackageService;
+
 
  @WebServlet("/GoToConfirmPage")
  public class  GoToConfirmPage  extends HttpServlet {
@@ -71,7 +67,6 @@ import services.ServicePackageService;
 		String message = null;
 		boolean isBadRequest = false;
 		Order order = null;
-		
 		Integer idservicepackage = null;
 		Integer idvalidityperiod = null;
 		Date startdate = null;
@@ -80,18 +75,17 @@ import services.ServicePackageService;
 		//Check data received from the form 
  		try {
  			
- 			idservicepackage =  Integer.parseInt(request.getParameter("idsinglepackage"));
- 			idvalidityperiod = Integer.parseInt(request.getParameter("idvalidity"));
+ 			idservicepackage =  Integer.parseInt(request.getParameter("idservicepackage"));
+ 			idvalidityperiod = Integer.parseInt(request.getParameter("idvalidityperiod"));
  			String [] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
  			String startdatestring = request.getParameter("startdate");
- 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+ 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
  			startdate = dateFormat.parse(startdatestring);
- 			Date today = new Date();
- 			if(idservicepackage == null || idservicepackage > 0
- 					|| idvalidityperiod == null || idvalidityperiod > 0
- 					|| startdatestring == null || startdatestring.isEmpty()
- 					|| startdate.before(today)) {
- 				throw new BadOrderParams("");
+
+ 			if(idservicepackage == null || idservicepackage < 1
+ 					|| idvalidityperiod == null || idvalidityperiod < 1
+ 					|| startdatestring == null || startdate.before(new Date())) {
+ 				throw new BadOrderParams("Invalid parameters.");
  			}
  			
  			if(idoptionalproductstring != null) {
@@ -100,10 +94,10 @@ import services.ServicePackageService;
  					idoptionalproducts.add(Integer.parseInt(idoptionalproductstring[i]));
  				}
  			}
- 		
+	
  		} 
  		catch (Exception e) {
- 			message = "Invalid data inserted into the form.";
+ 			message = "ERROR: Invalid data inserted into the form. Message: "+ e.getMessage();
  			isBadRequest = true;
  		}
  		
@@ -111,10 +105,13 @@ import services.ServicePackageService;
  		if(!isBadRequest) {
  	 		try {
  	 			order = orderService.createOrderNoPersist(idservicepackage, idvalidityperiod, idoptionalproducts, startdate);
+ 	 			if(order == null) {
+ 	 				throw new BadOrder("");
+ 	 			}
  	 		}
  	 		catch(Exception e) {
  	 			isBadRequest = true;
- 	 			message = "Could not create order";
+ 	 			message = "ERROR: Could not create order";
  	 		}
  		}
  		
@@ -124,6 +121,7 @@ import services.ServicePackageService;
  		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
  		if(!isBadRequest) {
  			ctx.setVariable("order", order);
+ 			System.out.println(order.getServicepackage().getName());
  		}
  		else {
  			ctx.setVariable("errorMsg", message);

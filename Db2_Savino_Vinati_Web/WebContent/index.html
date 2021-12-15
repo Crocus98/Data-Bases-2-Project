@@ -34,7 +34,9 @@
 		
 		<div>
 		<h3>Access as a guest customer</h3>
-		<a th:href="@{/GoToHomePageCustomer}"><button name="button">Continue to home page without logging in</button></a>
+		<form action="HomeCustomer" method="GET">
+			<input type="submit" value="Continue to home page without logging in">
+		</form>
 	</div>
 	</div>
 </body>

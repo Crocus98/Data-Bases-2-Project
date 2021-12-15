@@ -6,10 +6,12 @@
 <link rel="stylesheet" type="text/css" media="all" href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>
-	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
+	<th:block th:if="${session.user != null}">
+		<div align="right">
+			<a th:href="@{/Logout}">Logout</a>
+		</div>
+		<div align="right" th:text="${'Nice to see you again ' + ${session.user.username} "></div>
+	</th:block>
 	<h1>Home Customer</h1>
 	<th:block th:if="${!errorMsg.isEmpty()}">
 		<p th:text="${'ERROR: '+ errorMsg}"></p>

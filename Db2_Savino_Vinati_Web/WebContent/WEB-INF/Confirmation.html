@@ -16,7 +16,7 @@
 	
 	<div>
 	
-	<form th:action="@{/GoToConfirmPage}" method="POST">
+	<form method="POST">
     <fieldset> 
     	<th:block th:if="${order != null}">
 	    	<p th:text="${'Service package: ' + order.servicepackage.name}"></p>
@@ -49,7 +49,13 @@
 	    	<p>Total value to be paid:</p> 
 	        <span th:value="${order.totalvalue}" th:text="${order.totalvalue + ' &#36'}"></span><br><br>
 	    
-	        <input type="submit" value="CONFIRM" />
+	    	<th:block th:if="${session.user != null}">
+	        <input type="submit" value="BUY OK" th:formaction="@{/CreateOrderOK}" />	        
+	        <input type="submit" value="BUY KO" th:formaction="@{/CreateOrderKO}"/>
+	        </th:block>
+	        <th:block th:if="${session.user == null}">
+	        <input type="submit" value="Login/Register" th:formaction="@{/GoToRegistration_Login}"/>
+	        </th:block>
        	</th:block>   
         <p th:text="${errorMsg}"></p>
     </fieldset>      

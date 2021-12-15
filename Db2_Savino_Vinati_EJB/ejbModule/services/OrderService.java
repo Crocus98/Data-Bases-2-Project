@@ -27,7 +27,9 @@ public class OrderService {
 
 	public Order createOrderNoPersist(Integer idservicepackage, Integer idvalidityperiod,
 			List<Integer> idoptionalproducts, Date date) throws BadOrder {
+
 		Order order = null;
+
 		try {
 			//Controlls missing
 			float totalprice = 0;

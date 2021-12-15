@@ -85,6 +85,7 @@ import services.ServicePackageService;
  			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
  			startdate = dateFormat.parse(startdatestring);
 
+
  			if(idservicepackage == null || idservicepackage < 1
  					|| idvalidityperiod == null || idvalidityperiod < 1
  					|| startdatestring == null || startdate.before(new Date())) {
@@ -108,9 +109,13 @@ import services.ServicePackageService;
  		if(!isBadRequest) {
  	 		try {
  	 			order = orderService.createOrderNoPersist(idservicepackage, idvalidityperiod, idoptionalproducts, startdate);
+
  	 			if(order == null) {
  	 				throw new BadOrder("Order is null");
  	 			}
+
+ 	 			System.out.println(order.getServicepackage().getName());
+
  	 		}
  	 		catch(Exception e) {
  	 			isBadRequest = true;

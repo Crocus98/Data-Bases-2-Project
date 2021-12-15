@@ -5,10 +5,12 @@
 <title>Package Details</title>
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>
-	<div align="right" th:text="${session.isEmpty()} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
+	<th:block th:if="${session.user != null}">
+		<div align="right">
+			<a th:href="@{/Logout}">Logout</a>
+		</div>
+		<div align="right" th:text="${'Nice to see you again ' + ${session.user.username} "></div>
+	</th:block>
 	
 	<h1>Buy Service</h1>
 	

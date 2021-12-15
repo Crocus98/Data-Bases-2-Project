@@ -5,12 +5,12 @@
 <title>Confirmation</title>
 </head>
 <body>
-	<th:block th:if="${session.containsKey('user')}">
+	<th:block th:if="${session.user != null}">
 		<div align="right">
 			<a th:href="@{/Logout}">Logout</a>
 		</div>
+		<div align="right" th:text="${'Nice to see you again ' + ${session.user.username} "></div>
 	</th:block>
-	<div align="right" th:text="${!session.containsKey('user')} ? '' : 'Nice to see you again ' + ${session.user.username} "></div>
 	
 	<h1>Service Package summary</h1>
 	

@@ -7,11 +7,16 @@
 <body>
 	<h1>Telco Service Application</h1>
 	<div>
-		<form action="CheckLogin" method="POST">
+		<form method="POST">
 			<fieldset>
 				Username: <input type="text" name="username" required> <br>
 				Password: <input type="password" name="pwd" required><br>
-				<input type="submit" value="Login">
+				<th:block th:if="${session.order != null}">
+	        		<input type="submit" value="Login and go to order confirmation page" th:formaction="@{/GoToConfirmPage}" />
+	        	</th:block>
+	        	<th:block th:if="${session.order == null}">
+	        		<input type="submit" value="Login" th:formaction="@{/CheckLogin}" />
+	        	</th:block>
 				<p th:text=" ${errorMsg}"></p>
 			</fieldset>
 		</form>

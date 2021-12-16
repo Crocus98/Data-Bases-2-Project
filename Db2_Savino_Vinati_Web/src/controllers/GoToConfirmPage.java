@@ -25,9 +25,9 @@ import exceptions.BadOrderParams;
 import entities.Order;
 import entities.Servicepackage;
 import entities.User;
-import services.CartService;
 import services.OrderService;
 import services.ServicePackageService;
+import stateful.CartService;
 
 
  @WebServlet("/GoToConfirmPage")
@@ -38,7 +38,7 @@ import services.ServicePackageService;
  	private OrderService orderService;
 	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
-	@EJB(name = "services/CartService")
+	@EJB
 	private CartService cartservice;
         
      public  GoToConfirmPage () {

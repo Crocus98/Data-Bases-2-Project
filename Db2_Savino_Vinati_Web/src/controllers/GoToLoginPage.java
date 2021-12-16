@@ -14,14 +14,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import services.CartService;
+import stateful.CartService;
 
 
 @WebServlet("/GoToLoginPage")
 public class GoToLoginPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "services/CartService")
+	@EJB
 	private CartService cartservice;
 
 	public GoToLoginPage() {
@@ -43,14 +43,10 @@ public class GoToLoginPage extends HttpServlet {
 		String path = "/index.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(cartservice == null)
-		{
-			cartservice.initialize();
-		}
 		if(cartservice.getOrder() != null)
 			System.out.println(cartservice.getOrder().getTotalvalue());
 		else
-			System.out.println(cartservice.getOrder());
+			System.out.println("order "+cartservice.getOrder());
 		ctx.setVariable("order", cartservice.getOrder());
 		templateEngine.process(path, ctx, response.getWriter());
 	}

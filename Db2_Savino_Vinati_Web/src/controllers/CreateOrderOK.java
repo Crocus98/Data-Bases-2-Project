@@ -67,13 +67,13 @@ public class CreateOrderOK extends HttpServlet {
 		boolean isBadRequest2 = false;
 		String message = null;
 		String message2 = null;
-		String servicepackagename = null;
+		Integer servicepackagename;
 		List<Integer> idvalidityperiods = new ArrayList<Integer>();
 		List<Integer> idservices = new ArrayList<Integer>();
 		List<Float> monthlycosts = new ArrayList<Float>();
 		List<Integer> idoptionalproducts = new ArrayList<Integer>();
 		try {
-			servicepackagename = StringEscapeUtils.escapeJava(request.getParameter("productname"));
+			servicepackagename = Integer.parseInt(request.getParameter("productname"));
 			String[] monthlycoststring = request.getParameterValues("monthlycosts");
 			String[] idvalidityperiodstring = request.getParameterValues("idvalidityperiods");
 			String [] idallvalidityperiodstring = request.getParameterValues("idallvalidityperiods");
@@ -145,7 +145,7 @@ public class CreateOrderOK extends HttpServlet {
 			message2 = ".\nCould not retrieve data to create new servicepackages correctly";
 		}
 		//Returning to home employee
-		String path = "/WEB-INF/HomeEmployee.html";
+		String path = "/WEB-INF/HomeCustomer.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		if(!isBadRequest2) {

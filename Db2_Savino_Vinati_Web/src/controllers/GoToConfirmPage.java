@@ -25,6 +25,7 @@ import exceptions.BadOrderParams;
 import entities.Order;
 import entities.Servicepackage;
 import entities.User;
+import services.CartService;
 import services.OrderService;
 import services.ServicePackageService;
 
@@ -37,6 +38,8 @@ import services.ServicePackageService;
  	private OrderService orderService;
 	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
+	@EJB(name = "services/CartService")
+	private CartService cartservice;
         
      public  GoToConfirmPage () {
          super();
@@ -111,8 +114,6 @@ import services.ServicePackageService;
  	 				throw new BadOrder("Order is null");
  	 			}
 
- 	 			System.out.println(order.getServicepackage().getName());
-
  	 		}
  	 		catch(Exception e) {
  	 			isBadRequest = true;
@@ -152,6 +153,7 @@ import services.ServicePackageService;
  		}
  		else {
 	 		path = "/WEB-INF/Confirmation.html";
+	 		cartservice.setOrder(order);
 	 		ctx.setVariable("order", order);
  		}
  		templateEngine.process(path, ctx, response.getWriter());

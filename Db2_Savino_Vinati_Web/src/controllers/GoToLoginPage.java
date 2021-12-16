@@ -47,6 +47,10 @@ public class GoToLoginPage extends HttpServlet {
 		{
 			cartservice.initialize();
 		}
+		if(cartservice.getOrder() != null)
+			System.out.println(cartservice.getOrder().getTotalvalue());
+		else
+			System.out.println(cartservice.getOrder());
 		ctx.setVariable("order", cartservice.getOrder());
 		templateEngine.process(path, ctx, response.getWriter());
 	}

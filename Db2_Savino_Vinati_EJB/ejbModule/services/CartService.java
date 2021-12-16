@@ -4,14 +4,17 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
 import entities.Order;
-import exceptions.OrderException;
 
 @Stateful
-public class Cart {
+public class CartService {
 	private Order order;
 	
-	public void initialize () throws OrderException{
+	public void initialize () {
 		setOrder(null);	
+	}
+	
+	public void initialize (Order order) {
+		setOrder(order);	
 	}
 	
 	public Order getOrder() {

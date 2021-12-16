@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,15 +13,12 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import stateful.CartService;
 
 
 @WebServlet("/GoToLoginPage")
 public class GoToLoginPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB
-	private CartService cartservice;
 
 	public GoToLoginPage() {
 		super();
@@ -43,11 +39,6 @@ public class GoToLoginPage extends HttpServlet {
 		String path = "/index.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(cartservice.getOrder() != null)
-			System.out.println(cartservice.getOrder().getTotalvalue());
-		else
-			System.out.println("order "+cartservice.getOrder());
-		ctx.setVariable("order", cartservice.getOrder());
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 	

@@ -11,10 +11,10 @@
 			<fieldset>
 				Username: <input type="text" name="username" required> <br>
 				Password: <input type="password" name="pwd" required><br>
-				<th:block th:if="${order == null}">
+				<th:block th:if="${session.order == null}">
 	        		<input type="submit" value="Login" th:formaction="@{/CheckLogin}"/>
 	        	</th:block>
-		        <th:block th:if="${order != null}">
+		        <th:block th:if="${session.order != null}">
 		        	<input type="submit" value="Return to confirmation page" th:formaction="@{/GoToConfirmPage}"/>
 		        </th:block>
 				<p th:text=" ${errorMsg}"></p>

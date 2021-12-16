@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.persistence.NonUniqueResultException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -22,12 +24,13 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import exceptions.BadOrder;
 import exceptions.BadOrderParams;
+import exceptions.CredentialsException;
 import entities.Order;
 import entities.Servicepackage;
 import entities.User;
 import services.OrderService;
 import services.ServicePackageService;
-import stateful.CartService;
+import services.UserService;
 
 
  @WebServlet("/GoToConfirmPage")
@@ -36,10 +39,10 @@ import stateful.CartService;
  	private TemplateEngine templateEngine;
  	@EJB(name = "services/OrderService")
  	private OrderService orderService;
+ 	@EJB(name = "services/UserService")
+ 	private UserService userService;
 	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
-	@EJB
-	private CartService cartservice;
         
      public  GoToConfirmPage () {
          super();
@@ -67,10 +70,50 @@ import stateful.CartService;
 			}
 		}
 		
+		String path;
+		Order order = null;
+		
+		if(session.getAttribute("order")!= null) {
+			//Obtain order
+			order = (Order) session.getAttribute("order");
+			//Add user to session
+			String usrn = null;
+			String pwd = null;
+			
+			try {
+				usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
+				pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
+				
+				if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
+					throw new Exception("Missing or empty credential value");
+				}
+			}
+			catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or wrong credential value");
+				return;
+			}
+
+			try {
+				user = userService.checkCredentials(usrn, pwd);
+			}
+			catch (CredentialsException | NonUniqueResultException e ) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
+				return;
+			}
+			
+			ServletContext servletContext = getServletContext();
+	 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			path = "/WEB-INF/Confirmation.html";
+			ctx.setVariable("order", order);
+			request.getSession().setAttribute("user", user);
+			templateEngine.process(path, ctx, response.getWriter());
+			return;
+		}
+		
 		//Variable declaration
 		String message = null;
 		boolean isBadRequest = false;
-		Order order = null;
 		Integer idservicepackage = null;
 		Integer idvalidityperiod = null;
 		Date startdate = null;
@@ -125,7 +168,6 @@ import stateful.CartService;
  		//Moving to confirmation page if successful or to service buy page if not
  		ServletContext servletContext = getServletContext();
  		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
- 		String path;
  		if(isBadRequest){
  			String message2 = null;
  			boolean isBadRequest2 = false;
@@ -153,7 +195,7 @@ import stateful.CartService;
  		}
  		else {
 	 		path = "/WEB-INF/Confirmation.html";
-	 		cartservice.setOrder(order);
+	 		request.getSession().setAttribute("order", order);
 	 		ctx.setVariable("order", order);
  		}
  		templateEngine.process(path, ctx, response.getWriter());

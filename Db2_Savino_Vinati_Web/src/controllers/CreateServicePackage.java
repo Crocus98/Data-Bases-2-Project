@@ -76,7 +76,7 @@ public class CreateServicePackage extends HttpServlet {
 			servicepackagename = StringEscapeUtils.escapeJava(request.getParameter("productname"));
 			String[] monthlycoststring = request.getParameterValues("monthlycosts");
 			String[] idvalidityperiodstring = request.getParameterValues("idvalidityperiods");
-			String [] idallvalidityperiodstring = request.getParameterValues("idallvalidityperiods");
+			String[] idallvalidityperiodstring = request.getParameterValues("idallvalidityperiods");
 			String[] idservicestring = request.getParameterValues("idservices");
 			String[] idoptionalproductstring = request.getParameterValues("idoptionalproducts");
 			if(servicepackagename == null || servicepackagename.isEmpty() || monthlycoststring == null 

@@ -86,7 +86,7 @@ public class GoToHomePageEmployee extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		if(isBadRequest) {
-			ctx.setVariable("errorMsg2", message);	
+			ctx.setVariable("errorMsg2", message);
 		}
 		else{
 			ctx.setVariable("services", services);

@@ -50,8 +50,8 @@
 	        <span th:value="${order.totalvalue}" th:text="${order.totalvalue + ' &#36'}"></span><br><br>
 	    
 	    	<th:block th:if="${session.user != null}">
-	        	<input type="submit" value="BUY OK" th:formaction="@{/CreateOrderOK}" />	        
-	        	<input type="submit" value="BUY KO" th:formaction="@{/CreateOrderKO}"/>
+	        	<input type="submit" value="BUY OK" th:formaction="@{/CreateOrder(payment=1)}" />	        
+	        	<input type="submit" value="BUY KO" th:formaction="@{/CreateOrder(payment=0)}"/>
 	        </th:block>
 	        <th:block th:if="${session.user == null}">
 	        	<input type="submit" value="Login" th:formaction="@{/GoToLoginPage}"/>

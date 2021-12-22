@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -20,12 +21,13 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import entities.Order;
 import entities.Servicepackage;
 import entities.User;
+import exceptions.BadOrder;
 import services.OrderService;
 import services.ServicePackageService;
 
 
-@WebServlet("/CreateOrderOK")
-public class CreateOrderOK extends HttpServlet {
+@WebServlet("/CreateOrder")
+public class CreateOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  	private TemplateEngine templateEngine;
  	@EJB(name = "services/ServicePackageService")
@@ -33,7 +35,7 @@ public class CreateOrderOK extends HttpServlet {
  	@EJB(name = "services/OrderService")
 	private OrderService orderService;
 
-    public CreateOrderOK() {
+    public CreateOrder() {
         super();
        
     }
@@ -71,7 +73,7 @@ public class CreateOrderOK extends HttpServlet {
 			isBadRequest = true;
 			message = "Could not find order to be created";
 		}
-		if(isBadRequest) {
+		if(!isBadRequest) {
 			try {
 				packages = servicePackageService.findAllServicePackages();
 				//Andranno messi qui anche tutti gli ordini forse (Se si vogliono nella home page)
@@ -83,14 +85,37 @@ public class CreateOrderOK extends HttpServlet {
 		else {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
-				order.setPaid(true);
-				orderService.createOrder(order);
-				message = "Order and Activation Schedule created successfully";
+				String temp = StringEscapeUtils.escapeJava(request.getParameter("payment"));
+				if(temp == "1") {
+					order.setPaid(true);
+				}
+				else if (temp == "0") {
+					order.setPaid(false);
+				}
+				else {
+					throw new BadOrder("Payment parameter not found");
+				}
 			}
-			catch (Exception e)
-			{
-				isBadRequest2 = true;
-				message = "Could not create order";
+			catch(Exception e){
+				isBadRequest = true;
+				message = "Could not retrieve payment data. Your money are safe";
+			}
+			if(!isBadRequest) {
+				try {
+					order.setPaid(true);
+					orderService.createOrder(order);
+					if(order.isPaid() == true) {
+						message = "Order and Activation Schedule created successfully";
+					}
+					else {
+						message = "Order created successfully but payment failed. Complete the payment as soon as possible";
+					}
+				}
+				catch (Exception e)
+				{
+					isBadRequest2 = true;
+					message = "Could not create order";
+				}
 			}
 		}
 		String path = "/WEB-INF/HomeCustomer.html";
@@ -110,7 +135,6 @@ public class CreateOrderOK extends HttpServlet {
 		}
 		request.getSession().removeAttribute("order");
 		templateEngine.process(path, ctx, response.getWriter());
-		
 	}
 
 }

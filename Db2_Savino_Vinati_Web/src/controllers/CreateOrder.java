@@ -55,7 +55,6 @@ public class CreateOrder extends HttpServlet {
 		HttpSession session = request.getSession();
 		List<Servicepackage> packages = null;
 		boolean isBadRequest = false;
-		boolean isBadRequest2 = false;
 		String message = null;
 		User user;
 		if (session.isNew() || session.getAttribute("user") == null) {
@@ -113,7 +112,7 @@ public class CreateOrder extends HttpServlet {
 				}
 				catch (Exception e)
 				{
-					isBadRequest2 = true;
+					isBadRequest = true;
 					message = "Could not create order";
 				}
 			}
@@ -125,13 +124,9 @@ public class CreateOrder extends HttpServlet {
 			ctx.setVariable("errorMsg", message);
 		}
 		else{
-			if(isBadRequest2) {
-				ctx.setVariable("servicepackages", packages);
-				ctx.setVariable("errorMsg", message);
-			}
-			else{
-				ctx.setVariable("errorMsg", message);
-			}
+			ctx.setVariable("servicepackages", packages);
+			ctx.setVariable("errorMsg", message);
+
 		}
 		request.getSession().removeAttribute("order");
 		templateEngine.process(path, ctx, response.getWriter());

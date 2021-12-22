@@ -57,4 +57,9 @@ public class OrderService {
 			throw new BadOrder("Data for the creation of the order were wrong");
 		}
 	}
+
+	public void createOrder(Order order) {
+		// TODO Auto-generated method stub
+		
+	}
 }

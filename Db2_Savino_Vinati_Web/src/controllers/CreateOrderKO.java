@@ -20,6 +20,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import entities.Order;
 import entities.Servicepackage;
 import entities.User;
+import services.OrderService;
 import services.ServicePackageService;
 
 
@@ -29,6 +30,8 @@ public class CreateOrderKO extends HttpServlet {
  	private TemplateEngine templateEngine;
  	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
+ 	@EJB(name = "services/OrderService")
+	private OrderService orderService;
 
     public CreateOrderKO() {
         super();
@@ -80,10 +83,9 @@ public class CreateOrderKO extends HttpServlet {
 		else {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
-			//Code to create the order, update the user payment count and the Alert in a single transaction to avoid partial execution
-			
-			//
-				message = "Order and Activation Schedule created successfully";
+				order.setPaid(false);
+				orderService.createOrder(order);
+				message = "Order created successfully but not paid";
 			}
 			catch (Exception e)
 			{

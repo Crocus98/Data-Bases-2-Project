@@ -63,10 +63,11 @@ public class GoToHomePageCustomer extends HttpServlet {
 		List<Servicepackage> packages = null;
 		try {
 			packages = servicePackageService.findAllServicePackages();
+			//Andranno messi qui anche gli ordini
 			message = "";
 		} catch (Exception e) {
 			isBadRequest = true;
-			message = "Could not retrieve service packages to be bought.";
+			message = "Could not retrieve service packages to be bought."; //Andranno messi qui anche gli ordini
 		}
 		
 		String path = "/WEB-INF/HomeCustomer.html";

@@ -14,7 +14,7 @@
 	</th:block>
 	<h1>Home Customer</h1>
 	<th:block th:if="${!errorMsg.isEmpty()}">
-		<p th:text="${'ERROR: '+ errorMsg}"></p>
+		<p th:text="${errorMsg}"></p>
 	</th:block>
 	<div>
 	<table>

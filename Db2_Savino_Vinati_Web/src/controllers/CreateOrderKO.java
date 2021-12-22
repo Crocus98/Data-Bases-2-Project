@@ -23,14 +23,14 @@ import entities.User;
 import services.ServicePackageService;
 
 
-@WebServlet("/CreateOrderOK")
-public class CreateOrderOK extends HttpServlet {
+@WebServlet("/CreateOrderKO")
+public class CreateOrderKO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  	private TemplateEngine templateEngine;
  	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
 
-    public CreateOrderOK() {
+    public CreateOrderKO() {
         super();
        
     }
@@ -80,7 +80,7 @@ public class CreateOrderOK extends HttpServlet {
 		else {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
-			//Code to create the order and the Activation schedule in single transaction to avoid partial execution
+			//Code to create the order, update the user payment count and the Alert in a single transaction to avoid partial execution
 			
 			//
 				message = "Order and Activation Schedule created successfully";

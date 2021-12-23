@@ -54,6 +54,7 @@ public class CreateOrder extends HttpServlet {
  		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
 		List<Servicepackage> packages = null;
+		List<Order> rejectedOrders = null;
 		boolean isBadRequest = false;
 		String message = null;
 		User user;
@@ -72,16 +73,8 @@ public class CreateOrder extends HttpServlet {
 			isBadRequest = true;
 			message = "Could not find order to be created";
 		}
+		
 		if(!isBadRequest) {
-			try {
-				packages = servicePackageService.findAllServicePackages();
-				//Andranno messi qui anche tutti gli ordini forse (Se si vogliono nella home page)
-			} catch (Exception e) {
-				isBadRequest = true;
-				message += ". Could not retrieve service packages to be bought."; //Da modificare se si mettono sopra gli ordini (Se si vogliono nella HomePage)
-			}
-		}
-		else {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
 				String temp = StringEscapeUtils.escapeJava(request.getParameter("payment"));
@@ -117,6 +110,13 @@ public class CreateOrder extends HttpServlet {
 				}
 			}
 		}
+		try {
+			packages = servicePackageService.findAllServicePackages();
+			rejectedOrders = orderService.findAllRejectedOrders(user);
+		} catch (Exception e) {
+			isBadRequest = true;
+			message += ". Could not retrieve service packages to be bought or rejected orders.";
+		}
 		String path = "/WEB-INF/HomeCustomer.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -125,6 +125,7 @@ public class CreateOrder extends HttpServlet {
 		}
 		else{
 			ctx.setVariable("servicepackages", packages);
+			ctx.setVariable("rejectedorders", rejectedOrders);
 			ctx.setVariable("errorMsg", message);
 		}
 		request.getSession().removeAttribute("order");

@@ -203,10 +203,26 @@ import services.UserService;
  	
  	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+ 		HttpSession session = request.getSession();
+ 		String loginpath = getServletContext().getContextPath() + "/index.html";
  		Order order = null;
  		Integer orderid = null;
  		String message = null;
  		boolean isBadRequest = false;
+ 		List<Servicepackage> packages = null;
+		List<Order> rejectedOrders = null;
+		User user;
+		if (session.isNew() || session.getAttribute("user") == null) {
+			response.sendRedirect(loginpath);
+			return;
+		}
+		else {
+			user = (User) session.getAttribute("user");
+			if (!user.getUsertype().getUsertype().equals("Customer")) {
+				response.sendRedirect(loginpath);
+				return;
+			}
+		}
  		try {
  			orderid = Integer.parseInt(request.getParameter("orderid"));
  		}
@@ -219,20 +235,34 @@ import services.UserService;
 	 			order = orderService.findOrderById(orderid);
 	 		}
 	 		catch(Exception e) {
-	 			
+	 			isBadRequest = true;
+	 		}
+	 		if(isBadRequest) {
+	 			try {
+	 				packages = servicePackageService.findAllServicePackages();
+	 				rejectedOrders = orderService.findAllRejectedOrders(user);
+	 				message = "";
+	 			} 
+	 			catch (Exception e) {
+	 				isBadRequest = true;
+	 				message = "Could not retrieve service packages to be bought or rejected orders";
+	 			}
 	 		}
  		}
+ 		
  		ServletContext servletContext = getServletContext();
  		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
  		String path = null;
  		if(!isBadRequest) {
  			path = "/WEB-INF/Confirmation.html";
+ 			request.getSession().setAttribute("order", order);
  			ctx.setVariable("order", order);
  		}
  		else {
  			path = "/WEB-INF/HomeCustomer.html";
  			ctx.setVariable("errorMsg", message);
- 			//Mettere tutto ciò che serve per andare alla home
+ 			ctx.setVariable("servicepackages", packages);
+			ctx.setVariable("rejectedorders", rejectedOrders);
  		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}

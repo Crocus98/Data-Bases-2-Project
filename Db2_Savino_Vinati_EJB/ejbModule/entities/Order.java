@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Table(name = "order", schema="db2_savino_vinati")
 @NamedQueries({
 	@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o"),
-	@NamedQuery(name="Order.findFromId", query="SELECT o FROM Order o WHERE o.id = ?1")
+	@NamedQuery(name="Order.findFromId", query="SELECT o FROM Order o WHERE o.id = ?1"),
+	@NamedQuery(name="Order.findRejectedOrders", query="SELECT o FROM Order o WHERE o.paid = false AND o.user = ?1")
 })
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;

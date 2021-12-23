@@ -85,64 +85,36 @@ public class OrderService {
 			em.persist(order);
 		}catch(PersistenceException e) {
 			throw new BadOrder("Could not create order");
-		}
-		// activation schedule con activation date e deactivation date
-		
-		// service schedule con id activation e id service
-		// product schedule con idactivation  e id optional product
-		
-		
-		// se rejected
-		// insolventuser 
-		// insolventuser --> insolvent yes --> count ++
-		
-		
-		// mettere controllo login insolvent o meno
-		// se insolvent mostrare nella home page l'elenco degli ordini rejected
-		
-		
-		// se count >= 3
-		// create alert with the user Id, username, email, and the amount, date and time of the last rejection.
+		}		
 	}
 
-	private void checkInsolventUserAndAlert(Order order) throws BadAlert {
-		Alert alert = null;
+	private void checkInsolventUserAndAlert(Order order) throws BadAlert, BadOrder {
 		try {
-			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
 			order.getUser().getInsolventuser().setInsolvent(true);
-			if(order.getUser().getInsolventuser().getFailedpaymentcount() == 3) {
-				
-			}
-			else if (order.getUser().getInsolventuser().getFailedpaymentcount() > 3) {
-				
+			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
+			if (order.getUser().getInsolventuser().getFailedpaymentcount() >= 3) {
+				Alert alert = new Alert(order.getUser(), order.getTotalvalue(), order);
+				order.getUser().getInsolventuser().getAlerts().add(alert);
 			}
 		}
 		catch (Exception e) {
-			
-		}
-		try {
-			
-		}
-		catch(PersistenceException e) {
-			
+			throw new BadOrder("Could not check insolvent user or alert");
 		}
 	}
 
 	private void createActivationSchedule(Order order) throws BadActivationSchedule{
-		Activationschedule activationSchedule = null;
 		try {
 			Date deactivationDate = DateUtils.addMonths(order.getStartdate(), order.getValidityperiod().getValidityperiod());			
-			activationSchedule = new Activationschedule(order.getServicepackage().getServices(), order.getOptionalproducts(), order.getStartdate(), deactivationDate, order.getUser());
+			Activationschedule activationSchedule = new Activationschedule(order.getServicepackage().getServices(), order.getOptionalproducts(), order.getStartdate(), deactivationDate, order.getUser());
+			order.getUser().getActivationschedules().add(activationSchedule);
 		}
 		catch(Exception e) {
-			throw new BadActivationSchedule(e.getMessage());
-		}
-		try {
-			em.persist(activationSchedule);
-		}
-		catch(PersistenceException e) {
 			throw new BadActivationSchedule("Could not create activation schedule");
 		}
-		
+	}
+
+	public Order findOrderById(Integer orderid) {
+		Order order = em.find(Order.class, orderid);
+		return order;
 	}
 }

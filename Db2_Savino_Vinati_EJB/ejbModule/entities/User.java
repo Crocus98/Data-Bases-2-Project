@@ -34,9 +34,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<Activationschedule> activationschedules;
 	
-	@OneToMany(mappedBy="user")
-	private List<Alert> alerts;
-	
 	public User() {
 		
 	}
@@ -107,4 +104,5 @@ public class User implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 }

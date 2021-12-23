@@ -150,7 +150,7 @@ import services.UserService;
  		
  		//If data from the form are correct we try to create the order
  		if(!isBadRequest) {
- 	 		try {;
+ 	 		try {
  	 			order = orderService.createOrderNoPersist(idservicepackage, idvalidityperiod, idoptionalproducts, startdate);
 
  	 			if(order == null) {
@@ -200,6 +200,42 @@ import services.UserService;
  		}
  		templateEngine.process(path, ctx, response.getWriter());
  	}
+ 	
+ 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+ 		Order order = null;
+ 		Integer orderid = null;
+ 		String message = null;
+ 		boolean isBadRequest = false;
+ 		try {
+ 			orderid = Integer.parseInt(request.getParameter("orderid"));
+ 		}
+ 		catch(Exception e) {
+ 			message = "Invalid rejected order id";
+ 			isBadRequest = true;
+ 		}
+ 		if(!isBadRequest) {
+	 		try {
+	 			order = orderService.findOrderById(orderid);
+	 		}
+	 		catch(Exception e) {
+	 			
+	 		}
+ 		}
+ 		ServletContext servletContext = getServletContext();
+ 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+ 		String path = null;
+ 		if(!isBadRequest) {
+ 			path = "/WEB-INF/Confirmation.html";
+ 			ctx.setVariable("order", order);
+ 		}
+ 		else {
+ 			path = "/WEB-INF/HomeCustomer.html";
+ 			ctx.setVariable("errorMsg", message);
+ 			//Mettere tutto ciò che serve per andare alla home
+ 		}
+		templateEngine.process(path, ctx, response.getWriter());
+	}
 
  	public void destroy() {
  		

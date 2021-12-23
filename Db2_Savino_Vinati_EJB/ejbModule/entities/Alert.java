@@ -24,6 +24,10 @@ public class Alert implements Serializable {
 	@JoinColumn(name="iduser")
 	private User user;
 	
+	@OneToOne
+	@JoinColumn(name="idorder")
+	private Order order;
+	
 	private float amount;
 	
 	private boolean active;
@@ -31,6 +35,15 @@ public class Alert implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastrejection;
 	
+	public Alert() {
+		
+	}
+	
+	public Alert(User user, float amount, Order order) {
+		this.user = user;
+		this.amount = amount;
+		this.order = order;
+	}
 	
 	public float getAmount() {
 		return amount;
@@ -62,5 +75,13 @@ public class Alert implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }

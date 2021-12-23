@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -25,6 +27,9 @@ public class Insolventuser implements Serializable {
 	@JoinColumn(name = "id")
 	@MapsId
 	private User user;
+	
+	@OneToMany(mappedBy="user")
+	private List<Alert> alerts;
 
 	public Insolventuser() {
 		
@@ -60,6 +65,14 @@ public class Insolventuser implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Alert> getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(List<Alert> alerts) {
+		this.alerts = alerts;
 	}
 
 }

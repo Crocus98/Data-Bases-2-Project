@@ -17,6 +17,7 @@
 		<p th:text="${errorMsg}"></p>
 	</th:block>
 	<div>
+	<h2>Service Packages Offered By Telco</h2>
 	<table>
 		<thead>
 			<tr>
@@ -32,5 +33,30 @@
 		</tbody>
 	</table>
 	</div>
+	<th:block th:if="${session.user != null && session.user.insolventuser.failedpaymentcount > 0}">
+		<div>
+		<h2>Rejected Orders To Be Payed</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Service Package Name</th>
+					<th>Total value </th>
+					<th>Date of Purchase </th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ro : ${rejectedorders}">
+					<td th:text="${ro.servicepackage.name}"></td>
+					<td th:text="${ro.totalvalue}"></td>
+					<td th:text="${ro.datehour}"></td>
+					<td>
+						<input type="submit" value="Details" th:formaction="@{/GoToConfirmPage(orderid=${ro.id})}" /> 
+		        	</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</th:block>
 </body>
 </html>

@@ -126,7 +126,6 @@ public class CreateOrder extends HttpServlet {
 		else{
 			ctx.setVariable("servicepackages", packages);
 			ctx.setVariable("errorMsg", message);
-
 		}
 		request.getSession().removeAttribute("order");
 		templateEngine.process(path, ctx, response.getWriter());

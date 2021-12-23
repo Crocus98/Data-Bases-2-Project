@@ -108,10 +108,12 @@ public class OrderService {
 	private void checkInsolventUserAndAlert(Order order) throws BadAlert {
 		Alert alert = null;
 		try {
-			// order.getUser().getInsolventuser().setFailedpaymentcount(+1);
 			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
-			if(order.getUser().getInsolventuser().isInsolvent()) {
-								
+			if(order.getUser().getInsolventuser().getFailedpaymentcount() == 3) {
+				
+			}
+			else if (order.getUser().getInsolventuser().getFailedpaymentcount() > 3) {
+				
 			}
 		}
 		catch (Exception e) {
@@ -120,10 +122,9 @@ public class OrderService {
 		try {
 			
 		}
-		catch (PersistenceException e) {
+		catch(PersistenceException e) {
 			
 		}
-		
 	}
 
 	private void createActivationSchedule(Order order) throws BadActivationSchedule{

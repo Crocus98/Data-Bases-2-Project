@@ -97,7 +97,7 @@ public class OrderService {
 			order.getUser().getInsolventuser().setInsolvent(true);
 			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
 			if (order.getUser().getInsolventuser().getFailedpaymentcount() >= 3) {
-				Alert alert = new Alert(order.getUser(), order.getTotalvalue(), order);
+				Alert alert = new Alert(order.getUser().getInsolventuser(),order.getTotalvalue(), order);
 				order.getUser().getInsolventuser().getAlerts().add(alert);
 			}
 		}

@@ -21,8 +21,8 @@ public class Alert implements Serializable {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="iduser")
-	private User user;
+	@JoinColumn(name="idinsolventuser")
+	private Insolventuser insolventUser;
 	
 	@OneToOne
 	@JoinColumn(name="idorder")
@@ -39,8 +39,8 @@ public class Alert implements Serializable {
 		
 	}
 	
-	public Alert(User user, float amount, Order order) {
-		this.user = user;
+	public Alert(Insolventuser insolventUser, float amount, Order order) {
+		this.setInsolventUser(insolventUser);
 		this.amount = amount;
 		this.order = order;
 	}
@@ -69,19 +69,19 @@ public class Alert implements Serializable {
 		this.lastrejection = lastrejection;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Order getOrder() {
 		return order;
 	}
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Insolventuser getInsolventUser() {
+		return insolventUser;
+	}
+
+	public void setInsolventUser(Insolventuser insolventUser) {
+		this.insolventUser = insolventUser;
 	}
 }

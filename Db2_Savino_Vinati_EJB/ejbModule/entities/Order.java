@@ -12,7 +12,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "order", schema="db2_savino_vinati")
-@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
+@NamedQueries({
+	@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o"),
+	@NamedQuery(name="Order.findFromId", query="SELECT o FROM Order o WHERE o.id = ?1")
+})
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 

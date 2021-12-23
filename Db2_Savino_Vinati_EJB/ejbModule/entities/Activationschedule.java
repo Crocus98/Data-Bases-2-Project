@@ -26,8 +26,6 @@ public class Activationschedule implements Serializable {
 	@JoinColumn(name="iduser")
 	private User user;
 
-	public Activationschedule() {
-	}
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
@@ -44,6 +42,17 @@ public class Activationschedule implements Serializable {
 			inverseJoinColumns= { @JoinColumn(name="idoptionalproduct")}
 	)
 	private List<Optionalproduct> optionalproducts;
+	
+	public Activationschedule() {
+	}
+	
+	public Activationschedule(List<Service> services, List<Optionalproduct> optionalProducts, Date activationDate, Date deactivationDate, User user) {
+		this.setServices(services);
+		this.setOptionalproducts(optionalProducts);
+		this.setActivationdate(activationDate);
+		this.setDeactivationdate(deactivationDate);
+		this.setUser(user);
+	}
 
 	public int getId() {
 		return this.id;

@@ -21,8 +21,6 @@ import entities.Validityperiod;
 import exceptions.BadActivationSchedule;
 import exceptions.BadAlert;
 import exceptions.BadOrder;
-import exceptions.BadServicePackage;
-import exceptions.DuplicatedPackagename;
 
 
 @Stateless

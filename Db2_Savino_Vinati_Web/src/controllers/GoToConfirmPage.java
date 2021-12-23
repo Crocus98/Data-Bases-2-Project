@@ -219,7 +219,7 @@ import services.UserService;
 	 			order = orderService.findOrderById(orderid);
 	 		}
 	 		catch(Exception e) {
-	 			
+	 			message = ("Could not retreive the rejected order");
 	 		}
  		}
  		ServletContext servletContext = getServletContext();
@@ -233,7 +233,7 @@ import services.UserService;
  			path = "/WEB-INF/HomeCustomer.html";
  			ctx.setVariable("errorMsg", message);
  			//Mettere tutto ciò che serve per andare alla home
- 		}
+ 		} 
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

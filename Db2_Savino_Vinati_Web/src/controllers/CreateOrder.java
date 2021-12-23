@@ -101,7 +101,7 @@ public class CreateOrder extends HttpServlet {
 			}
 			if(!isBadRequest) {
 				try {
-					order.setPaid(true);
+					order.setUser(user);
 					orderService.createOrder(order);
 					if(order.isPaid() == true) {
 						message = "Order and Activation Schedule created successfully";

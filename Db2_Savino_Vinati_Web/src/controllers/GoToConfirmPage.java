@@ -150,7 +150,7 @@ import services.UserService;
  		
  		//If data from the form are correct we try to create the order
  		if(!isBadRequest) {
- 	 		try {
+ 	 		try {;
  	 			order = orderService.createOrderNoPersist(idservicepackage, idvalidityperiod, idoptionalproducts, startdate);
 
  	 			if(order == null) {

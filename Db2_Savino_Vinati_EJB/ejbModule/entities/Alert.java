@@ -24,10 +24,6 @@ public class Alert implements Serializable {
 	@JoinColumn(name="iduser")
 	private User user;
 	
-	private String username;
-	
-	private String mail;
-	
 	private float amount;
 	
 	private boolean active;
@@ -35,21 +31,6 @@ public class Alert implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastrejection;
 	
-	public String getUsername() {
-		return username;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public String getMail() {
-		return mail;
-	}
-	
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
 	
 	public float getAmount() {
 		return amount;

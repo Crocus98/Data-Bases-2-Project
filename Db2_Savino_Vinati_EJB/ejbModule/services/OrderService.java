@@ -109,6 +109,7 @@ public class OrderService {
 		Alert alert = null;
 		try {
 			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
+			order.getUser().getInsolventuser().setInsolvent(true);
 			if(order.getUser().getInsolventuser().getFailedpaymentcount() == 3) {
 				
 			}

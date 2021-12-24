@@ -39,50 +39,91 @@ public class SalesReportService {
 		}
 	}
 
-	private List<MvBestproduct> findAllbestproducts(){
-		List<MvBestproduct> mvBestproduct = em
-				.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
-				.getResultList();
+	public List<MvBestproduct> findAllbestproducts () throws BadSalesReportDataRetrieval{
+		List<MvBestproduct> mvBestproduct = null;
+		try {
+			mvBestproduct = em
+					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
+					.getResultList();
+		}
+		 catch (PersistenceException e) {
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		 }
 		return mvBestproduct;
 	}
 
 
-	private List<MvAlert> findAllmvalers() {
-		List<MvAlert> mvalerts = em
-				.createNamedQuery("MvAlert.findAll", MvAlert.class)
-				.getResultList();
+	public List<MvAlert> findAllmvalers() throws BadSalesReportDataRetrieval{
+		List<MvAlert> mvalerts = null;
+		try {
+			mvalerts = em
+					.createNamedQuery("MvAlert.findAll", MvAlert.class)
+					.getResultList();
+		}
+		catch(PersistenceException e) {
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		}
+		
 		return mvalerts;
 	}
 
 
-	private List<MvSuspendedorder> findAllmvsuspendedorders() {
-		List<MvSuspendedorder> mvsuspendedorders = em
-		.createNamedQuery("MvSuspendedorder.findAll", MvSuspendedorder.class)
-		.getResultList(); 
+	public List<MvSuspendedorder> findAllmvsuspendedorders() throws BadSalesReportDataRetrieval{
+		List<MvSuspendedorder> mvsuspendedorders = null;
+		try {
+			mvsuspendedorders = em
+					.createNamedQuery("MvSuspendedorder.findAll", MvSuspendedorder.class)
+					.getResultList(); 
+		}
+		catch(PersistenceException e){
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		}
+		
 		return mvsuspendedorders;
 	}
 
 
-	private List<MvInsolventUser> findAllmvinsolventusers() {
-		List<MvInsolventUser> mvinsolventuser = em
+	public List<MvInsolventUser> findAllmvinsolventusers() throws BadSalesReportDataRetrieval{
+		List<MvInsolventUser> mvinsolventuser = null;
+		try {
+			mvinsolventuser = em
 				.createNamedQuery("MvInsolventUser.findAll", MvInsolventUser.class)
 				.getResultList();
+		}
+		catch(PersistenceException e){
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		}
+		
 		return mvinsolventuser;
 	}
 
 
-	private List<MvPackageperiod> findAllmvpackageperiods() {
-		List<MvPackageperiod> mvpackageperiod = em
+	public List<MvPackageperiod> findAllmvpackageperiods() throws BadSalesReportDataRetrieval{
+		List<MvPackageperiod> mvpackageperiod = null;
+		try {
+			mvpackageperiod = em
 				.createNamedQuery("MvPackageperiod.findAll", MvPackageperiod.class)
 				.getResultList();
+		}
+		catch(PersistenceException e){
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		}
+		
 		return mvpackageperiod;
 	}
 
 
-	private List<MvPackage> findAllmvpackages() {
-		List<MvPackage> mvpackage = em
+	public List<MvPackage> findAllmvpackages() throws BadSalesReportDataRetrieval{
+		List<MvPackage> mvpackage = null;
+		try {
+			mvpackage = em
 				.createNamedQuery("MvPackage.findAll", MvPackage.class)
 				.getResultList();
+		}
+		catch(PersistenceException e){
+			 throw new BadSalesReportDataRetrieval("Could not retrieve sales report page data");
+		}
+		
 		return mvpackage;
 	}
 	

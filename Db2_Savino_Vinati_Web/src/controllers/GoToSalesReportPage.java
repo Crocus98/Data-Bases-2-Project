@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -72,13 +73,22 @@ public class GoToSalesReportPage extends HttpServlet {
 		List<MvBestproduct> mvbestproducts = null;
 		
 		try {
-			salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproducts);
+		//	salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproducts);
+			mvpackages = salesReportService.findAllmvpackages();
+			mvpackageperiods = salesReportService.findAllmvpackageperiods();
+			mvinsolventusers = salesReportService.findAllmvinsolventusers();
+			mvsuspendedorders = salesReportService.findAllmvsuspendedorders();
+			mvalerts = salesReportService.findAllmvalers();
+			mvbestproducts = salesReportService.findAllbestproducts();
 			message = "";
 		}
 		catch(Exception e) {
 			isBadRequest = true;
 			message = e.getMessage();
 		}
+		
+		System.out.println("prova mvpackages: " + Arrays.toString(mvpackages.toArray()));
+		
 		
 		String path = "/WEB-INF/SalesReport.html";
 		ServletContext servletContext = getServletContext();

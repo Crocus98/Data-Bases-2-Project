@@ -70,7 +70,7 @@
 			<tr th:each="mviu : ${mvinsolventusers}">
 				<td th:text="${mviu.insolventuser.user.username}"></td>
 				<td th:text="${mviu.insolventuser.user.mail}"></td>
-				<td th:text="${mviu.insolventuser.failedpaymentcount}"></td>
+				<td style="text-align:center" th:text="${mviu.insolventuser.failedpaymentcount}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -89,11 +89,11 @@
 		</thead>
 		<tbody>
 			<tr th:each="mvso : ${mvsuspendedorders}">
-				<td th:text="${mvso.user.username}"></td>
-				<td th:text="${mvso.servicepackage.name}"></td>
-				<td th:text="${mvso.validityperiod.validityperiod}"></td>
-				<td th:text="${mvso.totalvalue}"></td>
-				<td th:text="${mvso.datehour}"></td>
+				<td th:text="${mvso.suspendedorder.user.username}"></td>
+				<td th:text="${mvso.suspendedorder.servicepackage.name}"></td>
+				<td th:text="${mvso.suspendedorder.validityperiod.validityperiod + ' months'}"></td>
+				<td th:text="${mvso.suspendedorder.totalvalue + ' &#36'}"></td>
+				<td th:text="${#dates.format(mvso.suspendedorder.datehour, 'dd-MMM-yyyy HH:mm:ss')}"></td>
 			</tr>
 		</tbody>
 	</table>

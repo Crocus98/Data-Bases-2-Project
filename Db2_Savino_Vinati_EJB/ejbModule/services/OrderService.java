@@ -116,10 +116,10 @@ public class OrderService {
 			user.addOrder(order);
 		}
 		else {
-			user.updateOrder(order);
+			user.updateOrder(order); //doesnt work if there are 3 alerts
 		}
 		if (order.isPaid()) {
-			createActivationSchedule(order);
+			createActivationSchedule(order, user);
 		}
 		else {
 			checkInsolventUserAndAlert(order);
@@ -142,7 +142,6 @@ public class OrderService {
 			else {
 				throw new BadOrder("Could not update order");
 			}
-
 		}		
 	}
 
@@ -155,7 +154,7 @@ public class OrderService {
 				if(order.getUser().getInsolventuser().getAlerts()== null){
 					order.getUser().getInsolventuser().setAlerts(new ArrayList<>());
 				}
-				order.getUser().getInsolventuser().addAlerts(alert);
+				order.getUser().getInsolventuser().addAlert(alert);
 			}
 		}
 		catch (Exception e) {
@@ -163,7 +162,7 @@ public class OrderService {
 		}
 	}
 
-	private void createActivationSchedule(Order order) throws BadActivationSchedule{
+	private void createActivationSchedule(Order order, User user) throws BadActivationSchedule{
 		try {
 			order.getUser().getInsolventuser().setFailedpaymentcount(0);
 			order.getUser().getInsolventuser().setInsolvent(false);
@@ -174,12 +173,7 @@ public class OrderService {
 			}
 			order.getUser().addActivationschedule(activationSchedule);
 			if(order.getId() != 0) {
-				for(int i = 0; i< order.getUser().getInsolventuser().getAlerts().size(); i++) {
-					if(order.getUser().getInsolventuser().getAlerts().get(i).isActive() &&
-							order.getUser().getInsolventuser().getAlerts().get(i).getOrder().getId()==order.getId()) {
-						order.getUser().getInsolventuser().getAlerts().get(i).setActive(false);
-					}
-				}
+				user.getInsolventuser().updateToInactiveAlert(order);
 			}
 		}
 		catch(Exception e) {

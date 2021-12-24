@@ -111,10 +111,10 @@
 		</thead>
 		<tbody>
 			<tr th:each="mva : ${mvalerts}">
-				<td th:text="${mva.insolventuser.user.username}"></td>
-				<td th:text="${mva.insolventuser.user.mail}"></td>
-				<td th:text="${mva.amount}"></td>
-				<td th:text="${mva.lastrejection}"></td>
+				<td th:text="${mva.alert.insolventuser.user.username}"></td>
+				<td th:text="${mva.alert.insolventuser.user.mail}"></td>
+				<td th:text="${mva.alert.amount}"></td>
+				<td th:text="${mva.alert.lastrejection}"></td>
 			</tr>
 		</tbody>
 	</table>

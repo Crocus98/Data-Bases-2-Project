@@ -6,10 +6,6 @@ import java.util.*;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the order database table.
- * 
- */
 @Entity
 @Table(name = "order", schema="db2_savino_vinati")
 @NamedQueries({
@@ -26,7 +22,7 @@ public class Order implements Serializable {
 
 	private float totalvalue;
 	
-	@Column(name="datehour", insertable = false)
+	@Column(name="datehour", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datehour;
 	

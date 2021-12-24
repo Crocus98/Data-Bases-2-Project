@@ -2,24 +2,16 @@ package services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang3.time.DateUtils;
-
 import entities.Activationschedule;
 import entities.Alert;
-import entities.MvBestproduct;
 import entities.Optionalproduct;
 import entities.Order;
 import entities.Servicepackage;
@@ -58,11 +50,7 @@ public class OrderService {
 				order.addOptionalProduct(optionalproduct);
 				totalprice = totalprice + (optionalproduct.getMonthlyprice());
 			}
-			
-			Map<Validityperiod,Float> valperiodmonthlycost = servicepackage.getValidityperiods();
-			float cost = order.getServicepackage().getValidityperiods().get(validityperiod);
-					valperiodmonthlycost.get(validityperiod);
-			totalprice = totalprice + cost;
+			totalprice += order.getServicepackage().getValidityperiods().get(validityperiod);
 			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
 			BigDecimal temp = new BigDecimal(totalprice);
 			temp = temp.setScale(2, RoundingMode.HALF_UP);
@@ -79,15 +67,21 @@ public class OrderService {
 
 
 	public void createOrder(Order order) throws BadOrder, BadActivationSchedule, BadAlert {
+		User user = em.find(User.class, order.getUser().getId());
+		if(user.getOrders() == null) {
+			user.setOrders(new ArrayList<>());
+		}
 		if (order.isPaid()) {
 			createActivationSchedule(order);
 		}
 		else {
 			checkInsolventUserAndAlert(order);
 		}
+		user.addOrder(order);
 		try {
-			em.persist(order);
+			em.persist(user);
 			em.flush();
+			em.refresh(user);
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");

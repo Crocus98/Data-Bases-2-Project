@@ -31,10 +31,10 @@ public class User implements Serializable {
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Insolventuser insolventuser;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Activationschedule> activationschedules;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private List<Order> orders;
 	
 	public User() {
@@ -115,6 +115,10 @@ public class User implements Serializable {
 
 	public List<Order> getOrders() {
 		return orders;
+	}
+	
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 	
 	public void addOrder(Order order) {

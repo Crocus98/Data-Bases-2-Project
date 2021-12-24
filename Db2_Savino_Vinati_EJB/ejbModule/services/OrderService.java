@@ -21,7 +21,6 @@ import exceptions.BadActivationSchedule;
 import exceptions.BadAlert;
 import exceptions.BadOrder;
 import exceptions.BadOrderParams;
-import exceptions.BadServicePackage;
 
 
 @Stateless
@@ -141,7 +140,10 @@ public class OrderService {
 			order.getUser().getInsolventuser().setFailedpaymentcount(order.getUser().getInsolventuser().getFailedpaymentcount() + 1);
 			if (order.getUser().getInsolventuser().getFailedpaymentcount() >= 3) {
 				Alert alert = new Alert(order.getUser().getInsolventuser(),order.getTotalvalue(), order);
-				order.getUser().getInsolventuser().getAlerts().add(alert);
+				if(order.getUser().getInsolventuser().getAlerts()== null){
+					order.getUser().getInsolventuser().setAlerts(new ArrayList<>());
+				}
+				order.getUser().getInsolventuser().addAlerts(alert);;
 			}
 		}
 		catch (Exception e) {

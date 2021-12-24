@@ -75,5 +75,10 @@ public class Insolventuser implements Serializable {
 	public void setAlerts(List<Alert> alerts) {
 		this.alerts = alerts;
 	}
+	
+	public void addAlerts(Alert alert) {
+		this.alerts.add(alert);
+		alert.setInsolventUser(this);
+	}
 
 }

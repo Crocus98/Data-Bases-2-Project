@@ -32,6 +32,7 @@ public class Alert implements Serializable {
 	
 	private boolean active;
 	
+	@Column(name="lastrejection", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastrejection;
 	

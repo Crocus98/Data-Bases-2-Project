@@ -225,6 +225,7 @@ import services.UserService;
 		}
  		try {
  			orderid = Integer.parseInt(request.getParameter("orderid"));
+ 			System.out.print("orderid: " + orderid);
  		}
  		catch(Exception e) {
  			message = "Invalid rejected order id";

@@ -51,7 +51,7 @@
 					<td th:text="${ro.totalvalue}"></td>
 					<td th:text="${#dates.format(ro.datehour, 'dd-MMM-yyyy HH:mm:ss')}"></td>
 					<td>
-						<input type="submit" value="Details" th:formaction="@{/GoToConfirmPage(orderid=${ro.id})}" /> 
+						<a th:href="@{/GoToConfirmPage(orderid=${ro.id})}" >Details</a> 
 		        	</td>
 				</tr>
 			</tbody>

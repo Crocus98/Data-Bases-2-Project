@@ -30,7 +30,8 @@ public class Alert implements Serializable {
 	
 	private float amount;
 	
-	private boolean active;
+	@Column(name="active", insertable = false)
+	private Boolean active;
 	
 	@Column(name="lastrejection", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -54,7 +55,7 @@ public class Alert implements Serializable {
 		this.amount = amount;
 	}
 	
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 	

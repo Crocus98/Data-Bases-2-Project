@@ -20,6 +20,8 @@ import entities.Validityperiod;
 import exceptions.BadActivationSchedule;
 import exceptions.BadAlert;
 import exceptions.BadOrder;
+import exceptions.BadOrderParams;
+import exceptions.BadServicePackage;
 
 
 @Stateless
@@ -31,40 +33,82 @@ public class OrderService {
 	}
 
 	public Order createOrderNoPersist(Integer idservicepackage, Integer idvalidityperiod,
-			List<Integer> idoptionalproducts, Date date) throws BadOrder {
+			List<Integer> idoptionalproducts, Date date) throws BadOrder, BadOrderParams {
 
 		Order order = null;
 
 		try {
-			//Controlls missing
+			
 			float totalprice = 0;
 			order = new Order();
-			Servicepackage servicepackage = em.find(Servicepackage.class, idservicepackage); //id exists?
+			
+			Servicepackage servicepackage = checkServicePackage(idservicepackage);
+			Validityperiod validityperiod = checkValidityPeriod (idvalidityperiod);
 			order.setServicepackage(servicepackage);
-			Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiod); //id exist?
 			order.setValidityperiod(validityperiod);
 			order.setStartdate(date);
 			order.setOptionalproducts(new ArrayList<>());
-			for (int i = 0; i < idoptionalproducts.size() ; i++) {
-				Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproducts.get(i)); //id exists?
-				order.addOptionalProduct(optionalproduct);
-				totalprice = totalprice + (optionalproduct.getMonthlyprice());
-			}
-			totalprice += order.getServicepackage().getValidityperiods().get(validityperiod);
+			totalprice = checkOptionalProducts(idoptionalproducts, order, totalprice);
+			
+			
+			Map<Validityperiod,Float> valperiodmonthlycost = servicepackage.getValidityperiods();
+			float cost = order.getServicepackage().getValidityperiods().get(validityperiod);
+					valperiodmonthlycost.get(validityperiod);
+			totalprice = totalprice + cost;
 			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
 			BigDecimal temp = new BigDecimal(totalprice);
-			temp = temp.setScale(2, RoundingMode.HALF_UP);
+			temp = temp.setScale(1, RoundingMode.HALF_UP);
 			totalprice = Float.parseFloat(temp.toString());
 			order.setTotalvalue(totalprice);
 			return order;
 		}
 		catch(Exception e) {
-			throw new BadOrder("Data for the creation of the order were wrong");
+			throw new BadOrder("Data for the creation of the order is wrong");
 		}
 	}
 	
-	
+	private Validityperiod checkValidityPeriod(Integer idvalidityperiod) throws BadOrderParams{
+		try {
+			Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiod); //id exists?
+			 if(validityperiod != null) {
+				 return validityperiod;
+			 }else {
+				 return null;
+			 }
+		}catch(Exception e) {
+			throw new BadOrderParams("Could not find the vailidty period");
+		}
+	}
 
+	public Servicepackage checkServicePackage(Integer idservicepackage) throws BadOrderParams{
+		try {
+			 Servicepackage servicepackage = em.find(Servicepackage.class, idservicepackage); //id exists?
+			 if(servicepackage != null) {
+				 return servicepackage;
+			 }else {
+				 return null;
+			 }
+		}catch(Exception e) {
+			throw new BadOrderParams("Could not find the service package");
+		}
+		
+	}
+
+	public float checkOptionalProducts(List<Integer> idoptionalproducts, Order order, float totalprice) throws BadOrderParams{
+		try {
+			for (int i = 0; i < idoptionalproducts.size() ; i++) {
+				Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproducts.get(i)); //id exists?
+				order.addOptionalProduct(optionalproduct);
+				totalprice = totalprice + (optionalproduct.getMonthlyprice());
+			}
+			 
+		}catch(Exception e) {
+			throw new BadOrderParams("Could not add the optional product/s");
+		}
+		
+		return totalprice;
+		
+	}
 
 	public void createOrder(Order order) throws BadOrder, BadActivationSchedule, BadAlert {
 		User user = em.find(User.class, order.getUser().getId());

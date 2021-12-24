@@ -49,7 +49,7 @@
 				<tr th:each="ro : ${rejectedorders}">
 					<td th:text="${ro.servicepackage.name}"></td>
 					<td th:text="${ro.totalvalue}"></td>
-					<td th:text="${ro.datehour}"></td>
+					<td th:text="${#dates.format(ro.datehour, 'dd-MMM-yyyy HH:mm:ss')}"></td>
 					<td>
 						<input type="submit" value="Details" th:formaction="@{/GoToConfirmPage(orderid=${ro.id})}" /> 
 		        	</td>

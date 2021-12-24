@@ -41,9 +41,8 @@
 		       		 <br>
 		        </li>
 	        </ul>
-	        
 	        <p>Start date:</p> 
-	        <span th:value="${order.startdate}" th:text="${'date: ' + order.startdate}"></span><br>
+	        <span th:value="${order.startdate}" th:text="${'date: ' + #dates.format(order.startdate, 'dd-MMM-yyyy')}"></span><br>
 	    	
 	    	
 	    	<p>Total value to be paid:</p> 

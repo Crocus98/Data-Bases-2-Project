@@ -113,13 +113,13 @@ public class OrderService {
 		if(user.getOrders() == null) {
 			user.setOrders(new ArrayList<>());
 		}
+		user.addOrder(order);
 		if (order.isPaid()) {
 			createActivationSchedule(order);
 		}
 		else {
 			checkInsolventUserAndAlert(order);
 		}
-		user.addOrder(order);
 		try {
 			em.persist(user);
 			em.flush();
@@ -153,7 +153,7 @@ public class OrderService {
 		try {
 			order.getUser().getInsolventuser().setFailedpaymentcount(0);
 			order.getUser().getInsolventuser().setInsolvent(false);
-			Date deactivationDate = DateUtils.addMonths(order.getStartdate(), order.getValidityperiod().getValidityperiod());	
+			Date deactivationDate = DateUtils.addMonths(order.getStartdate(), order.getValidityperiod().getValidityperiod());
 			Activationschedule activationSchedule = new Activationschedule(order.getServicepackage().getServices(), order.getOptionalproducts(), order.getStartdate(), deactivationDate, order.getUser());
 			if(order.getUser().getActivationschedules() == null) {
 				order.getUser().setActivationschedules(new ArrayList<>());

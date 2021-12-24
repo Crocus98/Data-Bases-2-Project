@@ -28,7 +28,7 @@ public class Insolventuser implements Serializable {
 	@MapsId
 	private User user;
 	
-	@OneToMany(mappedBy="insolventUser")
+	@OneToMany(mappedBy="insolventUser", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Alert> alerts;
 
 	public Insolventuser() {

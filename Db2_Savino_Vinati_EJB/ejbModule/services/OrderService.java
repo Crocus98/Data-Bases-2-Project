@@ -2,24 +2,17 @@ package services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang3.time.DateUtils;
-
 import entities.Activationschedule;
 import entities.Alert;
-import entities.MvBestproduct;
 import entities.Optionalproduct;
 import entities.Order;
 import entities.Servicepackage;
@@ -28,8 +21,6 @@ import entities.Validityperiod;
 import exceptions.BadActivationSchedule;
 import exceptions.BadAlert;
 import exceptions.BadOrder;
-import exceptions.BadServicePackage;
-import exceptions.DuplicatedPackagename;
 
 
 @Stateless
@@ -90,6 +81,7 @@ public class OrderService {
 		try {
 			em.persist(order);
 			em.flush();
+			em.refresh(order);
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");

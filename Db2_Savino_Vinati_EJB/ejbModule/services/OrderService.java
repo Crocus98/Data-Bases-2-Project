@@ -1,8 +1,13 @@
 package services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.ejb.Stateless;
@@ -55,11 +60,14 @@ public class OrderService {
 			}
 			
 			Map<Validityperiod,Float> valperiodmonthlycost = servicepackage.getValidityperiods();
-			Float cost = order.getServicepackage().getValidityperiods().get(validityperiod);
+			float cost = order.getServicepackage().getValidityperiods().get(validityperiod);
 					valperiodmonthlycost.get(validityperiod);
 			totalprice = totalprice + cost;
-			order.setTotalvalue((totalprice*(order.getValidityperiod().getValidityperiod())));
-			
+			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
+			BigDecimal temp = new BigDecimal(totalprice);
+			temp = temp.setScale(2, RoundingMode.HALF_UP);
+			totalprice = Float.parseFloat(temp.toString());
+			order.setTotalvalue(totalprice);
 			return order;
 		}
 		catch(Exception e) {
@@ -79,6 +87,7 @@ public class OrderService {
 		}
 		try {
 			em.persist(order);
+			em.flush();
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");

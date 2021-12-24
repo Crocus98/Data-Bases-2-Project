@@ -24,22 +24,7 @@ public class SalesReportService {
 		
 	}
 
-	public void getSalesReportPageData(List<MvPackage> mvpackages, List<MvPackageperiod> mvpackageperiods, List<MvInsolventUser> mvinsolventusers, 
-			List<MvSuspendedorder> mvsuspendedorders, List<MvAlert> mvalerts, List<MvBestproduct> mvbestproducts) throws BadSalesReportDataRetrieval {
-		try {
-			mvpackages = findAllmvpackages();
-			mvpackageperiods = findAllmvpackageperiods();
-			mvinsolventusers = findAllmvinsolventusers();
-			mvsuspendedorders = findAllmvsuspendedorders();
-			mvalerts = findAllmvalerts();
-			mvbestproducts = findAllbestproducts();
-		}
-		catch(PersistenceException e){
-			throw new BadSalesReportDataRetrieval("Could not retrieve sales report data");
-		}
-	}
-
-	private List<MvBestproduct> findAllbestproducts (){
+	public List<MvBestproduct> findAllbestproducts (){
 		List<MvBestproduct> mvBestproduct = em
 					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
 					.getResultList();
@@ -47,7 +32,7 @@ public class SalesReportService {
 	}
 
 
-	private List<MvAlert> findAllmvalerts(){
+	public List<MvAlert> findAllmvalerts(){
 		List<MvAlert> mvalerts = em
 					.createNamedQuery("MvAlert.findAll", MvAlert.class)
 					.getResultList();
@@ -55,7 +40,7 @@ public class SalesReportService {
 	}
 
 
-	private List<MvSuspendedorder> findAllmvsuspendedorders(){
+	public List<MvSuspendedorder> findAllmvsuspendedorders(){
 		List<MvSuspendedorder> mvsuspendedorders = em
 					.createNamedQuery("MvSuspendedorder.findAll", MvSuspendedorder.class)
 					.getResultList(); 
@@ -63,7 +48,7 @@ public class SalesReportService {
 	}
 
 
-	private List<MvInsolventUser> findAllmvinsolventusers(){
+	public List<MvInsolventUser> findAllmvinsolventusers(){
 		List<MvInsolventUser> mvinsolventuser = em
 				.createNamedQuery("MvInsolventUser.findAll", MvInsolventUser.class)
 				.getResultList();
@@ -71,7 +56,7 @@ public class SalesReportService {
 	}
 
 
-	private List<MvPackageperiod> findAllmvpackageperiods(){
+	public List<MvPackageperiod> findAllmvpackageperiods(){
 		List<MvPackageperiod> mvpackageperiod = em
 				.createNamedQuery("MvPackageperiod.findAll", MvPackageperiod.class)
 				.getResultList();
@@ -79,7 +64,7 @@ public class SalesReportService {
 	}
 
 
-	private List<MvPackage> findAllmvpackages(){
+	public List<MvPackage> findAllmvpackages(){
 		List<MvPackage> mvpackage = em
 			.createNamedQuery("MvPackage.findAll", MvPackage.class)
 			.getResultList();

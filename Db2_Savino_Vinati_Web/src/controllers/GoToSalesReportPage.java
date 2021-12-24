@@ -72,7 +72,12 @@ public class GoToSalesReportPage extends HttpServlet {
 		List<MvBestproduct> mvbestproducts = null;
 		
 		try {
-		 	salesReportService.getSalesReportPageData(mvpackages, mvpackageperiods, mvinsolventusers, mvsuspendedorders, mvalerts, mvbestproducts);
+			mvpackages = salesReportService.findAllmvpackages(); 
+			mvpackageperiods = salesReportService.findAllmvpackageperiods(); 
+			mvinsolventusers = salesReportService.findAllmvinsolventusers(); 
+			mvsuspendedorders = salesReportService.findAllmvsuspendedorders(); 
+			mvalerts = salesReportService.findAllmvalerts();
+			mvbestproducts = salesReportService.findAllbestproducts(); 
 			message = "";
 		}
 		catch(Exception e) {

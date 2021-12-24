@@ -35,7 +35,6 @@ public class Servicepackage implements Serializable {
 	private List<Optionalproduct> optionalproducts;
 
 	
-	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "packageperiod", schema = "db2_savino_vinati", joinColumns = @JoinColumn(name = "idservicepackage"))
 	@MapKeyJoinColumn(name = "idvalidityperiod")

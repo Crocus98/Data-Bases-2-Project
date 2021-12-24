@@ -65,6 +65,7 @@ public class Insolventuser implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+		user.setInsolventuser(this);
 	}
 
 	public List<Alert> getAlerts() {

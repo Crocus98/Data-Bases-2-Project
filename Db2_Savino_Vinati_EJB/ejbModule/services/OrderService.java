@@ -110,9 +110,12 @@ public class OrderService {
 		try {
 			order.getUser().getInsolventuser().setFailedpaymentcount(0);
 			order.getUser().getInsolventuser().setInsolvent(false);
-			Date deactivationDate = DateUtils.addMonths(order.getStartdate(), order.getValidityperiod().getValidityperiod());		
+			Date deactivationDate = DateUtils.addMonths(order.getStartdate(), order.getValidityperiod().getValidityperiod());	
 			Activationschedule activationSchedule = new Activationschedule(order.getServicepackage().getServices(), order.getOptionalproducts(), order.getStartdate(), deactivationDate, order.getUser());
-			order.getUser().getActivationschedules().add(activationSchedule);
+			if(order.getUser().getActivationschedules() == null) {
+				order.getUser().setActivationschedules(new ArrayList<>());
+			}
+			order.getUser().addActivationschedule(activationSchedule);
 			if(order.getId() != 0) {
 				for(int i = 0; i< order.getUser().getInsolventuser().getAlerts().size(); i++) {
 					if(order.getUser().getInsolventuser().getAlerts().get(i).isActive() &&

@@ -78,10 +78,10 @@ public class CreateOrder extends HttpServlet {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
 				String temp = StringEscapeUtils.escapeJava(request.getParameter("payment"));
-				if(temp == "1") {
+				if(temp.equals("1")) {
 					order.setPaid(true);
 				}
-				else if (temp == "0") {
+				else if (temp.equals("0")) {
 					order.setPaid(false);
 				}
 				else {
@@ -102,6 +102,7 @@ public class CreateOrder extends HttpServlet {
 					else {
 						message = "Order created successfully but payment failed. Complete the payment as soon as possible";
 					}
+					System.out.println(order.getDatehour());
 				}
 				catch (Exception e)
 				{
@@ -120,14 +121,9 @@ public class CreateOrder extends HttpServlet {
 		String path = "/WEB-INF/HomeCustomer.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(isBadRequest) {
-			ctx.setVariable("errorMsg", message);
-		}
-		else{
-			ctx.setVariable("servicepackages", packages);
-			ctx.setVariable("rejectedorders", rejectedOrders);
-			ctx.setVariable("errorMsg", message);
-		}
+		ctx.setVariable("errorMsg", message);
+		ctx.setVariable("servicepackages", packages);
+		ctx.setVariable("rejectedorders", rejectedOrders);
 		request.getSession().removeAttribute("order");
 		templateEngine.process(path, ctx, response.getWriter());
 	}

@@ -26,6 +26,7 @@ public class Order implements Serializable {
 
 	private float totalvalue;
 	
+	@Column(name="datehour", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datehour;
 	

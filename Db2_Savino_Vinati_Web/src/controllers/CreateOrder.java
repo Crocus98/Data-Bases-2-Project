@@ -54,6 +54,7 @@ public class CreateOrder extends HttpServlet {
  		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
 		List<Servicepackage> packages = null;
+		List<Order> rejectedOrders = null;
 		boolean isBadRequest = false;
 		String message = null;
 		User user;
@@ -72,23 +73,15 @@ public class CreateOrder extends HttpServlet {
 			isBadRequest = true;
 			message = "Could not find order to be created";
 		}
+		
 		if(!isBadRequest) {
-			try {
-				packages = servicePackageService.findAllServicePackages();
-				//Andranno messi qui anche tutti gli ordini forse (Se si vogliono nella home page)
-			} catch (Exception e) {
-				isBadRequest = true;
-				message += ". Could not retrieve service packages to be bought."; //Da modificare se si mettono sopra gli ordini (Se si vogliono nella HomePage)
-			}
-		}
-		else {
 			Order order = (Order)request.getSession().getAttribute("order");
 			try {
 				String temp = StringEscapeUtils.escapeJava(request.getParameter("payment"));
-				if(temp == "1") {
+				if(temp.equals("1")) {
 					order.setPaid(true);
 				}
-				else if (temp == "0") {
+				else if (temp.equals("0")) {
 					order.setPaid(false);
 				}
 				else {
@@ -109,6 +102,7 @@ public class CreateOrder extends HttpServlet {
 					else {
 						message = "Order created successfully but payment failed. Complete the payment as soon as possible";
 					}
+					System.out.println(order.getDatehour());
 				}
 				catch (Exception e)
 				{
@@ -117,16 +111,19 @@ public class CreateOrder extends HttpServlet {
 				}
 			}
 		}
+		try {
+			packages = servicePackageService.findAllServicePackages();
+			rejectedOrders = orderService.findAllRejectedOrders(user);
+		} catch (Exception e) {
+			isBadRequest = true;
+			message += ". Could not retrieve service packages to be bought or rejected orders.";
+		}
 		String path = "/WEB-INF/HomeCustomer.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if(isBadRequest) {
-			ctx.setVariable("errorMsg", message);
-		}
-		else{
-			ctx.setVariable("servicepackages", packages);
-			ctx.setVariable("errorMsg", message);
-		}
+		ctx.setVariable("errorMsg", message);
+		ctx.setVariable("servicepackages", packages);
+		ctx.setVariable("rejectedorders", rejectedOrders);
 		request.getSession().removeAttribute("order");
 		templateEngine.process(path, ctx, response.getWriter());
 	}

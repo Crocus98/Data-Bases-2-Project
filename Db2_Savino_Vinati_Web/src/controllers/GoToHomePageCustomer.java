@@ -19,8 +19,10 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import entities.Order;
 import entities.Servicepackage;
 import entities.User;
+import services.OrderService;
 import services.ServicePackageService;
 
 @WebServlet("/HomeCustomer")
@@ -29,6 +31,8 @@ public class GoToHomePageCustomer extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "services/ServicePackageService")
 	private ServicePackageService servicePackageService;
+	@EJB(name = "services/OrderService")
+	private OrderService orderService;
 
 
 	public GoToHomePageCustomer() {
@@ -49,7 +53,7 @@ public class GoToHomePageCustomer extends HttpServlet {
 		
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
-		User user;
+		User user = null;
 		if (!(session.isNew() || session.getAttribute("user") == null)) {
 			user = (User) session.getAttribute("user");
 			if (user.getUsertype().getUsertype().equals("Employee")) {
@@ -61,13 +65,20 @@ public class GoToHomePageCustomer extends HttpServlet {
 		String message = null;
 		boolean isBadRequest = false;
 		List<Servicepackage> packages = null;
+		List<Order> rejectedOrders = null;
 		try {
 			packages = servicePackageService.findAllServicePackages();
-			//Andranno messi qui anche gli ordini
+			if(user != null) {
+				rejectedOrders = orderService.findAllRejectedOrders(user);
+			}
 			message = "";
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			isBadRequest = true;
-			message = "Could not retrieve service packages to be bought."; //Andranno messi qui anche gli ordini
+			message = "Could not retrieve service packages to be bought";
+			if(user != null) {
+				message += " or rejected orders";
+			}
 		}
 		
 		String path = "/WEB-INF/HomeCustomer.html";
@@ -76,6 +87,9 @@ public class GoToHomePageCustomer extends HttpServlet {
 		ctx.setVariable("errorMsg", message);
 		if(!isBadRequest) {
 			ctx.setVariable("servicepackages", packages);
+			if(user != null) {
+				ctx.setVariable("rejectedorders", rejectedOrders);
+			}
 		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}

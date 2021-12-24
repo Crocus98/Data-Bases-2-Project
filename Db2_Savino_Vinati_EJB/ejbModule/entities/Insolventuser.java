@@ -28,7 +28,7 @@ public class Insolventuser implements Serializable {
 	@MapsId
 	private User user;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="insolventUser")
 	private List<Alert> alerts;
 
 	public Insolventuser() {
@@ -65,6 +65,7 @@ public class Insolventuser implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+		user.setInsolventuser(this);
 	}
 
 	public List<Alert> getAlerts() {

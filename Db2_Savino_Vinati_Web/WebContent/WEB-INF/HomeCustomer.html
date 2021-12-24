@@ -33,7 +33,7 @@
 		</tbody>
 	</table>
 	</div>
-	<th:block th:if="${session.user != null && session.user.insolventuser.failedpaymentcount > 0}">
+	<th:block th:if="${session.user != null && rejectedorders != null}">
 		<div>
 		<h2>Rejected Orders To Be Payed</h2>
 		<table>

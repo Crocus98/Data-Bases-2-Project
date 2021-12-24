@@ -34,6 +34,9 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<Activationschedule> activationschedules;
 	
+	@OneToMany(mappedBy="user")
+	private List<Order> orders;
+	
 	public User() {
 		
 	}
@@ -88,6 +91,11 @@ public class User implements Serializable {
 	public void setActivationschedules(List<Activationschedule> activationschedules) {
 		this.activationschedules = activationschedules;
 	}
+	
+	public void addActivationschedule(Activationschedule activationSchedule) {
+		this.activationschedules.add(activationSchedule);
+		activationSchedule.setUser(this);
+	}
 
 	public Usertype getUsertype() {
 		return usertype;
@@ -103,6 +111,15 @@ public class User implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+	
+	public void addOrder(Order order) {
+		this.orders.add(order);
+		order.setUser(this);
 	}
 
 }

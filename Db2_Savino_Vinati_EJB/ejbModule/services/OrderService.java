@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -68,16 +67,21 @@ public class OrderService {
 
 
 	public void createOrder(Order order) throws BadOrder, BadActivationSchedule, BadAlert {
+		User user = em.find(User.class, order.getUser().getId());
+		if(user.getOrders() == null) {
+			user.setOrders(new ArrayList<>());
+		}
 		if (order.isPaid()) {
 			createActivationSchedule(order);
 		}
 		else {
 			checkInsolventUserAndAlert(order);
 		}
+		user.addOrder(order);
 		try {
-			em.persist(order);
+			em.persist(user);
 			em.flush();
-			em.refresh(order);
+			em.refresh(user);
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");

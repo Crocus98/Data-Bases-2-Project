@@ -6,10 +6,6 @@ import java.util.*;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the order database table.
- * 
- */
 @Entity
 @Table(name = "order", schema="db2_savino_vinati")
 @NamedQueries({

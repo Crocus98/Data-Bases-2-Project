@@ -28,11 +28,11 @@
 		</thead>
 		<tbody>
 			<tr th:each="mvp : ${mvpackages}">
-				<td th:text="${mvp.servicepackage.name}"></td>
-				<td th:text="${mvp.sales}"></td>
-				<td th:text="${mvp.value}"></td>
-				<td th:text="${mvp.valuewithproducts}"></td>
-				<td th:text="${mvp.avgoptionalproducts}"></td>
+				<td style="text-align:center" th:text="${mvp.servicepackage.name}"></td>
+				<td style="text-align:center" th:text="${mvp.sales}"></td>
+				<td style="text-align:center" th:text="${mvp.value + ' &#36'}"></td>
+				<td style="text-align:center" th:text="${mvp.valuewithproducts + ' &#36'}"></td>
+				<td style="text-align:center" th:text="${mvp.avgoptionalproducts}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -49,9 +49,9 @@
 		</thead>
 		<tbody>
 			<tr th:each="mvpp : ${mvpackageperiods}">
-				<td th:text="${mvpp.servicepackage.name}"></td>
-				<td th:text="${mvpp.period}"></td>
-				<td th:text="${mvpp.sales}"></td>
+				<td style="text-align:center" th:text="${mvpp.servicepackage.name}"></td>
+				<td style="text-align:center" th:text="${mvpp.period + ' months'}"></td>
+				<td style="text-align:center" th:text="${mvpp.sales}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -68,9 +68,9 @@
 		</thead>
 		<tbody>
 			<tr th:each="mviu : ${mvinsolventusers}">
-				<td th:text="${mviu.insolventuser.user.username}"></td>
-				<td th:text="${mviu.insolventuser.user.mail}"></td>
-				<td style="text-align:center" th:text="${mviu.insolventuser.failedpaymentcount}"></td>
+				<td style="text-align:center" th:text="${mviu.insolventuser.user.username}"></td>
+				<td style="text-align:center" th:text="${mviu.insolventuser.user.mail}"></td>
+				<td style="text-align:center" th:text="${mviu.insolventuser.failedpaymentcount + ' times'}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -89,11 +89,11 @@
 		</thead>
 		<tbody>
 			<tr th:each="mvso : ${mvsuspendedorders}">
-				<td th:text="${mvso.suspendedorder.user.username}"></td>
-				<td th:text="${mvso.suspendedorder.servicepackage.name}"></td>
-				<td th:text="${mvso.suspendedorder.validityperiod.validityperiod + ' months'}"></td>
-				<td th:text="${mvso.suspendedorder.totalvalue + ' &#36'}"></td>
-				<td th:text="${#dates.format(mvso.suspendedorder.datehour, 'dd-MMM-yyyy HH:mm:ss')}"></td>
+				<td style="text-align:center" th:text="${mvso.suspendedorder.user.username}"></td>
+				<td style="text-align:center" th:text="${mvso.suspendedorder.servicepackage.name}"></td>
+				<td style="text-align:center" th:text="${mvso.suspendedorder.validityperiod.validityperiod + ' months'}"></td>
+				<td style="text-align:center" th:text="${mvso.suspendedorder.totalvalue + ' &#36'}"></td>
+				<td style="text-align:center" th:text="${#dates.format(mvso.suspendedorder.datehour, 'dd-MMM-yyyy HH:mm:ss')}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -111,10 +111,10 @@
 		</thead>
 		<tbody>
 			<tr th:each="mva : ${mvalerts}">
-				<td th:text="${mva.alert.insolventuser.user.username}"></td>
-				<td th:text="${mva.alert.insolventuser.user.mail}"></td>
-				<td th:text="${mva.alert.amount}"></td>
-				<td th:text="${mva.alert.lastrejection}"></td>
+				<td style="text-align:center" th:text="${mva.alert.insolventuser.user.username}"></td>
+				<td style="text-align:center" th:text="${mva.alert.insolventuser.user.mail}"></td>
+				<td style="text-align:center" th:text="${mva.alert.amount  + ' &#36'}"></td>
+				<td style="text-align:center" th:text="${#dates.format(mva.alert.lastrejection, 'dd-MMM-yyyy HH:mm:ss')}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -130,8 +130,8 @@
 		</thead>
 		<tbody>
 			<tr th:each="mvbp : ${mvbestproducts}">
-				<td th:text="${mvbp.optionalproduct.name}"></td>
-				<td th:text="${mvbp.value}"></td>
+				<td style="text-align:center" th:text="${mvbp.optionalproduct.name}"></td>
+				<td style="text-align:center" th:text="${mvbp.value + ' &#36'}"></td>
 			</tr>
 		</tbody>
 	</table>

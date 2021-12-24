@@ -51,11 +51,7 @@ public class OrderService {
 				order.addOptionalProduct(optionalproduct);
 				totalprice = totalprice + (optionalproduct.getMonthlyprice());
 			}
-			
-			Map<Validityperiod,Float> valperiodmonthlycost = servicepackage.getValidityperiods();
-			float cost = order.getServicepackage().getValidityperiods().get(validityperiod);
-					valperiodmonthlycost.get(validityperiod);
-			totalprice = totalprice + cost;
+			totalprice += order.getServicepackage().getValidityperiods().get(validityperiod);
 			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
 			BigDecimal temp = new BigDecimal(totalprice);
 			temp = temp.setScale(2, RoundingMode.HALF_UP);

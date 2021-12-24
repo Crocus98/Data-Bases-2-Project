@@ -125,5 +125,13 @@ public class User implements Serializable {
 		this.orders.add(order);
 		order.setUser(this);
 	}
-
+	
+	public void updateOrder(Order order) {
+		for (int i = 0; i < this.getOrders().size(); i++) {
+			if(this.getOrders().get(i).getId() == order.getId()) {
+				order.setUser(this);
+				this.getOrders().set(i, order);
+			}
+		}
+	}
 }

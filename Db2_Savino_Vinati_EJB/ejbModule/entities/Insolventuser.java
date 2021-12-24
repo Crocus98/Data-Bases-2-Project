@@ -6,10 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the insolventuser database table.
- * 
- */
+
 @Entity
 @Table(name = "insolventuser", schema="db2_savino_vinati")
 @NamedQuery(name="Insolventuser.findAll", query="SELECT iu FROM Insolventuser iu")

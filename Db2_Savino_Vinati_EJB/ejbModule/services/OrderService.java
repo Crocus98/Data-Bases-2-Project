@@ -112,7 +112,12 @@ public class OrderService {
 		if(user.getOrders() == null) {
 			user.setOrders(new ArrayList<>());
 		}
-		user.addOrder(order);
+		if(order.getId() == 0) {
+			user.addOrder(order);
+		}
+		else {
+			user.updateOrder(order);
+		}
 		if (order.isPaid()) {
 			createActivationSchedule(order);
 		}
@@ -120,9 +125,16 @@ public class OrderService {
 			checkInsolventUserAndAlert(order);
 		}
 		try {
-			em.persist(user);
-			em.flush();
-			em.refresh(user);
+			if(order.getId() == 0) {
+				em.persist(user);
+				em.flush();
+				em.refresh(user);
+			}
+			else {
+				em.merge(user);
+				em.flush();
+				em.refresh(user);
+			}
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");
@@ -143,7 +155,7 @@ public class OrderService {
 				if(order.getUser().getInsolventuser().getAlerts()== null){
 					order.getUser().getInsolventuser().setAlerts(new ArrayList<>());
 				}
-				order.getUser().getInsolventuser().addAlerts(alert);;
+				order.getUser().getInsolventuser().addAlerts(alert);
 			}
 		}
 		catch (Exception e) {

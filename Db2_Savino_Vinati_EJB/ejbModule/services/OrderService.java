@@ -46,12 +46,11 @@ public class OrderService {
 			order.setServicepackage(servicepackage);
 			order.setValidityperiod(validityperiod);
 			order.setStartdate(date);
-			order.setOptionalproducts(new ArrayList<>());
-			totalprice = checkOptionalProducts(idoptionalproducts, order, totalprice);
-			
+			if(idoptionalproducts != null) {
+				order.setOptionalproducts(new ArrayList<>());
+				totalprice += checkOptionalProducts(idoptionalproducts, order, totalprice);
+			}
 			totalprice += order.getServicepackage().getValidityperiods().get(validityperiod);
-			
-		
 			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
 			BigDecimal temp = new BigDecimal(totalprice);
 			temp = temp.setScale(1, RoundingMode.HALF_UP);

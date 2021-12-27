@@ -134,8 +134,8 @@ public class CreateServicePackage extends HttpServlet {
 			optionalproducts = servicePackageService.findAllOptionalproducts();
 			validityperiods = servicePackageService.findAllValidityperiods();
 			
-			if(services == null || optionalproducts == null || validityperiods == null
-				|| services.isEmpty() || optionalproducts.isEmpty() || validityperiods.isEmpty()) {
+			if(services == null || validityperiods == null
+				|| services.isEmpty() || validityperiods.isEmpty()) {
 				isBadRequest2 = true;
 				message2 = ".\nSome data necessary to create new servicepackages are missing";
 			}

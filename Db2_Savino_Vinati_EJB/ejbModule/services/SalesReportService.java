@@ -26,7 +26,6 @@ public class SalesReportService {
 		List<MvBestproduct> mvBestproducts = em
 					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
 					.getResultList();
-		em.refresh(mvBestproducts.get(0));
 		return mvBestproducts;
 	}
 

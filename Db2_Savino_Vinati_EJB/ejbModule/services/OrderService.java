@@ -115,8 +115,8 @@ public class OrderService {
 		if(order.getId() == 0) {
 			user.addOrder(order);
 		}
-		else {
-			user.updateOrder(order); //doesnt work if there are 3 alerts
+		else{
+			user.updateOrder(order);
 		}
 		if (order.isPaid()) {
 			createActivationSchedule(order, user);
@@ -127,14 +127,13 @@ public class OrderService {
 		try {
 			if(order.getId() == 0) {
 				em.persist(user);
-				em.flush();
-				em.refresh(user);
 			}
 			else {
 				em.merge(user);
-				em.flush();
-				em.refresh(user);
+				
 			}
+			em.flush();
+			em.refresh(user);
 		}catch(PersistenceException e) {
 			if(order.getId() != 0) {
 				throw new BadOrder("Could not create order");

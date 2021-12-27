@@ -25,10 +25,11 @@ public class SalesReportService {
 	}
 
 	public List<MvBestproduct> findAllbestproducts (){
-		List<MvBestproduct> mvBestproduct = em
+		List<MvBestproduct> mvBestproducts = em
 					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
 					.getResultList();
-		return mvBestproduct;
+		em.refresh(mvBestproducts.get(0));
+		return mvBestproducts;
 	}
 
 

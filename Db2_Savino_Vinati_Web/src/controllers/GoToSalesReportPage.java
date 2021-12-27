@@ -95,7 +95,7 @@ public class GoToSalesReportPage extends HttpServlet {
 			ctx.setVariable("mvpackages", mvpackages);
 			ctx.setVariable("mvpackageperiods", mvpackageperiods);
 			ctx.setVariable("mvsuspendedorders", mvsuspendedorders);
-			ctx.setVariable("mvbestproduct", mvbestproducts);
+			ctx.setVariable("mvbestproducts", mvbestproducts);
 		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}

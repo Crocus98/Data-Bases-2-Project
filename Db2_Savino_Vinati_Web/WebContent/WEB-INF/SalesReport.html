@@ -126,12 +126,14 @@
 			<tr>
 				<th>Optional product name</th>
 				<th>Total value of sales</th>
+				<th>Number of sales</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="mvbp : ${mvbestproducts}">
 				<td style="text-align:center" th:text="${mvbp.optionalproduct.name}"></td>
 				<td style="text-align:center" th:text="${mvbp.value + ' &#36'}"></td>
+				<td style="text-align:center" th:text="${mvbp.sales}"></td>
 			</tr>
 		</tbody>
 	</table>

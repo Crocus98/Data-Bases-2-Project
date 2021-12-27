@@ -50,7 +50,7 @@
 		<tbody>
 			<tr th:each="mvpp : ${mvpackageperiods}">
 				<td style="text-align:center" th:text="${mvpp.servicepackage.name}"></td>
-				<td style="text-align:center" th:text="${mvpp.period + ' months'}"></td>
+				<td style="text-align:center" th:text="${mvpp.validityperiod.validityperiod + ' months'}"></td>
 				<td style="text-align:center" th:text="${mvpp.sales}"></td>
 			</tr>
 		</tbody>

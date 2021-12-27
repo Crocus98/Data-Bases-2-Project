@@ -22,7 +22,9 @@ public class MvPackageperiod implements Serializable {
 	@JoinColumn(name = "idpackage")
 	private Servicepackage servicepackage;
 
-	private int period;
+	@ManyToOne
+	@JoinColumn(name = "idperiod")
+	private Validityperiod validityperiod;
 
 	private int sales;
 
@@ -35,14 +37,6 @@ public class MvPackageperiod implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getPeriod() {
-		return this.period;
-	}
-
-	public void setPeriod(int period) {
-		this.period = period;
 	}
 
 	public int getSales() {
@@ -59,6 +53,14 @@ public class MvPackageperiod implements Serializable {
 
 	public void setServicepackage(Servicepackage servicepackage) {
 		this.servicepackage = servicepackage;
+	}
+
+	public Validityperiod getValidityperiod() {
+		return validityperiod;
+	}
+
+	public void setValidityperiod(Validityperiod validityperiod) {
+		this.validityperiod = validityperiod;
 	}
 
 }

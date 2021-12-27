@@ -23,6 +23,8 @@ public class MvBestproduct implements Serializable {
 	private Optionalproduct optionalproduct;
 
 	private float value;
+	
+	private int sales;
 
 	public MvBestproduct() {
 	}
@@ -50,6 +52,14 @@ public class MvBestproduct implements Serializable {
 
 	public void setOptionalproduct(Optionalproduct optionalproduct) {
 		this.optionalproduct = optionalproduct;
+	}
+
+	public int getSales() {
+		return sales;
+	}
+
+	public void setSales(int sales) {
+		this.sales = sales;
 	}
 
 }

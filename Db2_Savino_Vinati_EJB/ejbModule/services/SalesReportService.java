@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 
 import entities.MvAlert;
 import entities.MvBestproduct;
@@ -13,7 +12,6 @@ import entities.MvInsolventUser;
 import entities.MvPackage;
 import entities.MvPackageperiod;
 import entities.MvSuspendedorder;
-import exceptions.BadSalesReportDataRetrieval;
 
 @Stateless
 public class SalesReportService {

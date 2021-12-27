@@ -25,6 +25,7 @@ public class SalesReportService {
 	public List<MvBestproduct> findAllbestproducts (){
 		List<MvBestproduct> mvBestproducts = em
 					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
+					.setHint("javax.persistence.cache.storeMode", "REFRESH")
 					.getResultList();
 		return mvBestproducts;
 	}

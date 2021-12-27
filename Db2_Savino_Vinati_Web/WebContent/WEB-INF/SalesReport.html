@@ -63,14 +63,14 @@
 			<tr>
 				<th>User name</th>
 				<th>Mail</th>
-				<th>Failed Payment Count</th>
+				<th>Failed Payments Count</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="mviu : ${mvinsolventusers}">
 				<td style="text-align:center" th:text="${mviu.insolventuser.user.username}"></td>
 				<td style="text-align:center" th:text="${mviu.insolventuser.user.mail}"></td>
-				<td style="text-align:center" th:text="${mviu.insolventuser.failedpaymentcount + ' times'}"></td>
+				<td style="text-align:center" th:text="${mviu.insolventuser.failedpaymentcount}"></td>
 			</tr>
 		</tbody>
 	</table>

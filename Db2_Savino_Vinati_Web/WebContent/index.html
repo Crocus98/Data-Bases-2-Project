@@ -36,13 +36,14 @@
 				<p th:text=" ${errorMsgr}"></p>
 			</fieldset>
 		</form>
-		
-		<div>
+	<th:block th:if="${session.order == null}">
+	<div>
 		<h3>Access as a guest customer</h3>
 		<form action="HomeCustomer" method="GET">
 			<input type="submit" value="Continue to home page without logging in">
 		</form>
 	</div>
+	</th:block>
 	</div>
 </body>
 </html>

@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the mv_bestproduct database table.
- * 
- */
 @Entity
 @Table(name="mv_bestproduct")
 @NamedQuery(name="MvBestproduct.findAll", query="SELECT m FROM MvBestproduct m")

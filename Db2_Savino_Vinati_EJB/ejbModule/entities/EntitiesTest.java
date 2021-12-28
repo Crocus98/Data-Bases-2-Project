@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the test database table.
- * 
- */
 @Entity
 @Table(name = "test", schema="db2_savino_vinati")
 @NamedQuery(name="Test.findAll", query="SELECT t FROM EntitiesTest t")

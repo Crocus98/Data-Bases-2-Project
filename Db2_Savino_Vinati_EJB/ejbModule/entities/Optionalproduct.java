@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the optionalproduct database table.
- * 
- */
 @Entity
 @Table(name = "optionalproduct", schema="db2_savino_vinati")
 @NamedQuery(name="Optionalproduct.findAll", query="SELECT op FROM Optionalproduct op")

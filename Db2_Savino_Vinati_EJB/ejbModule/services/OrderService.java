@@ -65,7 +65,7 @@ public class OrderService {
 	
 	private Validityperiod checkValidityPeriod(Integer idvalidityperiod) throws BadOrderParams{
 		try {
-			Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiod); //id exists?
+			Validityperiod validityperiod = em.find(Validityperiod.class, idvalidityperiod);
 			 if(validityperiod != null) {
 				 return validityperiod;
 			 }else {
@@ -78,7 +78,7 @@ public class OrderService {
 
 	public Servicepackage checkServicePackage(Integer idservicepackage) throws BadOrderParams{
 		try {
-			 Servicepackage servicepackage = em.find(Servicepackage.class, idservicepackage); //id exists?
+			 Servicepackage servicepackage = em.find(Servicepackage.class, idservicepackage);
 			 if(servicepackage != null) {
 				 return servicepackage;
 			 }else {
@@ -93,7 +93,7 @@ public class OrderService {
 	public float checkOptionalProducts(List<Integer> idoptionalproducts, Order order, float totalprice) throws BadOrderParams{
 		try {
 			for (int i = 0; i < idoptionalproducts.size() ; i++) {
-				Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproducts.get(i)); //id exists?
+				Optionalproduct optionalproduct = em.find(Optionalproduct.class, idoptionalproducts.get(i));
 				order.addOptionalProduct(optionalproduct);
 				totalprice = totalprice + (optionalproduct.getMonthlyprice());
 			}

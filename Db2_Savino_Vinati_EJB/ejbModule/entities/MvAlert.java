@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the mv_alerts database table.
- * 
- */
 @Entity
 @Table(name="mv_alerts")
 @NamedQuery(name="MvAlert.findAll", query="SELECT m FROM MvAlert m")

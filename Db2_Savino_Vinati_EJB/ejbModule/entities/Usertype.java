@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the usertype database table.
- * 
- */
 @Entity
 @Table(name = "usertype", schema="db2_savino_vinati")
 @NamedQueries({

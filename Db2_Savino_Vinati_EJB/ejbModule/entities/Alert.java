@@ -6,10 +6,6 @@ import java.util.Date;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the alert database table.
- * 
- */
 @Entity
 @Table(name = "alert", schema="db2_savino_vinati")
 @NamedQuery(name="Alert.findAll", query="SELECT a FROM Alert a")

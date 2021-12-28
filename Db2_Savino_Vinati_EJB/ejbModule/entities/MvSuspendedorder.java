@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the mv_suspendedorders database table.
- * 
- */
 @Entity
 @Table(name="mv_suspendedorders")
 @NamedQuery(name="MvSuspendedorder.findAll", query="SELECT m FROM MvSuspendedorder m")

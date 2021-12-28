@@ -25,7 +25,7 @@ public class SalesReportService {
 	public List<MvBestproduct> findAllbestproducts (){
 		List<MvBestproduct> mvBestproducts = em
 					.createNamedQuery("MvBestproduct.findAll", MvBestproduct.class)
-					//.setHint("javax.persistence.cache.storeMode", "REFRESH")
+					//.setHint("javax.persistence.cache.storeMode", "REFRESH") This could help to avoid caching of old datas. We disabled it globally.
 					.getResultList();
 		return mvBestproducts;
 	}
@@ -34,7 +34,6 @@ public class SalesReportService {
 	public List<MvAlert> findAllmvalerts(){
 		List<MvAlert> mvalerts = em
 					.createNamedQuery("MvAlert.findAll", MvAlert.class)
-					//.setHint("javax.persistence.cache.storeMode", "REFRESH")
 					.getResultList();
 		return mvalerts;
 	}

@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the servicemobile database table.
- * 
- */
 @Entity
 @Table(name = "servicemobile", schema="db2_savino_vinati")
 @NamedQuery(name="Servicemobile.findAll", query="SELECT sm FROM Servicemobile sm")

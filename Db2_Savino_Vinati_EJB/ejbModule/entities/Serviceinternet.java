@@ -18,7 +18,8 @@ public class Serviceinternet implements Serializable {
 	private int includedgbs;
 	
 	@OneToOne
-	@PrimaryKeyJoinColumn
+	@JoinColumn(name = "id")
+	@MapsId
 	private Service service;
 
 	public Serviceinternet() {

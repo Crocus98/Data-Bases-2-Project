@@ -101,12 +101,17 @@ import services.UserService;
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
 				return;
 			}
-			
 			ServletContext servletContext = getServletContext();
 	 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			path = "/WEB-INF/Confirmation.html";
-			ctx.setVariable("order", order);
-			request.getSession().setAttribute("user", user);
+	 		if(user == null) {
+				ctx.setVariable("errorMsg", "Incorrect username or password");
+				path = "/index.html";
+			}
+			else {
+				path = "/WEB-INF/Confirmation.html";
+				request.getSession().setAttribute("user", user);
+				ctx.setVariable("order", order);
+			}
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}

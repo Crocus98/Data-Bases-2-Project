@@ -118,6 +118,7 @@ public class UserService {
 			usertype = getUsertype(type);
 		} 
 		catch (Exception e) {
+			System.out.println("Ciao");
 			throw new InvalidRegistrationParams(e.getMessage());
 		}
 		try {

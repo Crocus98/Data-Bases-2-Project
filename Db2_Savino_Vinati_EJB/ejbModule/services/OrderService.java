@@ -53,7 +53,7 @@ public class OrderService {
 			totalprice += order.getServicepackage().getValidityperiods().get(validityperiod);
 			totalprice = (totalprice*(order.getValidityperiod().getValidityperiod()));
 			BigDecimal temp = new BigDecimal(totalprice);
-			temp = temp.setScale(1, RoundingMode.HALF_UP);
+			temp = temp.setScale(2, RoundingMode.HALF_UP);
 			totalprice = Float.parseFloat(temp.toString());
 			order.setTotalvalue(totalprice);
 			return order;

@@ -31,7 +31,7 @@
 		       	<p>Validity Period:</p> 
 		       	<ul>
 			       	<li th:each="pp : ${singlepackage.validityperiods}">
-			       		<input type="radio" name="idvalidityperiod" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' price: ' + pp.value + ' &#36' }" required><br> 
+			       		<input type="radio" name="idvalidityperiod" th:value="${pp.key.id}" th:text="${pp.key.validityperiod + ' months for: ' + pp.value + ' &#36' }" required><br> 
 			       	</li>
 		       	</ul> 
 		        <p>Optional Products:</p>

@@ -37,7 +37,6 @@ public class CreateOptionalProduct extends HttpServlet {
        
     public CreateOptionalProduct() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     public void init() throws ServletException {

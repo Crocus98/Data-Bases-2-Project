@@ -49,7 +49,7 @@ public class CreateServicePackage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		User user = null;
 		if (session.isNew() || session.getAttribute("user") == null) {
 			response.sendRedirect(loginpath);

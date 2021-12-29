@@ -51,7 +51,7 @@ public class CreateOrder extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
- 		String loginpath = getServletContext().getContextPath() + "/index.html";
+ 		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		HttpSession session = request.getSession();
 		List<Servicepackage> packages = null;
 		List<Order> rejectedOrders = null;

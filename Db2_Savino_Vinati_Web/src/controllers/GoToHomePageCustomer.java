@@ -51,7 +51,7 @@ public class GoToHomePageCustomer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		HttpSession session = request.getSession();
 		User user = null;
 		if (!(session.isNew() || session.getAttribute("user") == null)) {

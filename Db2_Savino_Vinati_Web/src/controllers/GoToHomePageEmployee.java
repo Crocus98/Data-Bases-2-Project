@@ -45,7 +45,7 @@ public class GoToHomePageEmployee extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		String message = null;
 		boolean isBadRequest = false;
 		HttpSession session = request.getSession();

@@ -59,7 +59,7 @@ import services.UserService;
      
  	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
  			throws ServletException, IOException {
- 		String loginpath = getServletContext().getContextPath() + "/index.html";
+ 		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		HttpSession session = request.getSession();
 		User user;
 		if (!(session.isNew() || session.getAttribute("user") == null)) {
@@ -209,7 +209,7 @@ import services.UserService;
  	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
  		HttpSession session = request.getSession();
- 		String loginpath = getServletContext().getContextPath() + "/index.html";
+ 		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
  		Order order = null;
  		Integer orderid = null;
  		String message = null;

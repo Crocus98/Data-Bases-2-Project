@@ -48,7 +48,7 @@ public class GoToSalesReportPage extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = getServletContext().getContextPath() + "/GoToLoginPage";
 		User user = null;
 		if (session.isNew() || session.getAttribute("user") == null) {
 			response.sendRedirect(loginpath);

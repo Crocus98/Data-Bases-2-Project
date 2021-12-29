@@ -16,8 +16,7 @@ public class OptionalProductService {
 	public OptionalProductService() {
 	}
 	
-	public void createOptionalProduct(String name, float monthlyprice) 
-			throws InvalidProductParams {
+	public void createOptionalProduct(String name, float monthlyprice) throws InvalidProductParams {
 		try {
 			Optionalproduct product = new Optionalproduct(name, monthlyprice);
 			em.persist(product);

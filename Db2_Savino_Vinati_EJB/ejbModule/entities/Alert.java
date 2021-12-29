@@ -20,7 +20,7 @@ public class Alert implements Serializable {
 	@JoinColumn(name="idinsolventuser")
 	private Insolventuser insolventUser;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="idorder")
 	private Order order;
 	

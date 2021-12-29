@@ -27,7 +27,7 @@ public class Activationschedule implements Serializable {
 	private User user;
 
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(
 			name="serviceschedule",
 			joinColumns= { @JoinColumn(name="idactivation")},
@@ -35,7 +35,7 @@ public class Activationschedule implements Serializable {
 	)
 	private List<Service> services;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(
 			name="productschedule",
 			joinColumns= { @JoinColumn(name="idactivation")},
